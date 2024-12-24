@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+
+#wrap{
+	width:1500px;
+	height:1000px;
+	margin: 0 auto;
+}
+
+/* <uniquifier>: Use a unique and descriptive class name
+ <weight>: Use a value from 100 to 900
+*/
+.noto-sans-kr {
+  font-family: "Noto Sans KR", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.black-han-sans-regular {
+  font-family: "Black Han Sans", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+header{
+	height:180px;
+}
+
+.logo{
+width: 288px;
+height: 93px;
+	/* 누누북스 
+
+
+
+font-family: 'Black Han Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 64px;
+line-height: 80px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #7CC491;
+
+border: 3px solid #1F7B3B;
+
+	*/
+	
+}
+
+
+.search-bar{
+	width:540px;
+	height:50px;
+}
+.search-icons{
+	width:40px;
+	height:40px;
+}
+	
+.search-tab{
+	width:450px;
+}
+
+
+.menu{
+	height:60px;
+	background-color: #F4FFF8;
+}	
+
+.contents{
+	height: 750px;
+}
+
+
+footer{
+	color:#797979;
+	height:60px;
+}
