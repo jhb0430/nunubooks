@@ -2,8 +2,10 @@
 
 
 #wrap{
+	/*
 	width:1500px;
 	height:1000px;
+	*/
 	margin: 0 auto;
 }
 
@@ -13,12 +15,13 @@
 .noto-sans-kr {
   font-family: "Noto Sans KR", serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
 }
+
 .black-han-sans-regular {
   font-family: "Black Han Sans", serif;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -31,7 +34,6 @@ header{
 .logo{
 width: 288px;
 height: 93px;
-	/* 누누북스 
 
 
 
@@ -45,10 +47,9 @@ align-items: center;
 text-align: center;
 
 color: #7CC491;
+-webkit-text-stroke-width: 3px;
+-webkit-text-stroke-color: #1F7B3B;
 
-border: 3px solid #1F7B3B;
-
-	*/
 	
 }
 
@@ -76,6 +77,27 @@ border: 3px solid #1F7B3B;
 	height: 750px;
 }
 
+.login-info {
+	width:270px;
+	height:50px;
+	background-color: #F4FFF8;
+	align-items: center;
+	font-weight: bolder;
+}
+
+.contents > .input-box {
+	
+	width: 640px;
+ 	margin-top:80px;
+}
+
+
+.outline{
+	border:solid 1px #E7E5E5;
+	padding: 4% 10%;
+	/*위 오른족 아래 왼쪽 */
+	/* 세로방향 | 가로방향 */
+}
 
 footer{
 	color:#797979;
