@@ -73,24 +73,34 @@ color: #7CC491;
 }	
 
 .contents{
+	/*
 	height: 750px;
+	*/
 }
 
-.login-info {
-	width:270px;
+.info-btn {
+	width:300px;
 	height:50px;
-	background-color: #F4FFF8;
-	align-items: center;
+	text-align: center;
 	font-weight: bolder;
+	vertical-align: middle;
+	/*
+	background-color: #F4FFF8;
+	*/
+}
+
+.btn-lgn{
+	background-color: #F4FFF8;
 }
 
 
+	/*
 .join-info {
 	width:270px;
 	height:50px;
 	font-weight: bolder;
-	text-align: center;
 }
+	*/
 
 .contents > .input-box {
 	
@@ -104,6 +114,15 @@ color: #7CC491;
 	padding: 4% 10%;
 	/* 세로방향 | 가로방향 */
 }
+
+.bg-lyw{
+	 background-color : #FCF6CC;
+}
+
+.bg-mgn{
+	 background-color: #F4FFF8;
+}
+
 
 footer{
 	color:#797979;

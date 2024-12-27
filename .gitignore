@@ -37,3 +37,4 @@ out/
 .vscode/
 
 security-variable.yml
+src/main/resources/templates/account/note.html
