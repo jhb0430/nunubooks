@@ -7,146 +7,142 @@
 
 		<section layout:fragment="contents" class="contents d-flex justify-content-center">
 		
-		<div style="width: 1200px;"> <!--  회원가입 전체 틀 -->
-			<div class="d-flex align-items-center" style="height: 120px; background-color : #FEF9F9">  <!--  회원가입시 어쩌고저쩌고 특전 안내  -->
-				<h2 class=" font-weight-bold ml-4" style="color:#7CC491">
-				  누누북스 회원가입
-				</h2>
-				<h4 class="ml-4 font-weight-bold"> <!--  회원가입시 어쩌고저쩌고 특전 안내  -->
-				  회원가입시 적립금 3000p 증정! 
-				</h4>
-			</div>
-			<div class="d-flex"> <!-- 회원가입 대상 구분 --> <!--  div 안에 div 따로 줘서 하나하나 주는것도...  -->
-				<button class="info-btn btn-lgn btn rounded-0">만 14세 이상 일반 개인 회원</button>
-				<button class="info-btn btn rounded-0">만 14세 미만 어린이 회원</button>
-				<button class="info-btn btn rounded-0">법인/ 단체 회원</button>
-				<button class="info-btn btn rounded-0">해외 거주자</button>
-				<!-- 
-				<div class="info-btn">만 14세 미만 어린이 회원</div>
-				<div class="info-btn">법인/ 단체 회원</div>
-				<div class="info-btn">해외 거주자</div>
-				 -->
-			</div>
-			
-				
-			<div class="d-flex border-top">
-				<div class="border-right col-3 d-flex align-items-center justify-content-center font-weight-bold">
-			 		약관동의
+			<div width="1200"> <!--  회원가입 전체 틀 -->
+				<div class="d-flex align-items-center join-ad">  <!--  회원가입시 어쩌고저쩌고 특전 안내  -->
+					<h2 class=" font-weight-bold ml-4 logo-color">
+					  누누북스 회원가입
+					</h2>
+					<h4 class="ml-4 font-weight-bold"> <!--  회원가입시 어쩌고저쩌고 특전 안내  -->
+					  회원가입시 적립금 3000p 증정! 
+					</h4>
+				</div>
+				<div class="d-flex"> <!-- 회원가입 대상 구분 --> <!--  div 안에 div 따로 줘서 하나하나 주는것도...  -->
+					<button class="info-btn btn-lgn btn rounded-0">만 14세 이상 일반 개인 회원</button>
+					<button class="info-btn btn rounded-0">만 14세 미만 어린이 회원</button>
+					<button class="info-btn btn rounded-0">법인/ 단체 회원</button>
+					<button class="info-btn btn rounded-0">해외 거주자</button>
+					<!-- 
+					<div class="info-btn">만 14세 미만 어린이 회원</div>
+					<div class="info-btn">법인/ 단체 회원</div>
+					<div class="info-btn">해외 거주자</div>
+					 -->
 				</div>
 				
-				<div class="col-9">
-				<textarea class="border-0 w-100" rows="10" > <!--  이용약관 -->
-				
-				</textarea>
-				</div>
-			</div>
-			
-			<div class="d-flex border-top">
-				<div class="border-right col-3 d-flex align-items-center justify-content-center">
-					<div class="font-weight-bold">
-				 		기본 정보 입력 
-					<div>
-				 		<span class="text-primary">*</span> 필수항목
+					
+				<div class="d-flex border-top">
+					<div class="border-right col-3 d-flex align-items-center justify-content-center font-weight-bold">
+				 		약관동의
 					</div>
+					
+					<div class="col-9">
+					<textarea class="border-0 w-100" rows="10" > <!--  이용약관 -->
+					
+					</textarea>
 					</div>
 				</div>
-				<div class="col-9 p-3">
-				<table class="table table-borderless w-75">
-					<tr>
-						 <th>
-						 이름
-						 <span class="text-primary">*</span>
-						 </th>
-						<td>
-							<input type="text" class="form-control">
-						</td>
-					</tr>
-					<tr>
-						 <th>
-						 아이디
-						 <span class="text-primary">*</span>
-						 </th>
-						<td>
-							<input type="text" class="form-control">
-						</td>
-					</tr>
-					<tr>
-						 <th>
-						 이메일
-						 <span class="text-primary">*</span>
-						 </th>
-						<td class="d-flex align-items-center">
-							<input type="text" class="form-control">
-							<span>@</span>
-							<input type="text" class="form-control d-none">
-							<select class="form-control text-center">
-								<option selected>직접입력</option>
-                                <option value="naver.com">naver.com</option>
-                                <option value="gmail.com">gmail.com</option>
-                                <option value="nate.com">nate.com</option>
-                                <option value="hanmail.net">hanmail.net</option>
-                                <option value="daum.net">daum.net</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						 <th>
-						 비밀번호
-						 <span class="text-primary">*</span>
-						 </th>
-						<td>
-							<input type="password" class="form-control">
-						</td>
-					</tr>
-					<tr>
-						 <th>
-						 비밀번호 재입력
-						 <span class="text-primary">*</span>
-						 </th>
-						<td>
-							<input type="password" class="form-control">
-						</td>
-					</tr>
-					<tr>
-						 <th>
-						 주소
-						 <span class="text-primary">*</span>
-						 </th>
-						<td>
-							<input type="text" class="form-control">
-						</td>
-					</tr>
-					<tr>
-						 <th>
-						 휴대전화
-						 <span class="text-primary">*</span>
-						 </th>
-						<td class="d-flex align-items-center justfiy-content-between">
-							<input type="text" class="form-control">
-							<span> - </span>
-							<input type="text" class="form-control">
-							<span> - </span>
-							<input type="text" class="form-control">
-						</td>
-					</tr>
-				</table>
 				
+				<div class="d-flex border-top">
+					<div class="border-right col-3 d-flex align-items-center justify-content-center">
+						<div class="font-weight-bold">
+					 		기본 정보 입력 
+						<div>
+					 		<span class="text-primary">*</span> 필수항목
+						</div>
+						</div>
+					</div>
+					<div class="col-9 p-3">
+					<table class="table table-borderless w-75">
+						<tr>
+							 <th>
+							 이름
+							 <span class="text-primary">*</span>
+							 </th>
+							<td>
+								<input type="text" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							 <th>
+							 아이디
+							 <span class="text-primary">*</span>
+							 </th>
+							<td>
+								<input type="text" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							 <th>
+							 이메일
+							 <span class="text-primary">*</span>
+							 </th>
+							<td class="d-flex align-items-center">
+								<input type="text" class="form-control">
+								<span>@</span>
+								<input type="text" class="form-control d-none">
+								<select class="form-control text-center">
+									<option selected>직접입력</option>
+	                                <option value="naver.com">naver.com</option>
+	                                <option value="gmail.com">gmail.com</option>
+	                                <option value="nate.com">nate.com</option>
+	                                <option value="hanmail.net">hanmail.net</option>
+	                                <option value="daum.net">daum.net</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							 <th>
+							 비밀번호
+							 <span class="text-primary">*</span>
+							 </th>
+							<td>
+								<input type="password" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							 <th>
+							 비밀번호 재입력
+							 <span class="text-primary">*</span>
+							 </th>
+							<td>
+								<input type="password" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							 <th>
+							 주소
+							 <span class="text-primary">*</span>
+							 </th>
+							<td>
+								<input type="text" class="form-control">
+							</td>
+						</tr>
+						<tr>
+							 <th>
+							 휴대전화
+							 <span class="text-primary">*</span>
+							 </th>
+							<td class="d-flex align-items-center justfiy-content-between">
+								<input type="text" class="form-control">
+								<span> - </span>
+								<input type="text" class="form-control">
+								<span> - </span>
+								<input type="text" class="form-control">
+							</td>
+						</tr>
+					</table>
+					
+					</div>
 				</div>
-			</div>
-				<div class="d-flex align-items-center justify-content-around my-4">
-					<button type="button" class="btn btn-danger col-3">이전화면</button>
-					<button type="button" class="btn btn-primary col-3">회원가입하기</button>
-				</div>
+					<div class="d-flex align-items-center justify-content-around my-5">
+						<button type="button" class="btn btn-danger col-3">이전화면</button>
+						<button type="button" class="btn btn-primary col-3">회원가입하기</button>
+					</div>
+				
+				
+				
+			</div> <!--  회원가입 전체 닫는 -->
 			
 			
-			
-			
-			
-			
-			
-		</div> <!--  회원가입 전체 닫는 -->
-		
-		
 		
 		
 		
