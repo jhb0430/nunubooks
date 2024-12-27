@@ -89,7 +89,30 @@ color: #7CC491;
 
 .banner {
 	
+	width:1200px;
 	height:300px;
+}
+
+.banner-image {
+	height:300px;
+	object-fit: cover;
+	border-radius: 15px;
+	z-index:3;
+}
+
+.image-text {
+	width:300px;
+	word-break:keep-all;
+	position: absolute;
+	z-index:1;
+	color:white;
+	font-weight:bold;
+	font-size:38px;
+}
+
+.seller-info{
+	width:600px;
+	height:400px;
 }
 
 
