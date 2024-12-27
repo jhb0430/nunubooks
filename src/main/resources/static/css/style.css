@@ -72,12 +72,27 @@ color: #7CC491;
 	background-color: #F4FFF8;
 }	
 
-.contents{
-	/*
-	height: 750px;
-	*/
+.menu-text{
+	
+	color:#1B9A41;
 }
 
+
+.banner {
+	
+	height:300px;
+}
+
+
+
+
+
+	/*
+.contents{
+	height: 750px;
+}
+
+	*/
 .info-btn {
 	width:300px;
 	height:50px;
