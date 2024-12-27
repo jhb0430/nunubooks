@@ -71,16 +71,31 @@ color: #7CC491;
 }
 
 
+
+.contents{
+	width:1200px;
+	height: 750px;
+}
+
+
 .menu{
 	height:60px;
 	background-color: #F4FFF8;
 }	
-
+.order-menu{
+	
+	height:40px;
+	background-color: #F4FFF8;
+}
 .menu-text{
 	
 	color:#1B9A41;
 }
 
+.checkbox {
+	color:#65558F;
+	
+}
 
 .join-ad{
 	height:120px;
@@ -116,15 +131,6 @@ color: #7CC491;
 }
 
 
-
-
-
-	/*
-.contents{
-	height: 750px;
-}
-
-	*/
 .info-btn {
 	width:300px;
 	height:50px;
@@ -138,6 +144,13 @@ color: #7CC491;
 
 .btn-lgn{
 	background-color: #F4FFF8;
+}
+
+
+.cart-book-img{
+	width:90px;
+	height:120px;
+	object-fit: comtain;
 }
 
 

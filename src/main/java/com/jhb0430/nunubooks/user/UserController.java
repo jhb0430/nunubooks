@@ -25,6 +25,11 @@ public class UserController {
 		
 		return "books/main";
 	}
+	@GetMapping("/cart")
+	public String cartList() {
+		
+		return "order/cart";
+	}
 	
 
 }
