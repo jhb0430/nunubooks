@@ -10,21 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jhb0430.nunubooks.user.service.UserService;
 
+
 @RequestMapping("/user")
 @RestController
 public class UserRestController {
 	
 	private UserService userSevice;
 	
+
 	public UserRestController(UserService userSevice) {
 		this.userSevice = userSevice;
 	}
 	
-	
 	// 회원가입 기능
 	@PostMapping("/sign-up")
 	public Map<String,String> signUp(
-			@RequestParam("userId") String id
+			@RequestParam("userId") String userId
 			,@RequestParam("email") String email
 			,@RequestParam("password") String password
 			,@RequestParam("address") String address
@@ -33,7 +34,7 @@ public class UserRestController {
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(userSevice.addUser(id, email, password, address, phoneNumber)) {
+		if(userSevice.addUser(userId, email, password, address, phoneNumber)) {
 			resultMap.put("result", "success");
 		}else {
 			resultMap.put("result", "fail");
@@ -43,4 +44,7 @@ public class UserRestController {
 		
 	}
 
+	
+	
+	// 아이디 중복 방지
 }

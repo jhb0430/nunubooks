@@ -5,9 +5,9 @@
      layout:decorate="~{layout/default}">
      
 
-		<section layout:fragment="contents" class="contents d-flex justify-content-center">
+		<section layout:fragment="contents" class="d-flex justify-content-center">
 		
-			<div width="1200"> <!--  회원가입 전체 틀 -->
+			<div class="contents"> <!--  회원가입 전체 틀 -->
 				<div class="d-flex align-items-center join-ad">  <!--  회원가입시 어쩌고저쩌고 특전 안내  -->
 					<h2 class=" font-weight-bold ml-4 logo-color">
 					  누누북스 회원가입
@@ -58,7 +58,7 @@
 							 <span class="text-primary">*</span>
 							 </th>
 							<td>
-								<input type="text" class="form-control">
+								<input type="text" class="form-control w-50" id="nameInput">
 							</td>
 						</tr>
 						<tr>
@@ -66,8 +66,9 @@
 							 아이디
 							 <span class="text-primary">*</span>
 							 </th>
-							<td>
-								<input type="text" class="form-control">
+							<td class="d-flex">
+								<input type="text" class="form-control" id="idInput">
+								<button type="button" class="btn btn-outline-secondary w-50 ml-2" id="dupBtn">중복 확인</button>
 							</td>
 						</tr>
 						<tr>
@@ -76,11 +77,11 @@
 							 <span class="text-primary">*</span>
 							 </th>
 							<td class="d-flex align-items-center">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" id="emailInput">
 								<span>@</span>
-								<input type="text" class="form-control d-none">
+								<input type="text" class="form-control d-none" id="fillEmail">
 								<select class="form-control text-center">
-									<option selected>직접입력</option>
+									<option selected value="1">직접입력</option>
 	                                <option value="naver.com">naver.com</option>
 	                                <option value="gmail.com">gmail.com</option>
 	                                <option value="nate.com">nate.com</option>
@@ -95,7 +96,7 @@
 							 <span class="text-primary">*</span>
 							 </th>
 							<td>
-								<input type="password" class="form-control">
+								<input type="password" class="form-control" id="passwordInput">
 							</td>
 						</tr>
 						<tr>
@@ -104,7 +105,7 @@
 							 <span class="text-primary">*</span>
 							 </th>
 							<td>
-								<input type="password" class="form-control">
+								<input type="password" class="form-control" id="passwordConfirmInput">
 							</td>
 						</tr>
 						<tr>
@@ -113,7 +114,12 @@
 							 <span class="text-primary">*</span>
 							 </th>
 							<td>
-								<input type="text" class="form-control">
+								<div class="d-flex">
+								<input type="text" class="form-control w-25"> <!-- 다음 주소 api 활용 -->
+								<button type="button" class="btn btn-outline-secondary w-25 ml-2" id="postCodeBtn">우편번호 찾기</button>
+								</div>
+								<input type="text" class="form-control mt-2 w-75" placeholder="주소" id="address"> 
+								<input type="text" class="form-control mt-2 w-75" placeholder="상세 주소 입력" id="detailAddress"> 
 							</td>
 						</tr>
 						<tr>
@@ -122,11 +128,11 @@
 							 <span class="text-primary">*</span>
 							 </th>
 							<td class="d-flex align-items-center justfiy-content-between">
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" id="phoneInput1">
 								<span> - </span>
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" id="phoneInput2">
 								<span> - </span>
-								<input type="text" class="form-control">
+								<input type="text" class="form-control" id="phoneInput3">
 							</td>
 						</tr>
 					</table>
@@ -134,8 +140,8 @@
 					</div>
 				</div>
 					<div class="d-flex align-items-center justify-content-around my-5">
-						<button type="button" class="btn btn-danger col-3">이전화면</button>
-						<button type="button" class="btn btn-primary col-3">회원가입하기</button>
+						<button type="button" class="btn btn-danger col-3" id="prevBtn">이전화면</button>
+						<button type="button" class="btn btn-primary col-3" id="signUpBtn">회원가입하기</button>
 					</div>
 				
 				
@@ -155,7 +161,31 @@
 
 
 
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script layout:fragment="script">
+	
+	$(document).ready(function(){
+	
+		$("#signUpBtn").on("click",function(){
 
-<script layout:fragment="script"></script>
+			
+			let name = $("#nameInput").val();
+			let userId = $("#idInput").val();
+			let email = $("#emailInput").val();
+			let password = $("#passwordInput").val();
+			let passwordConfirm = $("#passwordConfirmInput").val();
+			
+			let phoneNumber1 = $("#phoneInput1").val();
+			let phoneNumber2 = $("#phoneInput2").val();
+			let phoneNumber3 = $("#phoneInput3").val();
+			
+			
+		});
+		
+	
+	});
+
+
+</script>
 
 </html>

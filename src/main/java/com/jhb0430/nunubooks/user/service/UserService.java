@@ -1,10 +1,12 @@
 package com.jhb0430.nunubooks.user.service;
 
-import org.apache.ibatis.annotations.Param;
+
+import org.springframework.stereotype.Service;
 
 import com.jhb0430.nunubooks.common.SHA256HashingEncoder;
 import com.jhb0430.nunubooks.user.repository.UserRepository;
 
+@Service
 public class UserService {
 
 	private UserRepository userRepository;

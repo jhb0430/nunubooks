@@ -1,7 +1,10 @@
 package com.jhb0430.nunubooks.user.repository;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Mapper
 public interface UserRepository {
 
 	
