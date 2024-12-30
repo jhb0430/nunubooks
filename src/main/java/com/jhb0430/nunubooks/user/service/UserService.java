@@ -1,0 +1,41 @@
+package com.jhb0430.nunubooks.user.service;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.jhb0430.nunubooks.common.SHA256HashingEncoder;
+import com.jhb0430.nunubooks.user.repository.UserRepository;
+
+public class UserService {
+
+	private UserRepository userRepository;
+	
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	// 회원가입 기능 
+	// 가입됐으면 true 아니면 false
+	public boolean addUser(
+			String userId
+			,String email
+			,String password
+			,String address
+			,String phoneNumber
+			) {
+		// 암호화 해줘야함
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		
+		int count = userRepository.addUser(userId, email, encodingPassword, address, phoneNumber);
+		
+		if(count == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
+}
