@@ -12,6 +12,7 @@ public interface UserRepository {
 			@Param("userId")String userId
 			,@Param("email")String email
 			,@Param("password")String password
+			,@Param("postcode")String postcode
 			,@Param("address")String address
 			,@Param("phoneNumber")String phoneNumber
 			);

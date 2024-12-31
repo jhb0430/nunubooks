@@ -21,6 +21,7 @@ public class UserService {
 			String userId
 			,String email
 			,String password
+			,String postcode
 			,String address
 			,String phoneNumber
 			) {
@@ -29,8 +30,7 @@ public class UserService {
 		String encodingPassword = SHA256HashingEncoder.encode(password);
 		
 		
-		int count = userRepository.addUser(userId, email, encodingPassword, address, phoneNumber);
-		
+		int count = userRepository.addUser(userId, email, encodingPassword, postcode, address, phoneNumber);
 		if(count == 1) {
 			return true;
 		}

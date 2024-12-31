@@ -13,16 +13,18 @@
 					`userId`
 					,`email`
 					, `password`
+					,`postcode`
 					, `address`
-					, `phonNumber`
+					, `phoneNumber`
 				)
 				VALUE
 				(
 					#{userId}
 					,#{email}
 					,#{password}
+					,#{postcode}
 					,#{address}
-					,#{phonNumber}
+					,#{phoneNumber}
 				)
 	 				
 	 	</insert>

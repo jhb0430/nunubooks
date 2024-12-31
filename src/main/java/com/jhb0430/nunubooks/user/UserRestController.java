@@ -29,13 +29,14 @@ public class UserRestController {
 			@RequestParam("userId") String userId
 			,@RequestParam("email") String email
 			,@RequestParam("password") String password
+			,@RequestParam("postcode") String postcode
 			,@RequestParam("address") String address
 			,@RequestParam("phoneNumber") String phoneNumber
 			){
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(userSevice.addUser(userId, email, password, address, phoneNumber)) {
+		if(userSevice.addUser(userId, email, password, postcode, address, phoneNumber)) {
 			resultMap.put("result", "success");
 		}else {
 			resultMap.put("result", "fail");

@@ -84,7 +84,7 @@
 								<input type="text" class="form-control" id="emailInput">
 								<span>@</span>
 								<input type="text" class="form-control d-none" id="fillEmail">
-								<select class="form-control text-center">
+								<select class="form-control text-center" id="domainSel">
 									<option selected value="1">직접입력</option>
 	                                <option value="naver.com">naver.com</option>
 	                                <option value="gmail.com">gmail.com</option>
@@ -110,6 +110,7 @@
 							 </th>
 							<td>
 								<input type="password" class="form-control" id="passwordConfirmInput">
+								<div class="small text-danger d-none" id="notsamePw">비밀번호가 일치하지 않습니다</div>
 							</td>
 						</tr>
 						<tr>
@@ -122,8 +123,8 @@
 								<input type="text" class="form-control w-25" id="postcode"> <!-- 다음 주소 api 활용 -->
 								<button type="button" class="btn btn-outline-secondary w-25 ml-2" id="postCodeBtn">우편번호 찾기</button>
 								</div>
-								<input type="text" class="form-control mt-2 w-75" placeholder="주소" id="address"> 
-								<input type="text" class="form-control mt-2 w-75" placeholder="상세 주소 입력" id="detailAddress"> 
+								<input type="text" class="form-control mt-2 w-75" placeholder="주소" id="addr"> 
+								<input type="text" class="form-control mt-2 w-75" placeholder="상세 주소 입력" id="detailAddr"> 
 							</td>
 						</tr>
 						<tr>
@@ -175,9 +176,26 @@
 		var isDuplicateId = true; // 중복검사를 했는데 중복일 때 
 		
 		
+		
+//		input 창에 입력을 하면 초기화 (중복확인 빠져나가기 방지)
+		$("#idInput").on("input",function(){ 
+			
+			isDuplicateCheck = false;
+			isDuplicateId = true;
+			
+			$("#availableText, #duplicateText").addClass("d-none");
+		});
+		
+		$("#passwordConfirm").on("input",function(){ 
+			
+			
+			$("#notsamePw").addClass("d-none");
+		});
+		
+		
+		
 		$("#dupBtn").on("click",function(){
 
-			alert("중복확인")
 			
 			let userId = $("#idInput").val();
 			
@@ -186,6 +204,10 @@
 				,url:"/user/duplicate-id"
 				,data:{"userId":userId}
 				,success:function(response){
+
+					isDuplicateCheck = true; // 중복확인을 했다 
+					
+					
 					if(response.isDuplicate) { // 중복이면
 						$("#dupText").removeClass("d-none");
 						$("#availableText").addClass("d-none");
@@ -200,9 +222,11 @@
 				alert("중복확인 에러!!");
 			}	
 				
-						
+			});
 			
 		});
+		
+		
 		
 		
 		$("#postCodeBtn").on("click",function(){
@@ -248,10 +272,10 @@
 	                    
 	                // 우편번호와 주소 정보를 input 박스에 넣는다.
 	                document.getElementById('postcode').value = data.zonecode;
-	                document.getElementById("address").value = addr;
-	                document.getElementById("address").value += extraAddr;
+	                document.getElementById("addr").value = addr;
+	                document.getElementById("addr").value += extraAddr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("detailAddress").focus();
+	                document.getElementById("detailAddr").focus();
 	            } 
 			// 자바문법 위랑 통일 시키기 
 	        
@@ -263,28 +287,47 @@
 		});
 		
 		
-		
+		 $("#domainSel").on("change",function(){
+             // alert();
+            let select= $(this).val();
+            //alert(select);
+             if(select == "1") {
+                 $("#fillEmail").removeClass("d-none");      
+                 $("#domainSel").addClass("d-none");
+             }
+
+         });
+
 		
 		$("#signUpBtn").on("click",function(){
 
 			
 			let name = $("#nameInput").val();
 			let userId = $("#idInput").val();
-			let email = $("#emailInput").val();
+			let emailId = $("#emailInput").val();
 			let password = $("#passwordInput").val();
 			let passwordConfirm = $("#passwordConfirmInput").val();
 			
 			let postcode = $("#postcode").val();
-			let address = $("#address").val();
-			let detailAddress = $("#detailAddress").val();
+			let addr = $("#addr").val();
+			let detailAddr = $("#detailAddr").val();
 
 			
 			let phoneNumber1 = $("#phoneInput1").val();
 			let phoneNumber2 = $("#phoneInput2").val();
 			let phoneNumber3 = $("#phoneInput3").val();
 			
+			let domain = "@" + $("#domainSel").val();
 			
-			let phoneNumber = phoneNumber1 + "" + phoneNumber2 + "" + phoneNumber3;
+			let email = emailId + domain;
+			let phoneNumber = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
+			let address = addr+ " " + detailAddr;
+			
+			 if (domain == "fillEmail") { 
+                 domain = $("#fillEmail").val() ;
+             }
+
+			
 			
 			//alert(phoneNumber);
 			
@@ -309,7 +352,7 @@
 			}
 				
 			if(passwordConfirm != password){
-				alert("패스워드가 일치하지 않습니다");
+				$("#notsamePw").removeClass("d-none");
 				return;
 			}
 			
@@ -317,6 +360,26 @@
 				alert("전화번호를 입력해주세요");
 				return;
 			}
+			
+			
+			$.ajax({
+
+			type:"post"
+			,url:"/user/sign-up"
+			,data:{"name":name,"userId":userId,"email":email,"password":password,"postcode":postcode,"address":address,"phoneNumber":phoneNumber}
+			,success:function(response){
+	
+				if(response.result == "success"){
+					location.href="/nunubooks/account/main";
+				} else{
+					alert("양식을 다시 확인해 주세요")
+				}
+			}
+			,error:function(){
+				alert("회원가입 오류!!! ")
+				}
+			
+			});
 			
 			
 			
