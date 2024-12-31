@@ -169,6 +169,8 @@
 		$("#signUpBtn").on("click",function(){
 
 			
+			alert("클릭!"); 
+			
 			let name = $("#nameInput").val();
 			let userId = $("#idInput").val();
 			let email = $("#emailInput").val();
@@ -178,6 +180,46 @@
 			let phoneNumber1 = $("#phoneInput1").val();
 			let phoneNumber2 = $("#phoneInput2").val();
 			let phoneNumber3 = $("#phoneInput3").val();
+			
+			
+			let phoneNumber = phoneNumber1 + "" + phoneNumber2 + "" + phoneNumber3;
+			
+			
+			
+			alert(phoneNumber);
+			
+			if(name ==""){
+				alert("이름을 입력해주세요");
+				return;
+			}
+				
+			if(userId ==""){
+				alert("아이디를 입력해주세요");
+				return;
+			}
+				
+			if(email ==""){
+				alert("이메일을 입력해주세요");
+				return;
+			}
+				
+			if(password ==""){
+				alert("패스워드를 입력해주세요");
+				return;
+			}
+				
+			if(passwordConfirm != password){
+				alert("패스워드가 일치하지 않습니다");
+				return;
+			}
+			
+			if(phoneNumber1 == "" | phoneNumber2 == "" | phoneNumber3 == ""){
+				alert("전화번호를 입력해주세요");
+				return;
+			}
+			
+			
+			
 			
 			
 		});
