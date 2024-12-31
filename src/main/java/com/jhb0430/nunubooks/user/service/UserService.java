@@ -4,6 +4,7 @@ package com.jhb0430.nunubooks.user.service;
 import org.springframework.stereotype.Service;
 
 import com.jhb0430.nunubooks.common.SHA256HashingEncoder;
+import com.jhb0430.nunubooks.user.domain.User;
 import com.jhb0430.nunubooks.user.repository.UserRepository;
 
 @Service
@@ -52,6 +53,21 @@ public class UserService {
 			return false;
 		 }
 			
+	}
+	
+	
+	// 로그인 기능
+	
+	public User loginUser(
+			String userId
+			,String password
+			) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		User user = userRepository.selectLoginUser(userId, encodingPassword);
+		
+		return user;
 	}
 	
 }

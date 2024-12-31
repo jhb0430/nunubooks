@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jhb0430.nunubooks.user.domain.User;
 import com.jhb0430.nunubooks.user.service.UserService;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RequestMapping("/user")
@@ -63,6 +66,32 @@ public class UserRestController {
 		return resultMap;
 		
 	}
+	
+	
+	// 로그인 기능 
+	
+	@PostMapping("/login")
+	public Map<String,String> loginUser(
+			@RequestParam("userId") String userId
+			,@RequestParam("password") String password
+			){
+		
+			Map<String,String> resultMap = new HashMap<>();
+			
+			User user = userSevice.loginUser(userId, password);
+			
+			if(user != null) {
+				
+				resultMap.put("result", "success");
+				
+			} else {
+				resultMap.put("result", "fail");
+			}
+	
+			return resultMap;
+		
+		}
+	
 	
 	
 }

@@ -39,5 +39,25 @@
 				`userId` = #{userId};
  	</select>
  	
+ 	
+	 	<select id="selectLoginUser" resultType="com.jhb0430.nunubooks.user.domain.User">
+	 	SELECT 
+	 		`id`
+			`userId`
+			, `email`
+			, `password`
+			, `postcode`
+			, `address`
+			, `phoneNumber`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`user`
+		WHERE 
+			`userId` = #{userId}
+			AND 
+			`password` = #{password};
+ 	</select>
+ 	
  
  </mapper>
