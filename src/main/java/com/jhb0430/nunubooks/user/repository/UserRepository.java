@@ -15,4 +15,11 @@ public interface UserRepository {
 			,@Param("address")String address
 			,@Param("phoneNumber")String phoneNumber
 			);
+	
+	
+	public int selectCountId(
+			@Param("userId")String userId
+			);
+		
+	
 }

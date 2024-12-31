@@ -26,5 +26,16 @@
 				)
 	 				
 	 	</insert>
+	 	
+	 	
+	 	<select id="selectCountId" parameterType="string" resultType="int">
+	 	SELECT 
+				count(*)
+			FROM 
+				`user`
+			WHERE 
+				`userId` = #{userId};
+ 	</select>
+ 	
  
  </mapper>

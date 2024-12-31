@@ -39,5 +39,19 @@ public class UserService {
 		}
 	}
 	
+	// 중복 확인 - 입력받은 아이디가 데이터에 존재하는지 안하는지 
+	public boolean isDuplicateId(
+			String userId
+			) {
+		
+		int count = userRepository.selectCountId(userId);
+		
+		if(count > 0){
+			return true;
+		 } else {
+			return false;
+		 }
+			
+	}
 	
 }

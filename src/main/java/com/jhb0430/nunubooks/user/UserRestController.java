@@ -3,6 +3,7 @@ package com.jhb0430.nunubooks.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,4 +48,20 @@ public class UserRestController {
 	
 	
 	// 아이디 중복 방지
+	@GetMapping("/duplicate-id")
+	public Map<String, Boolean> isDuplicateId(
+			@RequestParam("userId") String userId
+			){
+		Map<String, Boolean> resultMap = new HashMap<>();
+		
+		//if(userSevice.isDuplicateId(userId)) {
+			
+		//}
+		resultMap.put("isDuplicate", userSevice.isDuplicateId(userId));
+		
+		return resultMap;
+		
+	}
+	
+	
 }
