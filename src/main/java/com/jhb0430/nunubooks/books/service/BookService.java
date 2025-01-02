@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.jhb0430.nunubooks.aladdin.AladdinOpenAPI;
 import com.jhb0430.nunubooks.books.domain.Books;
 
+/*
 @Service
 public class BookService {
 
@@ -26,3 +27,4 @@ public class BookService {
 	
 	
 }
+*/
