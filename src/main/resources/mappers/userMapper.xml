@@ -40,7 +40,7 @@
  	</select>
  	
  	
-	 	<select id="selectLoginUser" resultType="com.jhb0430.nunubooks.user.domain.User">
+ 	<select id="selectLoginUser" resultType="com.jhb0430.nunubooks.user.domain.User">
 	 	SELECT 
 	 		`id`
 			`userId`
@@ -58,6 +58,18 @@
 			AND 
 			`password` = #{password};
  	</select>
+ 	
+ 	
+ 	<select id="findUserId" resultType="com.jhb0430.nunubooks.user.domain.User">
+ 	SELECT 
+		`userId`
+	FROM 
+		`user`
+	WHERE 
+		`email` = #{email}
+		AND 
+		`phoneNumber` = #{phoneNumber};
+	</select>
  	
  
  </mapper>

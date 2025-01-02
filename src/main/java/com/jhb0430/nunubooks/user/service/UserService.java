@@ -70,4 +70,15 @@ public class UserService {
 		return user;
 	}
 	
+	// 아이디 찿기 
+	public User findUserId(
+			String email
+			,String phoneNumber
+			) {
+		
+		User user = userRepository.findUserId(email, phoneNumber);
+		
+		return user;
+	}
+	
 }

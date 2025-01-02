@@ -92,6 +92,28 @@ public class UserRestController {
 		
 		}
 	
+	// 아이디 찾기
+	@PostMapping("/findId")
+	public Map<String,String> findUserId(
+			@RequestParam("email") String email
+			,@RequestParam("phoneNumber") String phoneNumber
+			){
+		
+		Map<String,String> resultMap = new HashMap<>();
+		
+		User user = userSevice.findUserId(email, phoneNumber);
+		
+		if(user != null) {
+			
+			resultMap.put("result", "success");
+			
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+		
+	}
 	
 	
 }

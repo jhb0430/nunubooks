@@ -30,4 +30,9 @@ public interface UserRepository {
 			);
 	
 	
+	public User findUserId(
+			@Param("email")String email
+			,@Param("phoneNumber")String phoneNumber
+			);	
+	
 }
