@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/default}">
+     
+
+		<section layout:fragment="contents" class="d-flex justify-content-center">
+		
+		<div class="border-bottom">
+			<h3>내 계정 찾기</h3>
+		</div>
+	
+	<div class="border btn-lgn">
+		<h4>아이디와 비밀번호 찾기</h4>
+	</div>
+	
+	<button type="button" class="btn">회원 정보에 등록된 이메일로 찾기 찾기</button>
+		<!--  버튼 누르면 인풋창 show -->
+		<div>
+			<div>
+				<input type="text" class="form-control" placeholder="이름">
+			</div>
+			<div>
+				<input type="text" class="form-control" placeholder="이메일">
+			</div>
+			<button class="btn btn">찾기</button>
+		</div>
+	
+	<button type="button" class="btn btn-lgn">회원 정보에 등록된 휴대폰으로 찾기</button>
+		<!--  버튼 누르면 인풋창 show -->
+		<div>
+			<div>
+				<input type="text" class="form-control" placeholder="이름">
+			</div>
+			<div>
+				<input type="text" class="form-control" placeholder="휴대폰 번호">
+			</div>
+			<button class="btn btn">찾기</button>
+		</div>
+	
+	
+	<div class="border btn-lgn">
+		<h4>새로운 비밀번호 설정하기</h4>
+	</div>
+	
+	
+	
+	
+	
+	
+		</section>
+		
+		<script layout:fragment="script">
+		</script>
+
+</html>
