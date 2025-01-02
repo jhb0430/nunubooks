@@ -31,11 +31,7 @@ public class UserController {
 		return "order/cart";
 	}
 	
-	@GetMapping("/search")
-	public String searchList() {
-		
-		return "books/search";
-	}
+	
 	
 
 }
