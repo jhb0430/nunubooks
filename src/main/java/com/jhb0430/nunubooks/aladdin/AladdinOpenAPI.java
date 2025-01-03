@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public class AladdinOpenAPI {
 
 	private static final String BASE_URL = "http://www.aladdin.co.kr/ttb/api/ItemSearch.aspx?";
@@ -20,7 +19,7 @@ public class AladdinOpenAPI {
 		hm.put("MaxResults", "10");
 		hm.put("start", "1");
 		hm.put("SearchTarget", "Book");
-		hm.put("output", "xml");
+		hm.put("output", "json");
 
 		StringBuffer sb = new StringBuffer();
 		

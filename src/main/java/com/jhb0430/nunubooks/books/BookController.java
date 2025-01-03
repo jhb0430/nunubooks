@@ -14,9 +14,13 @@ public class BookController {
 		
 		return "books/search";
 	}
+	
+	
 	@GetMapping("/product")
 	public String bookInfo() {
 		
 		return "books/product";
 	}
+	
+	
 }
