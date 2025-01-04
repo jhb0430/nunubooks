@@ -17,8 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(name="`item`")
-@Entity
 public class Item {
 
 	@Id
@@ -38,39 +36,30 @@ public class Item {
 	
 	private int isbn13;
 	
-	@Column(name="itemId")
 	private int itemId;
 	
-	@Column(name="priceSales")
 	private int priceSales;
 	
-	@Column(name="priceStandard")
 	private int priceStandard;
 	
-	@Column(name="mallType")
 	private String mallType;
 	
-	@Column(name="stockStatus")
 	private String stockStatus;
 	
 	private int mileage;
 	
 	private String cover;
 	
-	@Column(name="categoryId")
 	private int categoryId;
 	
-	@Column(name="categoryName")
 	private String categoryName;
 	
 	private String publisher;
 	
-	@Column(name="salesPoint")
 	private int salesPoint;
 	
 	private boolean adult;
 	
-	@Column(name="fixedPrice")
 	private boolean fixedPrice;
 	
 	

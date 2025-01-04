@@ -1,11 +1,14 @@
 package com.jhb0430.nunubooks.books;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.jhb0430.nunubooks.books.domain.Item;
+import com.jhb0430.nunubooks.books.dto.BookDTO;
 
 import reactor.core.publisher.Mono;
 
@@ -21,7 +24,6 @@ public class BookRestController {
 	@Autowired
     private WebClient.Builder webClientBuilder;
 
-	
 	
 	
 	/*
@@ -46,21 +48,22 @@ public class BookRestController {
 	 */	
 	
 	@GetMapping("/nunubooks/test")
-	public Item bookTest(
+	public List<BookDTO> bookTest(
 //			@RequestParam("Query") String Query
 			)  {
 		
 		 WebClient webClient = webClientBuilder.build();
 		
 		 
-		 Mono<Item> response = 
+		 
+		 Mono<List> response = 
 			webClient.get().uri("https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbleky22241703001&Query=aladdin&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101"
 //			webClient.get().uri("https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbleky22241703001&QueryType=Title&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101&"
 			//+ Query //&Query=aladdin
 					
 					) 
 			.retrieve()
-			.bodyToMono(Item.class);
+			.bodyToMono(List.class);
 	    
 	    return response.block();
 		
