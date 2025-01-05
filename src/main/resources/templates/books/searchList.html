@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/default}">
+     
+
+		<section layout:fragment="contents" class="contents ">
+		
+		<!--  리스트 테스트 후 수정예정 -->
+		<table class="table">
+	        <thead>
+	            <tr>
+	                <th>타이틀</th>
+	                <th>저자</th>
+	                <th>출판사</th>
+	                <th>가격</th>
+	                <th>이미지</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="book : ${books}">
+	                <td th:text="${book.title}">Book Title</td>
+	                <td th:text="${book.author}">Author</td>
+	                <td th:text="${book.publisher}">Publisher</td>
+	                <td th:text="${book.priceSales}">0</td>
+	                <td><img th:src="${book.cover}">이미지</td>
+	            </tr>
+	        </tbody>
+   		</table>
+		
+		</section>
+
+<script layout:fragment="script"></script>
+
+</html>
