@@ -1,30 +1,43 @@
 package com.jhb0430.nunubooks.books;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
-
-import reactor.core.publisher.Mono;
 @RequestMapping("/books")
 @RestController
 public class BookRestController {
 
 
 
-	
+	private BookService bookService; 
 
+	public BookRestController(BookService bookService) {
+		this.bookService = bookService;
+	}
+	
 	
 	@GetMapping("/search")
-	public BookDTO bookTest()  {
+	public Map<String,String> bookTest(
+			@RequestParam("query") String query)  {
+		
+		Map<String,String> resultMap = new HashMap<>();
+		
+		if(bookService.fetchBooks(query) != null) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+			
+		}
 		
 		
-		return 
+		
+		return resultMap;
 
 	}
 

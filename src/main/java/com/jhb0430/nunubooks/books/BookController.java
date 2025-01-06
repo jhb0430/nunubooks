@@ -42,8 +42,7 @@ public class BookController {
 	@GetMapping("/searchList")
 	public String bookList(
 			@RequestParam("query") String query
-					,Model model
-							) {
+			,Model model) {
 		 WebClient webClient = webClientBuilder.build();
 		 
 		
