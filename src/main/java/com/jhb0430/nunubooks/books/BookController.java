@@ -47,7 +47,9 @@ public class BookController {
 		 
 		
 		 BookDTO bookDTO = bookService.fetchBooks(query);
-		 model.addAttribute("books",bookDTO.getItem());
+		 model.addAttribute("books",bookDTO);
+		 
+		 
 		 
 	    return "books/searchList";
 	}
