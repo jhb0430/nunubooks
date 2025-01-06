@@ -5,21 +5,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.jhb0430.nunubooks.books.dto.BookDTO;
-
-import reactor.core.publisher.Mono;
+import com.jhb0430.nunubooks.books.service.BookService;
 
 @RequestMapping("/nunubooks")
 @Controller
 public class BookController {
 
+	private BookService bookService;
+	private WebClient.Builder webClientBuilder;
 	
-	@GetMapping("/search")
-	public String searchList() {
+	public BookController(BookService bookService, WebClient.Builder webClientBuilder) {
+		this.bookService = bookService;
+		this.webClientBuilder = webClientBuilder;
+	}
+	
+	
+	@GetMapping("/bestSeller")
+	public String bestSellerList() {
 		
-		return "books/search";
+		return "books/best-seller";
 	}
 	
 	
@@ -29,39 +37,17 @@ public class BookController {
 		return "books/product";
 	}
 	
-	@Autowired
-	private WebClient.Builder webClientBuilder;
+
 	
 	@GetMapping("/searchList")
 	public String bookList(
-					Model model
+			@RequestParam("query") String query
+					,Model model
 							) {
 		 WebClient webClient = webClientBuilder.build();
 		 
-		 Mono<BookDTO> response = 
-				 webClient.get()
-					.uri(
-					"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?"
-					+ "ttbkey=ttbleky22241703001"
-					+ "&"
-					+ "Query=aladdin"
-					+ "&"
-					+ "QueryType=Title"
-					+ "&"
-					+ "MaxResults=10"
-					+ "&"
-					+ "start=1"
-					+ "&"
-					+ "SearchTarget=Book"
-					+ "&"
-					+ "output=js"
-					+ "&"
-					+ "Version=20131101"
-					) 
-			.retrieve()
-			.bodyToMono(BookDTO.class);
-		 
-		 BookDTO bookDTO = response.block();
+		
+		 BookDTO bookDTO = bookService.fetchBooks(query);
 		 model.addAttribute("books",bookDTO.getItem());
 		 
 	    return "books/searchList";
