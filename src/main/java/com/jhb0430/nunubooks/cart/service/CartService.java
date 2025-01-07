@@ -15,12 +15,13 @@ public class CartService {
 	}
 	
 	
-	public boolean addCart(String itemId, int quantity) {
+	public boolean addCart(String itemId, int quantity, String userId) {
 		
 		quantity = 1;
 		
 		Cart cart = Cart.builder()
 				.itemId(itemId)
+				.userId(userId)
 				.quantity(quantity)
 				.build();
 		

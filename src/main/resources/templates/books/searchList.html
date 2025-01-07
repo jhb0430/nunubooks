@@ -98,8 +98,28 @@
 	
 		$(".cartBtn").on("click",function(){
 		let itemId = $(".item-checkbox").val();
+		let userId = null; 
+        let quantity = 1;
 
-		alert(itemId);
+// 로그인 안해도 장바구니에 저장될 수 있도록         
+        
+		$.ajax({
+
+			type:"post"
+			,url:"/cart/add"
+			,data:{"itemId":itemId,"userId":userId, "quantity":quantity}
+			,success:function(response){
+
+				if(response.result =="success"){
+					alert("담기 성공!");
+				} else {
+					alert("담기 실패")
+				}
+			}
+			,error:function(){
+				alert("오류!!")
+			}
+		});
 		
 		});
 	
