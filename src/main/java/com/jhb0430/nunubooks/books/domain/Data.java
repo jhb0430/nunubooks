@@ -17,7 +17,7 @@ public class Data {
 	private String pubDate;
 	private String isbn;
 	private String isbn13;
-	private int itemId;
+	private String itemId;
 	private int priceSales;
 	private int priceStandard;
 	private String mallType;
