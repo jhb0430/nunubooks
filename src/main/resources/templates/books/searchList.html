@@ -50,7 +50,9 @@
 				</div>
 				<img th:src="${book.cover}" class="info-img">
 				<div class="mx-3 info-title">
+					<a th:href="|/nunubooks/product?itemId=${book.itemId}|" class="text-dark">
 					<h5 class="font-weight-bold" th:text="${book.title}">책 제목 어쩌구저쩌구</h5>
+					</a>
 					<h6 th:text="|${book.author}|">저자</h6>
 					<div class="d-flex align-items-center">
 						<h6 th:text="${book.publisher}">출판사</h6>

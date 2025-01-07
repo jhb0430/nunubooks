@@ -32,7 +32,15 @@ public class BookController {
 	
 	
 	@GetMapping("/product")
-	public String bookInfo() {
+	public String bookInfo(
+			@RequestParam("itemId") String itemId
+			,Model model) {
+		
+		WebClient webClient = webClientBuilder.build();
+		 
+		
+		 BookDTO bookDTO = bookService.bookProduct(itemId);
+		 model.addAttribute("book",bookDTO);
 		
 		return "books/product";
 	}

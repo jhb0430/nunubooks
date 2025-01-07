@@ -14,6 +14,7 @@ public class Data {
 	private String title;
 	private String link;
 	private String author;
+	private String description;
 	private String pubDate;
 	private String isbn;
 	private String isbn13;

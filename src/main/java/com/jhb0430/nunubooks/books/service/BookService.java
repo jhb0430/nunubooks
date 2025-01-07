@@ -14,6 +14,8 @@ public class BookService {
 	@Autowired
 	WebClient.Builder webClientBuilder;
 	
+	
+	
 	public BookDTO fetchBooks(String query) {
 		
 		 WebClient webClient = webClientBuilder.build();
@@ -40,6 +42,32 @@ public class BookService {
 			    return response.block();
 	}
 	
+	
+	public BookDTO bookProduct(String itemId) {
+		
+		WebClient webClient = webClientBuilder.build();
+		
+		Mono<BookDTO> response = 
+				webClient.get()
+				.uri(uriBuilder -> uriBuilder
+						.scheme("https")
+						.host("www.aladin.co.kr")
+						.path("/ttb/api/ItemLookUp.aspx")
+						.queryParam("ttbkey","ttbleky22241703001")
+						.queryParam("itemIdType","itemId")
+						.queryParam("itemId",itemId)
+						.queryParam("Cover","Big")
+						.queryParam("output","js")
+						.queryParam("Version","20131101")
+//OptResult=ebookList,usedList,reviewList
+						.build()
+						)
+				.retrieve()
+				.bodyToMono(BookDTO.class);
+		return response.block();
+	}
+	
+
 
 	}
 	
