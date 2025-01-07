@@ -173,8 +173,49 @@ color: #7CC491;
 }
 
 .book-info{
-	width:1000px;
-	height:180px;
+	width:1200px;
+	height:200px;
+}
+.info-checkbox{
+	width:20px;
+}
+.info-img{
+	width:140px;
+	height:170px;
+	object-fit: contain;
+	
+}
+.info-title{
+	width:700px;
+}
+.info-price{
+	width:150px;
+}
+.info-cart{
+	width:100px;
+}
+
+.pageNum-now{
+	width:20px;
+	height:20px;
+	color:#F4FFF8;
+	background-color: #7CC491;
+	border-radius: 20%;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	margin-right:4px;
+}
+.pageNum{
+	width:20px;
+	height:20px;
+	color:#b8b8b8;
+	background-color: #F4FFF8;
+	border-radius: 20%;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	margin-right:4px;
 }
 
 .outline{

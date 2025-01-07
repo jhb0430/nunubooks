@@ -91,7 +91,7 @@ public class Item {
       "fixedPrice": true,
       "customerReviewRank": 0,
       "subInfo": { }
-    },
+    },8
     
       "version": "20131101",
   "logo": "http://image.aladin.co.kr/img/header/2011/aladin_logo_new.gif",

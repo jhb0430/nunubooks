@@ -22,6 +22,7 @@ public class BookRestController {
 	}
 	
 	
+	/*
 	@GetMapping("/search")
 	public Map<String,String> bookTest(
 			@RequestParam("query") String query)  {
@@ -43,7 +44,6 @@ public class BookRestController {
 
 
 	
-	/*
 	@Autowired
 	WebClient client = WebClient.create();
 
