@@ -1,5 +1,8 @@
 package com.jhb0430.nunubooks.cart.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.jhb0430.nunubooks.cart.domain.Cart;
@@ -33,5 +36,32 @@ public class CartService {
 		}
 	}
 	
+	// 장바구니 리스트 출력
 	
+	public List<Cart> cartList(){
+		List<Cart> cartList = cartRepository.findAll();
+		
+		return cartList;
+	}
+	
+// 장바구니 삭제
+	
+	public boolean deleteCart(int id, String itemId) {
+		
+		Optional<Cart> optionalCart = cartRepository.findById(id);
+		
+		if(optionalCart.isPresent()) {
+			Cart cart = optionalCart.get();
+			
+			if(cart.getItemId() == itemId) {
+				cartRepository.delete(cart);
+			}
+			
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+
 }
