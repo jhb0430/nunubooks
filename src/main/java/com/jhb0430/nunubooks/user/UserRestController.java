@@ -30,7 +30,7 @@ public class UserRestController {
 	// 회원가입 기능
 	@PostMapping("/sign-up")
 	public Map<String,String> signUp(
-			@RequestParam("userId") String userId
+			@RequestParam("loginId") String loginId
 			,@RequestParam("name") String name
 			,@RequestParam("email") String email
 			,@RequestParam("password") String password
@@ -41,7 +41,7 @@ public class UserRestController {
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(userSevice.addUser(userId, name, email, password, postcode, address, phoneNumber)) {
+		if(userSevice.addUser(loginId, name, email, password, postcode, address, phoneNumber)) {
 			resultMap.put("result", "success");
 		}else {
 			resultMap.put("result", "fail");
@@ -56,14 +56,14 @@ public class UserRestController {
 	// 아이디 중복 방지
 	@GetMapping("/duplicate-id")
 	public Map<String, Boolean> isDuplicateId(
-			@RequestParam("userId") String userId
+			@RequestParam("loginId") String loginId
 			){
 		Map<String, Boolean> resultMap = new HashMap<>();
 		
 		//if(userSevice.isDuplicateId(userId)) {
 			
 		//}
-		resultMap.put("isDuplicate", userSevice.isDuplicateId(userId));
+		resultMap.put("isDuplicate", userSevice.isDuplicateId(loginId));
 		
 		return resultMap;
 		
@@ -74,19 +74,19 @@ public class UserRestController {
 	
 	@PostMapping("/login")
 	public Map<String,String> loginUser(
-			@RequestParam("userId") String userId
+			@RequestParam("loginId") String loginId
 			,@RequestParam("password") String password
 			,HttpSession session 
 			){
 		
 			Map<String,String> resultMap = new HashMap<>();
 			
-			User user = userSevice.loginUser(userId, password);
+			User user = userSevice.loginUser(loginId, password);
 			
 			if(user != null) {
 				// user id, user name
 				session.setAttribute("userId", user.getId());
-				session.setAttribute("userId", user.getUserId());
+				session.setAttribute("userLoginId", user.getLoginId());
 				session.setAttribute("userName", user.getName());
 				
 				resultMap.put("result", "success");

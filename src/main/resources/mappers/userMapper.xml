@@ -10,7 +10,7 @@
 	 		INSERT INTO 
 	 				`user`
 				(
-					`userId`
+					`loginId`
 					,`name`
 					,`email`
 					, `password`
@@ -20,7 +20,7 @@
 				)
 				VALUE
 				(
-					#{userId}
+					#{loginId}
 					,#{name}
 					,#{email}
 					,#{password}
@@ -38,14 +38,14 @@
 			FROM 
 				`user`
 			WHERE 
-				`userId` = #{userId};
+				`loginId` = #{loginId};
  	</select>
  	
  	
  	<select id="selectLoginUser" resultType="com.jhb0430.nunubooks.user.domain.User">
 	 	SELECT 
 	 		`id`
-			`userId`
+			`loginId`
 			,`name`
 			, `email`
 			, `password`
@@ -57,7 +57,7 @@
 		FROM 
 			`user`
 		WHERE 
-			`userId` = #{userId}
+			`loginId` = #{loginId}
 			AND 
 			`password` = #{password};
  	</select>
@@ -65,7 +65,7 @@
  	
  	<select id="findUserId" resultType="com.jhb0430.nunubooks.user.domain.User">
  	SELECT 
-		`userId`
+		`loginId`
 	FROM 
 		`user`
 	WHERE 
@@ -80,7 +80,7 @@
 	
 	 	SELECT 
 			`id`
-			`userId`
+			`loginId`
 			,`name`
 			, `email`
 			, `password`

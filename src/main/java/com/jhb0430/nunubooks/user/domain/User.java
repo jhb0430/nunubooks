@@ -28,8 +28,8 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	@Column(name="userId")
-	private String  userId;
+	@Column(name="loginId")
+	private String  loginId;
 	private String  email;
 	private String  postcode;
 	private String  password;

@@ -19,7 +19,7 @@ public class UserService {
 	// 회원가입 기능 
 	// 가입됐으면 true 아니면 false
 	public boolean addUser(
-			String userId
+			String loginId
 			,String name
 			,String email
 			,String password
@@ -32,7 +32,7 @@ public class UserService {
 		String encodingPassword = SHA256HashingEncoder.encode(password);
 		
 		
-		int count = userRepository.addUser(userId, name, email, encodingPassword, postcode, address, phoneNumber);
+		int count = userRepository.addUser(loginId, name, email, encodingPassword, postcode, address, phoneNumber);
 		if(count == 1) {
 			return true;
 		}
@@ -43,10 +43,10 @@ public class UserService {
 	
 	// 중복 확인 - 입력받은 아이디가 데이터에 존재하는지 안하는지 
 	public boolean isDuplicateId(
-			String userId
+			String loginId
 			) {
 		
-		int count = userRepository.selectCountId(userId);
+		int count = userRepository.selectCountId(loginId);
 		
 		if(count > 0){
 			return true;
@@ -60,13 +60,13 @@ public class UserService {
 	// 로그인 기능
 	
 	public User loginUser(
-			String userId
+			String loginId
 			,String password
 			) {
 		
 		String encodingPassword = SHA256HashingEncoder.encode(password);
 		
-		User user = userRepository.selectLoginUser(userId, encodingPassword);
+		User user = userRepository.selectLoginUser(loginId, encodingPassword);
 		
 		return user;
 	}

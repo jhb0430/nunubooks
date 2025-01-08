@@ -11,8 +11,8 @@ public interface UserRepository {
 
 	
 	public int addUser(
-			@Param("userId")String userId
-			,@Param("userId")String name
+			@Param("loginId")String loginId
+			,@Param("name")String name
 			,@Param("email")String email
 			,@Param("password")String password
 			,@Param("postcode")String postcode
@@ -22,11 +22,11 @@ public interface UserRepository {
 	
 	
 	public int selectCountId(
-			@Param("userId")String userId
+			@Param("loginId")String loginId
 			);
 		
 	public User selectLoginUser(
-			@Param("userId")String userId
+			@Param("loginId")String loginId
 			,@Param("password")String password
 			);
 	

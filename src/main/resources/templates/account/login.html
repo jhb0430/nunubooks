@@ -57,10 +57,10 @@
 
 			$("#loginBtn").on("click",function(){
 
-				let userId = $("#idInput").val();
+				let loginId = $("#idInput").val();
 				let password = $("#passwordInput").val();
 				
-				if(userId == ""){
+				if(loginId == ""){
 					alert("아이디를 입력하세요");
 					return;
 				}
@@ -73,7 +73,7 @@
 				$.ajax({
 					type:"post"
 					,url:"/user/login"
-					,data:{"userId":userId,"password":password}
+					,data:{"loginId":loginId,"password":password}
 					,success:function(response){
 						if(response.result == "success"){
 							location.href="/nunubooks/account/main";
