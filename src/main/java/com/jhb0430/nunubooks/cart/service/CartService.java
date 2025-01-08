@@ -46,26 +46,29 @@ public class CartService {
 	// 장바구니 리스트 출력
 	// 로그인 기반으로, 로그인 했을때만 수행되도록 1차 정리 후, 비로그인시에도 저장되도록 수정하기
 	// userId를 넣으면 -> 그 사람의 장바구니 목록을 보여준다 .
-	public List<Cart> cartList(int userId){
+	public List<Cart> getCartList(int userId){
 		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
 		
 		return cartList;
 	}
 	
 	
-	
+	public int countCart(int userId) {
+		
+		return cartRepository.countByUserId(userId);
+	}
 	
 	
 // 장바구니 삭제
 	// userId가 따라와주는게 좋다 
-	public boolean deleteCart(int id, String itemId) {
+	public boolean deleteCart(int id, int userId) {
 		
 		Optional<Cart> optionalCart = cartRepository.findById(id);
 		
 		if(optionalCart.isPresent()) {
 			Cart cart = optionalCart.get();
 			
-			if(cart.getItemId() == itemId) {
+			if(cart.getUserId() == userId) {
 				cartRepository.delete(cart);
 			}
 			

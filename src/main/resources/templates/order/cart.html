@@ -8,7 +8,7 @@
 		<section layout:fragment="contents" class="container">
 			<div width="1200" class=" contents">
 				<div  class="d-flex justify-content-between p-2 mt-4">
-					<h2 class="font-weight-bold">장바구니(0)</h2>
+					<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|">장바구니(0)</h2>
 					
 					<div class="d-flex">
 						<div class="d-flex align-items-center">
@@ -43,7 +43,7 @@
 					</div>
 				</div>
 			
-				<div class="d-flex"> <!--  장바구니 정보- 배송정보 가로배치 -->
+				<div class="d-flex" th:each="cart:${cartList}"> <!--  장바구니 정보- 배송정보 가로배치 -->
 				
 					<div class="col-8 border d-flex align-items-center"> <!--장바구니 정보 전체틀  -->
 					<!-- 

@@ -40,6 +40,10 @@ public class CartRestController {
 		
 		Map<String, String> resultMap = new HashMap<>();
 		
+		if(userId == 0) { //로그인 정보가 없으면
+			resultMap.put("result", "fail");
+		}
+		
 		if(cartService.addCart(itemId, quantity, userId)) {
 			resultMap.put("result", "success");
 		} else {
@@ -52,12 +56,20 @@ public class CartRestController {
 	// 삭제기능 
 	@DeleteMapping("/delete")
 	public Map<String, String> deleteCart(
-			@RequestParam("itemId") String itemId
+			@RequestParam("id") int id
+			,HttpSession session
 			){
+		
+		int userId = (Integer)session.getAttribute("userId");
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(cartService.deleteCart(0, itemId)) {
+		if(userId == 0) {
+			resultMap.put("result", "fail");
+		}
+		
+		
+		if(cartService.deleteCart(id, userId)) {
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");
