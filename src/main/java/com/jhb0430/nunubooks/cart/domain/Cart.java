@@ -2,6 +2,7 @@ package com.jhb0430.nunubooks.cart.domain;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import jakarta.persistence.Column;
@@ -35,7 +36,7 @@ public class Cart {
 	
 	private int quantity;
 	
-	@CurrentTimestamp
+	@CreationTimestamp
 	@Column(name="createdAt")
 	private LocalDateTime createdAt;
 	

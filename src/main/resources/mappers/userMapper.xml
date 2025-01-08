@@ -44,22 +44,22 @@
  	
  	<select id="selectLoginUser" resultType="com.jhb0430.nunubooks.user.domain.User">
 	 	SELECT 
-	 		`id`
-			`loginId`
-			,`name`
-			, `email`
-			, `password`
-			, `postcode`
-			, `address`
-			, `phoneNumber`
-			, `createdAt`
-			, `updatedAt`
+		 		`id`
+				,`loginId`
+				,`name`
+				, `email`
+				, `password`
+				, `postcode`
+				, `address`
+				, `phoneNumber`
+				, `createdAt`
+				, `updatedAt`
 		FROM 
-			`user`
+				`user`
 		WHERE 
-			`loginId` = #{loginId}
-			AND 
-			`password` = #{password};
+				`loginId` = #{loginId}
+				AND 
+				`password` = #{password};
  	</select>
  	
  	
@@ -80,7 +80,7 @@
 	
 	 	SELECT 
 			`id`
-			`loginId`
+			,`loginId`
 			,`name`
 			, `email`
 			, `password`
