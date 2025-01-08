@@ -12,6 +12,7 @@ public interface UserRepository {
 	
 	public int addUser(
 			@Param("userId")String userId
+			,@Param("userId")String name
 			,@Param("email")String email
 			,@Param("password")String password
 			,@Param("postcode")String postcode
@@ -35,4 +36,6 @@ public interface UserRepository {
 			,@Param("phoneNumber")String phoneNumber
 			);	
 	
+	// 사용자의 id값 조회
+	public User selectUserById(@Param("id") int id);
 }

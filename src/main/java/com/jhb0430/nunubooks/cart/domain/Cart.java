@@ -31,7 +31,7 @@ public class Cart {
 	private String itemId;
 	
 	@Column(name="userId")
-	private String userId;
+	private int userId;
 	
 	private int quantity;
 	

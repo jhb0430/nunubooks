@@ -1,7 +1,12 @@
 		<header>
-			<div class="mt-3 text-right"> <!-- 정보  관리 버튼 -->
+			<div class="mt-3 text-right d-flex justify-content-end"> <!-- 정보  관리 버튼 -->
+			<div class="mr-2" th:if="${session.userId != null }">
+				<span th:text="|${session.userName} 님 |" class="font-weight-bold">김뫄뫄님</span> 
+			<a href="/user/logout" class="text-dark">로그아웃</a></div>
+				<div th:unless="${session.userId != null }">
 					<a href="/nunubooks/account/login" class="text-dark mr-2">로그인</a>
 					<a href="/nunubooks/account/sign-up" class="text-dark mr-2">회원가입</a>
+				</div>
 					<a href="/nunubooks/cart" class="text-dark mr-2">장바구니</a>
 					<a href="#" class="text-dark mr-2">마이페이지</a>
 					<a href="#" class="text-dark mr-4">고객센터</a>

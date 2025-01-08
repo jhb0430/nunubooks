@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jhb0430.nunubooks.user.domain.User;
 import com.jhb0430.nunubooks.user.service.UserService;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -30,6 +31,7 @@ public class UserRestController {
 	@PostMapping("/sign-up")
 	public Map<String,String> signUp(
 			@RequestParam("userId") String userId
+			,@RequestParam("name") String name
 			,@RequestParam("email") String email
 			,@RequestParam("password") String password
 			,@RequestParam("postcode") String postcode
@@ -39,7 +41,7 @@ public class UserRestController {
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(userSevice.addUser(userId, email, password, postcode, address, phoneNumber)) {
+		if(userSevice.addUser(userId, name, email, password, postcode, address, phoneNumber)) {
 			resultMap.put("result", "success");
 		}else {
 			resultMap.put("result", "fail");
@@ -74,6 +76,7 @@ public class UserRestController {
 	public Map<String,String> loginUser(
 			@RequestParam("userId") String userId
 			,@RequestParam("password") String password
+			,HttpSession session 
 			){
 		
 			Map<String,String> resultMap = new HashMap<>();
@@ -81,6 +84,10 @@ public class UserRestController {
 			User user = userSevice.loginUser(userId, password);
 			
 			if(user != null) {
+				// user id, user name
+				session.setAttribute("userId", user.getId());
+				session.setAttribute("userId", user.getUserId());
+				session.setAttribute("userName", user.getName());
 				
 				resultMap.put("result", "success");
 				

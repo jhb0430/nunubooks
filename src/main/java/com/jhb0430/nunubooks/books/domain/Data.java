@@ -31,4 +31,6 @@ public class Data {
 	private int salesPoint;
 	private boolean adult;
 	private boolean fixedPrice;
+	
+	private Subinfo subInfo;
 }

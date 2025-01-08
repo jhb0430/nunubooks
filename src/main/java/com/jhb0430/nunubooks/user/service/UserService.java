@@ -20,6 +20,7 @@ public class UserService {
 	// 가입됐으면 true 아니면 false
 	public boolean addUser(
 			String userId
+			,String name
 			,String email
 			,String password
 			,String postcode
@@ -31,7 +32,7 @@ public class UserService {
 		String encodingPassword = SHA256HashingEncoder.encode(password);
 		
 		
-		int count = userRepository.addUser(userId, email, encodingPassword, postcode, address, phoneNumber);
+		int count = userRepository.addUser(userId, name, email, encodingPassword, postcode, address, phoneNumber);
 		if(count == 1) {
 			return true;
 		}
@@ -79,6 +80,11 @@ public class UserService {
 		User user = userRepository.findUserId(email, phoneNumber);
 		
 		return user;
+	}
+	
+	// 아이디 값 조회
+	public User getUserById(int id) {
+		return userRepository.selectUserById(id);
 	}
 	
 }

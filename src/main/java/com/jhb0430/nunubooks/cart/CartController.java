@@ -24,9 +24,9 @@ public class CartController {
 	@GetMapping("/cart")
 	public String cartList(Model model) {
 		
-		List<Cart> cartList = cartService.cartList();
+//		List<Cart> cartList = cartService.cartList();
 		
-		model.addAttribute("cart",cartList);
+//		model.addAttribute("cart",cartList);
 		
 		
 		return "order/cart";

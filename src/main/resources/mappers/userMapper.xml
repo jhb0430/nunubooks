@@ -11,6 +11,7 @@
 	 				`user`
 				(
 					`userId`
+					,`name`
 					,`email`
 					, `password`
 					,`postcode`
@@ -20,6 +21,7 @@
 				VALUE
 				(
 					#{userId}
+					,#{name}
 					,#{email}
 					,#{password}
 					,#{postcode}
@@ -44,6 +46,7 @@
 	 	SELECT 
 	 		`id`
 			`userId`
+			,`name`
 			, `email`
 			, `password`
 			, `postcode`
@@ -71,5 +74,25 @@
 		`phoneNumber` = #{phoneNumber};
 	</select>
  	
+ 	
+ 	<select id="selectUserById" parameterType="int" 
+ 	resultType="com.jhb0430.nunubooks.user.domain.User">
+	
+	 	SELECT 
+			`id`
+			`userId`
+			,`name`
+			, `email`
+			, `password`
+			, `postcode`
+			, `address`
+			, `phoneNumber`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`user`
+		WHERE 
+			`id` = #{id} 
+ 	</select>
  
  </mapper>

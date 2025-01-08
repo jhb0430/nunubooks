@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jhb0430.nunubooks.cart.service.CartService;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @RequestMapping("/cart")
 @RestController
@@ -18,20 +20,23 @@ public class CartRestController {
 
 
 	private CartService cartService;
+
 	
 	public CartRestController(CartService cartService) {
 		this.cartService = cartService;
 	}
 	
-	
+	// 로그인 해야만 추가할 수 있게 
 	@PostMapping("/add")
 	public Map<String, String> addCart(
 			@RequestParam("itemId") String itemId
-			,@RequestParam("userId") String userId
 			,@RequestParam("quantity") int quantity
+			,HttpSession session
 			){
 		
 		quantity = 1;
+		
+		int userId = (Integer)session.getAttribute("userId");
 		
 		Map<String, String> resultMap = new HashMap<>();
 		
