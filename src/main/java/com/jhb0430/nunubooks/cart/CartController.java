@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhb0430.nunubooks.cart.domain.Cart;
+import com.jhb0430.nunubooks.cart.dto.CartDTO;
 import com.jhb0430.nunubooks.cart.service.CartService;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,14 +37,13 @@ public class CartController {
 		int userId = (Integer)session.getAttribute("userId");
 		
 //		int itemId;
-		List<Cart> cartList = cartService.getCartList(userId);
+		List<CartDTO> cartList = cartService.getCartList(userId);
 		model.addAttribute("cartList",cartList);
 		
 		int cartCount = cartService.countCart(userId); 
 		model.addAttribute("cartCount",cartCount);
 		
 		// 장바구니에 담긴 갯수도 가져와야함
-//		cart?userId=000 로 받아와야할거같은디
 		return "order/cart";
 	}
 	

@@ -38,7 +38,7 @@
 						</div>
 						<div class="d-flex mr-4">
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-							<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-trash"></i></button>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1 deleteBtn"><i class="bi bi-trash"></i></button>
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1">품절/절판 삭제</button>
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1">구매 이력 확인</button>
 						</div>
@@ -51,28 +51,28 @@
 				<div>
 					<div th:each="cart:${cartList}">
 						<div class="cart-box d-flex align-items-center p-1 border"> <!-- 책 정보부분 (++++ ) -->
-							<div> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
-								<button type="button" class="close"> <!--  닫기버튼  -->
+							<div th:each="item : ${cart.bookInfo.item}"> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
+								<button type="button" class="close deleteBtn"> <!--  닫기버튼  -->
 									<span aria-hidden="true">&times;</span>
 								</button>
 							
 								<div class="d-flex align-items-center">
 									<div class="cart-check mr-4">
-										<input type="checkbox" class="mx-3">
+										<input type="checkbox" class="mx-3" th:data-item-id="${cart.itemId}">
 									</div>
-									<img src="/static/image/car.jpg" class="cart-book-img mx-2">
+									<img th:src="${item.cover}" class="cart-book-img mx-2">
 									<div class="mx-3 cart-title"> <!--  책 정보 -->
-										<h5 class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구</h5>
+										<h5 class="font-weight-bold" th:text="${item.title}">책 제목 어쩌구저쩌구저쩌구</h5>
 										<div class="d-flex mt-2">
 											<div class="text-success font-weight-bold mr-2">할인율</div>
-											<del><div>정가</div></del>
-											<div class="font-weight-bold mx-1">판매가</div>
-											<div>point</div>
+											<del><div th:text="|${#numbers.formatInteger(item.priceStandard, 3, 'COMMA')} 원|">정가</div></del>
+											<div class="font-weight-bold mx-1" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">판매가</div>
+											<div th:text="|(${#numbers.formatInteger(item.mileage, 3, 'COMMA')} point)|">point</div>
 										</div>
 									</div>
 									<div class="d-flex align-items-center justify-content-center cart-price">
 										<div>
-											<h6 class="font-weight-bold  text-center my-4">18,000 원</h6>
+											<h6 class="font-weight-bold  text-center my-4" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">18,000 원</h6>
 											<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
 												<button type="button" class="btn btn-0">-</button>
 												<div class="mx-1">1</div>
@@ -138,6 +138,9 @@
 		
 		</section>
 
-<script layout:fragment="script"></script>
+<script layout:fragment="script">
+
+$(document).ready(function(){});
+</script>
 
 </html>
