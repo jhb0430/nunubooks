@@ -151,6 +151,17 @@ color: #7CC491;
 }
 
 
+.cart-box{
+	width:900px;
+	height:150px;
+}
+
+.cart-title{
+	width:400px;
+}
+.cart-price{
+	width:100px;
+}
 .cart-book-img{
 	width:90px;
 	height:120px;

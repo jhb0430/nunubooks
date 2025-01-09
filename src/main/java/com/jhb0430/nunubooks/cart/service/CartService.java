@@ -1,5 +1,6 @@
 package com.jhb0430.nunubooks.cart.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,9 @@ import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.cart.domain.Cart;
 import com.jhb0430.nunubooks.cart.repository.CartRepository;
 import com.jhb0430.nunubooks.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+import reactor.core.publisher.Mono;
 
 @Service
 public class CartService {
@@ -54,12 +58,24 @@ public class CartService {
 	// 장바구니 리스트 출력
 	// 로그인 기반으로, 로그인 했을때만 수행되도록 1차 정리 후, 비로그인시에도 저장되도록 수정하기
 	// userId를 넣으면 -> 그 사람의 장바구니 목록을 보여준다 .
-	public List<Cart> getCartList(int userId){
-		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
+	public List<Cart> getCartList(int userId
+//			,HttpSession session
+			){
+//		int userId = (Integer)session.getAttribute("userId");
 		
-//		Data item = item.builder().title()
+		WebClient webClient = webClientBuilder.build();
+		
+		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
+
+		
+		
+
+		
+		
+		
 		
 		return cartList;
+//		return bookList;
 	}
 	
 	

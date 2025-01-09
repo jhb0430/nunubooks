@@ -35,6 +35,7 @@ public class CartController {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		
+//		int itemId;
 		List<Cart> cartList = cartService.getCartList(userId);
 		model.addAttribute("cartList",cartList);
 		

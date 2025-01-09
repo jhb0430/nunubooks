@@ -44,9 +44,7 @@
 			
 			<div class="d-flex align-items-center book-info p-2 border m-3" th:each="book : ${books.item}">
 				<div class="mx-3 info-checkbox">
-				<label>
 					<input type="checkbox" th:data-item-id="${book.itemId}" class="item-checkbox">
-				</label>
 				</div>
 				<img th:src="${book.cover}" class="info-img">
 				<div class="mx-3 info-title">
