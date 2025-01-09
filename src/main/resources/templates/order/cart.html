@@ -7,147 +7,134 @@
 
 		<section layout:fragment="contents" class="container">
 			<div class=" contents">
-			<div>
-				<div  class="d-flex justify-content-between p-2 mt-4">
-					<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|">장바구니(0)</h2>
-					
-					<div class="d-flex">
-						<div class="d-flex align-items-center">
-							<i class="bi bi-1-circle-fill logo-color mr-2"></i>
-							<div class="mr-4">장바구니</div>
-						</div>
-						<div class="d-flex align-items-center">
-							<i class="bi bi-2-circle-fill logo-color mr-2"></i>
-							<div class="mr-4">사은품 선택</div>
-						</div>
-						<div class="d-flex align-items-center">
-							<i class="bi bi-3-circle-fill logo-color mr-2"></i>
-							<div class="mr-4">주문 / 결제</div>
-						</div>
-						<div class="d-flex align-items-center">
-							<i class="bi bi-4-circle-fill logo-color mr-2"></i>
-							<div class="mr-4">주문 완료</div>
-						</div>
-					</div>
-				</div>
-				<div class="order-menu w-100 my-4 d-flex align-items-center justify-content-between">
-					<div class="d-flex">
-						<i class="bi bi-check-circle-fill mx-3 h5 checkbox"></i>
-						<input type="checkbox" class="d-none">
-						<h5 class=" font-weight-bold">전체</h5>
-					</div>
-					<div class="d-flex mr-4">
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-trash"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1">품절/절판 삭제</button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1">구매 이력 확인</button>
-					</div>
-				</div>
-			</div>
-			
-			 <!--  장바구니 정보- 배송정보 -->
-			<div class="d-flex">
-			<div class="d-flex justify-content-end bg-warning"> <!--  구매 정보 박스 -->
-				<div class="col-3 border p-3"> <!--  구매 정보 박스 -->
-					<div> <!--  구매 정보 추가 수정 예정 (했으면 주석 지우기) -->
-						<table class="table table-borderless">
-							<tr>
-								<th>상품 금액</th>
-								<td>0000원</td>
-							</tr>
-							<tr>
-								<th>배송비</th>
-								<td>0000원</td>
-							</tr>
-							<tr>
-								<th>상품 할인</th>
-								<td>0000원</td>
-							</tr>
-							<tr class=" border-top">
-								<th>결제 예정 금액</th>
-								<td>0000원</td>
-							</tr>
-							<tr>
-								<th>적립 예정 포인트</th>
-								<td>000 point</td>
-							</tr>
-						</table>
-					</div>
-					<button type="button" class="btn btn-primary my-3 w-100">구매하기</button>
-					<button type="button" class="btn btn-primary my-3 w-100">수령 매장 선택</button>
-				</div>
-			</div>	
-			<div>
-			
-				<div th:each="cart:${cartList}"> <!-- 책 정보부분 (++++ ) -->
-					<div class="border cart-box p-2"> <!--장바구니 정보 전체틀  -->
-					<!-- 
-						<div class="bg-warning">
-							<h5 class="font-weight-bold">0000원 더 구매시 무료 배송!</h5>
-						</div>
-						<div class="bg-primary">
-							<h5 class="font-weight-bold">사은품 증정 제품 (0)</h5>
-						</div>
-					 -->
+				<div>
+					<div  class="d-flex justify-content-between p-2 mt-4">
+						<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|">장바구니(0)</h2>
 						
-						<div class="p-2 "> <!-- 책 정보부분 (++++ ) -->
-							<div><!--  닫기버튼  -->
-								<button type="button" class="close"> 
-									<span aria-hidden="true">&times;</span>
-								</button>
+						<div class="d-flex">
+							<div class="d-flex align-items-center">
+								<i class="bi bi-1-circle-fill logo-color mr-2"></i>
+								<div class="mr-4">장바구니</div>
 							</div>
 							<div class="d-flex align-items-center">
-								<div class="info-checkbox mx-2">
-									<input type="checkbox" class="mx-3">
-								</div>
-								<img src="/static/image/car.jpg" class="cart-book-img">
-								<div class="mx-3 cart-title"> <!--  책 정보 -->
-									<h5 class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구</h5>
-									<div class="d-flex mt-2">
-										<div class="text-success font-weight-bold mr-2">할인율</div>
-										<del><div>정가</div></del>
-										<div class="font-weight-bold mx-1">판매가</div>
-										<div>point</div>
-									</div>
-								</div>
-								<div class="d-flex align-items-center justify-content-center border cart-price">
-									<div>
-										<h6 class="font-weight-bold  text-center my-4">18,000 원</h6>
-										<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
-											<button type="button" class="btn btn-0">-</button>
-											<div class="mx-1">1</div>
-											<button type="button" class="btn btn-0">+</button>
-										</div>
-									</div>
-								</div>
-							
-								<div>
-									<div class="text-center border-bottom ">
-											<h6>00/00일 출고예정</h6>
-											<!-- 
-											<div>(15시 이전 주문시 +2 일 뒤 몇시 배송 예정)</div>
-											 -->
-									</div>
-									<div class="text-center">
-											<h6>00시 이후 방문수령 가능</h6>
-										<button type="button" class="btn btn-o">방문수령</button>
-									</div>
-								</div>
-								
+								<i class="bi bi-2-circle-fill logo-color mr-2"></i>
+								<div class="mr-4">사은품 선택</div>
 							</div>
-						</div> <!--  책 정보 부분 /div -->
-						
+							<div class="d-flex align-items-center">
+								<i class="bi bi-3-circle-fill logo-color mr-2"></i>
+								<div class="mr-4">주문 / 결제</div>
+							</div>
+							<div class="d-flex align-items-center">
+								<i class="bi bi-4-circle-fill logo-color mr-2"></i>
+								<div class="mr-4">주문 완료</div>
+							</div>
+						</div>
+					</div>
+					<div class="order-menu w-100 my-4 d-flex align-items-center justify-content-between">
+						<div class="d-flex">
+							<i class="bi bi-check-circle-fill mx-3 h5 checkbox"></i>
+							<input type="checkbox" class="d-none">
+							<h5 class=" font-weight-bold">전체</h5>
+						</div>
+						<div class="d-flex mr-4">
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-trash"></i></button>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1">품절/절판 삭제</button>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1">구매 이력 확인</button>
+						</div>
 					</div>
 				</div>
+			
+			
+			<div class="d-flex"><!--  장바구니 정보- 배송정보 전체 묶는 div-->
+
+				<div>
+					<div th:each="cart:${cartList}">
+						<div class="cart-box d-flex align-items-center p-1 border"> <!-- 책 정보부분 (++++ ) -->
+							<div> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
+								<button type="button" class="close"> <!--  닫기버튼  -->
+									<span aria-hidden="true">&times;</span>
+								</button>
+							
+								<div class="d-flex align-items-center">
+									<div class="cart-check mr-4">
+										<input type="checkbox" class="mx-3">
+									</div>
+									<img src="/static/image/car.jpg" class="cart-book-img mx-2">
+									<div class="mx-3 cart-title"> <!--  책 정보 -->
+										<h5 class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구</h5>
+										<div class="d-flex mt-2">
+											<div class="text-success font-weight-bold mr-2">할인율</div>
+											<del><div>정가</div></del>
+											<div class="font-weight-bold mx-1">판매가</div>
+											<div>point</div>
+										</div>
+									</div>
+									<div class="d-flex align-items-center justify-content-center cart-price">
+										<div>
+											<h6 class="font-weight-bold  text-center my-4">18,000 원</h6>
+											<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
+												<button type="button" class="btn btn-0">-</button>
+												<div class="mx-1">1</div>
+												<button type="button" class="btn btn-0">+</button>
+											</div>
+										</div>
+									</div>
+								
+									<div class="cart-deli mx-3"><!--  배송가능정보, 방문수랴ㅕㅇ정보  -->
+										<div class="text-center border-bottom ">
+												<h6>00/00일 출고예정</h6>
+												<!-- 
+												<div>(15시 이전 주문시 +2 일 뒤 몇시 배송 예정)</div>
+												 -->
+										</div>
+										<div class="text-center">
+												<h6>00시 이후 방문수령 가능</h6>
+											<button type="button" class="btn btn-0">방문수령</button>
+										</div>
+									</div>
+								</div><!-- 책 이미지 제목 수량 -->
+							</div><!-- 닫기버튼 포함한 책 정보 묶는 div -->
+	
+						</div> <!--   cart-box  -->
+					</div>
+				</div>
+						
+				<div class="col-3 border p-2 cart-total-price ml-1">
+					<table class="table table-borderless">
+						<tr>
+							<th>상품 금액</th>
+							<td>0000원</td>
+						</tr>
+						<tr>
+							<th>배송비</th>
+							<td>0000원</td>
+						</tr>
+						<tr>
+							<th>상품 할인</th>
+							<td>0000원</td>
+						</tr>
+						<tr class=" border-top">
+							<th>결제 예정 금액</th>
+							<td>0000원</td>
+						</tr>
+						<tr>
+							<th>적립 예정 포인트</th>
+							<td>000 point</td>
+						</tr>
+					</table>
+						<button type="button" class="btn btn-primary my-3 w-100">구매하기</button>
+						<button type="button" class="btn btn-primary my-3 w-100">수령 매장 선택</button>
+				</div>
+			
+				
 			</div>
-		</div>
 					
-					
-					<button type="button" class="btn btn-info col-8 mt-4">더 고르러 가기</button>
+		<button type="button" class="btn btn-info col-8 mt-4">더 고르러 가기</button>
 			
 			
 			
-			</div>
+			</div><!-- contents -->
 		
 		</section>
 

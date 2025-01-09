@@ -156,16 +156,24 @@ color: #7CC491;
 	height:150px;
 }
 
+.cart-check{
+	width:20px;
+}
 .cart-title{
 	width:400px;
 }
 .cart-price{
 	width:100px;
 }
+.cart-deli{
+	width:150px;
+}
 .cart-book-img{
 	width:90px;
-	height:120px;
-	object-fit: comtain;
+}
+.cart-total-price{
+	width:290px;
+	height:450px;
 }
 
 

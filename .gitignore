@@ -38,3 +38,4 @@ out/
 
 security-variable.yml
 src/main/resources/templates/account/note.html
+src/main/resources/templates/note.html
