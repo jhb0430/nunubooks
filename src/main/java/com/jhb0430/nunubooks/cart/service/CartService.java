@@ -66,9 +66,27 @@ public class CartService {
 		WebClient webClient = webClientBuilder.build();
 		
 		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
-
+// 리스트를 반복하면서 itemId마다 정보 가져오게 됨.... 
 		
-		
+		/*
+		 * Mono<BookDTO> response = 
+				webClient.get()
+				.uri(uriBuilder -> uriBuilder
+						.scheme("https")
+						.host("www.aladin.co.kr")
+						.path("/ttb/api/ItemLookUp.aspx")
+						.queryParam("ttbkey","ttbleky22241703001")
+						.queryParam("itemIdType","itemId")
+						.queryParam("itemId",itemId)
+						.queryParam("Cover","Mid")
+						.queryParam("output","js")
+						.queryParam("Version","20131101")
+//OptResult=ebookList,usedList,reviewList
+						.build()
+						)
+				.retrieve()
+				.bodyToMono(BookDTO.class);
+				*/
 
 		
 		
