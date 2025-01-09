@@ -68,8 +68,11 @@ public class CartService {
 		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
 // 리스트를 반복하면서 itemId마다 정보 가져오게 됨.... 
 		
-		/*
-		 * Mono<BookDTO> response = 
+		for(Cart cart : cartList) {
+			
+			int itemId = cart.getItemId();
+			
+		  Mono<BookDTO> response = 
 				webClient.get()
 				.uri(uriBuilder -> uriBuilder
 						.scheme("https")
@@ -81,14 +84,16 @@ public class CartService {
 						.queryParam("Cover","Mid")
 						.queryParam("output","js")
 						.queryParam("Version","20131101")
-//OptResult=ebookList,usedList,reviewList
 						.build()
 						)
 				.retrieve()
 				.bodyToMono(BookDTO.class);
-				*/
 
+//		  return response.block();
+		  BookDTO book = response.block();
+		  
 		
+		}
 		
 		
 		

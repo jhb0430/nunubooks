@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
 
+import com.jhb0430.nunubooks.books.dto.BookDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,5 +42,5 @@ public class Cart {
 	@Column(name="createdAt")
 	private LocalDateTime createdAt;
 	
-	
+
 }
