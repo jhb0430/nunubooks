@@ -43,7 +43,7 @@ public class BookService {
 	}
 	
 	
-	public BookDTO bookProduct(String itemId) {
+	public BookDTO bookProduct(int itemId) {
 		
 		WebClient webClient = webClientBuilder.build();
 		

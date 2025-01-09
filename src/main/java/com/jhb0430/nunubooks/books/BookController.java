@@ -33,7 +33,7 @@ public class BookController {
 	
 	@GetMapping("/product")
 	public String bookInfo(
-			@RequestParam("itemId") String itemId
+			@RequestParam("itemId") int itemId
 			,Model model) {
 		
 		WebClient webClient = webClientBuilder.build();

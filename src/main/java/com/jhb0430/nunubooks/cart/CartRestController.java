@@ -29,7 +29,7 @@ public class CartRestController {
 	// 로그인 해야만 추가할 수 있게 
 	@PostMapping("/add")
 	public Map<String, String> addCart(
-			@RequestParam("itemId") String itemId
+			@RequestParam("itemId") int itemId
 			,@RequestParam("quantity") int quantity
 			,HttpSession session
 			){

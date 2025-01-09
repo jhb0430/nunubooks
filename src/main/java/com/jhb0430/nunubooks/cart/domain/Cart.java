@@ -29,7 +29,7 @@ public class Cart {
 	private int id;
 	
 	@Column(name="itemId")
-	private String itemId;
+	private int itemId;
 	
 	@Column(name="userId")
 	private int userId;

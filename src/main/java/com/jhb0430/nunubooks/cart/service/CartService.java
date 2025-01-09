@@ -3,8 +3,12 @@ package com.jhb0430.nunubooks.cart.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jhb0430.nunubooks.books.domain.Data;
+import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.cart.domain.Cart;
 import com.jhb0430.nunubooks.cart.repository.CartRepository;
 import com.jhb0430.nunubooks.user.service.UserService;
@@ -15,13 +19,17 @@ public class CartService {
 	private CartRepository cartRepository;
 	private UserService userService;
 	
+	@Autowired
+	WebClient.Builder webClientBuilder;
+	
+	
 	public CartService(CartRepository cartRepository,UserService userService) {
 		this.cartRepository = cartRepository;
 		this.userService = userService;
 	}
 	
 	
-	public boolean addCart(String itemId, int quantity, int userId) {
+	public boolean addCart(int itemId, int quantity, int userId) {
 		
 		quantity = 1;
 		
@@ -49,8 +57,12 @@ public class CartService {
 	public List<Cart> getCartList(int userId){
 		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
 		
+//		Data item = item.builder().title()
+		
 		return cartList;
 	}
+	
+	
 	
 	
 	public int countCart(int userId) {
