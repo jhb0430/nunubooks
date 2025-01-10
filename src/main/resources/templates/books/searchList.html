@@ -98,12 +98,20 @@
 		$("#maxResultSel").on("change",function(){
             // alert();
            let maxResults = $(this).val();
+           if (!maxResults) {
+               maxResults = 10;
+           }
+ //          alert(maxResults);
          
-           alert(maxResults);
+           // jquery test06
+           // name이 member인 input 태그 중에서 선택된 input태그 의 value 속성 가져오기 
+                               // $("input[name=type]:checked")
+           let query = $("input[name='query']").val();
+
+           let baseUrl = "/nunubooks/searchList";
            
-           
-         
-});
+           location.href=`${baseUrl}?query=${query}&maxResults=${maxResults}`;
+		});
 
 		
 		

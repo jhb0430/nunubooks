@@ -61,12 +61,15 @@ public class BookController {
 			,Model model) {
 		 WebClient webClient = webClientBuilder.build();
 		 
-//		 int maxResults = 10;
 		 // maxResult가 필수값이 아니게 설정해주기 
 		 // 검색시 결과창에 내각 검색한 값 띄울 수 있게 하기
+		 if((Integer)maxResults == null) {
+			 maxResults = 10;
+		 }
 		 
 		 BookDTO bookDTO = bookService.fetchBooks(query,maxResults);
 		 model.addAttribute("books",bookDTO);
+		 model.addAttribute("query",query);
 		 
 		 
 		 
