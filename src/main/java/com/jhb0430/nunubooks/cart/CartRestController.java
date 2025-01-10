@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jhb0430.nunubooks.cart.domain.Cart;
 import com.jhb0430.nunubooks.cart.service.CartService;
 
 import jakarta.servlet.http.HttpSession;
@@ -77,5 +80,16 @@ public class CartRestController {
 		}
 		return resultMap;
 	}
+	
+
+		@GetMapping("/update")
+		public Cart updateQuantity(@RequestParam("id") int id, @RequestParam("quantity") int quantity) {
+			// qauntity 수정 
+		// +버튼을 누르면 +1; -를 누르면 -1
+			// quantity는 0 이하로 내려갈 수 없음 
+			Cart cartQuantity = cartService.updateQuantity(id, quantity);
+			
+			return cartQuantity;
+		}
 	
 }

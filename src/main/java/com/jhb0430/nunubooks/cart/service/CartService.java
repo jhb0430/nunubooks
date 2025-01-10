@@ -146,10 +146,26 @@ public class CartService {
 	
 //	public int totalPrice() {}
 	
+	
 	// 수량 추가, 제거
-	public int quantityItems(int quantity) {
+		// cart의 id를 전달 받고 수량을 수정.
+	public Cart updateQuantity(int id,int quantity) {
 		
-		return (int) cartRepository.count();
+		Optional<Cart> optionalCart = cartRepository.findById(id);
+		
+		Cart cart = optionalCart.orElse(null);
+		
+		if(cart != null) { // cart에 값이 있으면 
+			// cart에 값이 있고 quantity가 1 밑으로 내려가지 못하게, 내려가면 db 삭제되어야함.
+			if(quantity > 0) {
+				
+			cart = cart.toBuilder().quantity(quantity).build();
+			cart = cartRepository.save(cart);
+			} else { // 0이상이 아니면 
+				cartRepository.delete(cart);
+			}
+		}
+		return cart;
 		
 	}
 

@@ -74,9 +74,9 @@
 										<div>
 											<h6 class="font-weight-bold  text-center my-4" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">18,000 원</h6>
 											<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
-												<button type="button" class="btn btn-0">-</button>
-												<div class="mx-1">1</div>
-												<button type="button" class="btn btn-0">+</button>
+												<button type="button" class="btn btn-0 subBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">-</button>
+												<div class="mx-1" th:text="${cart.quantity}">1</div>
+												<button type="button" class="btn btn-0 addBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">+</button>
 											</div>
 										</div>
 									</div>
@@ -142,6 +142,35 @@
 		
 		$(document).ready(function(){
 
+			
+			// addBtn 클릭시 quantity ++
+			$(".subBtn").on("click",function(){
+
+//				alert("--!!")
+				let cartId = $(this).data("cart-id");
+				let quantity = $(this).data("quantity-id");
+				
+				if(quantity > 1){ // quantity가 1보다 많으면 1 줄어든다 
+
+					quantity--;
+				} 
+				//if(quantity <= 1){ // 1 미만이 되면 삭제된다 
+				else{
+					 location.href = "/cart/delete?id=" + cartId;
+				}
+			
+			});
+			
+			
+			$(".addBtn").on("click",function(){
+
+//				alert("++!!")
+				let cartId = $(this).data("cart-id");
+				
+				
+			});
+			
+			
 			$(".deleteBtn").on("click",function(){
 
 				let cartId = $(this).data("cart-id");
