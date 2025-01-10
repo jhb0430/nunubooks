@@ -57,15 +57,15 @@ public class BookController {
 	@GetMapping("/searchList")
 	public String bookList(
 			@RequestParam("query") String query
-			,@RequestParam("maxResults") int maxResults
+			,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
 			,Model model) {
 		 WebClient webClient = webClientBuilder.build();
 		 
 		 // maxResult가 필수값이 아니게 설정해주기 
 		 // 검색시 결과창에 내각 검색한 값 띄울 수 있게 하기
-		 if((Integer)maxResults == null) {
-			 maxResults = 10;
-		 }
+//		 if((Integer)maxResults == null) {
+			 
+//		 }
 		 
 		 BookDTO bookDTO = bookService.fetchBooks(query,maxResults);
 		 model.addAttribute("books",bookDTO);
