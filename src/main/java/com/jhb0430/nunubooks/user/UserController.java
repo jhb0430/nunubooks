@@ -22,12 +22,7 @@ public class UserController {
 		
 		return "account/login";
 	}
-	
-	@GetMapping("/main")
-	public String mainPage() {
-		
-		return "books/main";
-	}
+
 
 
 	@GetMapping("/logout")

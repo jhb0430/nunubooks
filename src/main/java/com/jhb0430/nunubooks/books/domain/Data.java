@@ -33,4 +33,16 @@ public class Data {
 	private boolean fixedPrice;
 	
 	private Subinfo subInfo;
+	
+
+	// 다시 정리하기 
+	public int getDiscount(){
+		
+		return  (int)(( (priceStandard - priceSales) / (double)priceStandard) * 100);
+		
+	}
+
+	
+	
+	
 }

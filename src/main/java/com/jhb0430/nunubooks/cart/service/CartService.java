@@ -1,6 +1,5 @@
 package com.jhb0430.nunubooks.cart.service;
 
-import java.awt.CardLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,6 @@ import com.jhb0430.nunubooks.cart.dto.CartDTO;
 import com.jhb0430.nunubooks.cart.repository.CartRepository;
 import com.jhb0430.nunubooks.user.service.UserService;
 
-import jakarta.servlet.http.HttpSession;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -97,6 +95,8 @@ public class CartService {
 		  BookDTO book = response.block();
 		  
 		  
+//		  private int discount = ( (priceStandard - priceSales) / priceStandard) * 100;
+		  
 		  CartDTO cartDTO = CartDTO.builder()
 				  					.id(cart.getId())
 				  					.itemId(itemId)
@@ -143,5 +143,14 @@ public class CartService {
 		}
 	}
 	
+	
+//	public int totalPrice() {}
+	
+	// 수량 추가, 제거
+	public int quantityItems(int quantity) {
+		
+		return (int) cartRepository.count();
+		
+	}
 
 }

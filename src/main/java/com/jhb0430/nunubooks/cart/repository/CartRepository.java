@@ -12,4 +12,5 @@ public interface CartRepository  extends JpaRepository<Cart, Integer>{
 	public List<Cart> findAllByUserIdOrderByIdDesc(int userId);
 	
 	public int countByUserId(int userId);
+	// update -- insert처럼 ... 
 }

@@ -16,7 +16,9 @@ public class BookService {
 	
 	
 	
-	public BookDTO fetchBooks(String query) {
+	public BookDTO fetchBooks(String query
+			,int maxResults
+			) {
 		
 		 WebClient webClient = webClientBuilder.build();
 		 
@@ -30,7 +32,7 @@ public class BookService {
 							.queryParam("ttbkey","ttbleky22241703001")
 							.queryParam("Query",query)
 							.queryParam("QueryType","Title")
-							.queryParam("MaxResults",10)
+							.queryParam("MaxResults",maxResults)
 							.queryParam("start",1)
 							.queryParam("SearchTarget","Book")
 							.queryParam("output","js")

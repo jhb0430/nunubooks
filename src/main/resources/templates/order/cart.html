@@ -52,19 +52,19 @@
 					<div th:each="cart:${cartList}">
 						<div class="cart-box d-flex align-items-center p-1 border"> <!-- 책 정보부분 (++++ ) -->
 							<div th:each="item : ${cart.bookInfo.item}"> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
-								<button type="button" class="close deleteBtn"> <!--  닫기버튼  -->
+								<button type="button" class="close deleteBtn" th:data-cart-id="${cart.id}"> <!--  닫기버튼  -->
 									<span aria-hidden="true">&times;</span>
 								</button>
 							
 								<div class="d-flex align-items-center">
 									<div class="cart-check mr-4">
-										<input type="checkbox" class="mx-3" th:data-item-id="${cart.itemId}">
+										<input type="checkbox" class="mx-3" th:data-cart-id="${cart.id}">
 									</div>
 									<img th:src="${item.cover}" class="cart-book-img mx-2">
 									<div class="mx-3 cart-title"> <!--  책 정보 -->
 										<h5 class="font-weight-bold" th:text="${item.title}">책 제목 어쩌구저쩌구저쩌구</h5>
 										<div class="d-flex mt-2">
-											<div class="text-success font-weight-bold mr-2">할인율</div>
+											<div class="text-success font-weight-bold mr-2" th:text="|(${item.discount}%)|">할인율</div>
 											<del><div th:text="|${#numbers.formatInteger(item.priceStandard, 3, 'COMMA')} 원|">정가</div></del>
 											<div class="font-weight-bold mx-1" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">판매가</div>
 											<div th:text="|(${#numbers.formatInteger(item.mileage, 3, 'COMMA')} point)|">point</div>
@@ -138,9 +138,38 @@
 		
 		</section>
 
-<script layout:fragment="script">
+		<script layout:fragment="script">
+		
+		$(document).ready(function(){
 
-$(document).ready(function(){});
-</script>
+			$(".deleteBtn").on("click",function(){
+
+				let cartId = $(this).data("cart-id");
+				
+				
+			$.ajax({
+
+				type:"delete"
+				,url:"/cart/delete"
+				,data:{"id":cartId}
+				,success:function(response){
+					if(response.result == "success"){
+					alert("선택하신 물품이 삭제되었습니다");
+					location.reload();
+					} else {
+					alert("삭제 실패!")
+					}
+				} 
+				,error:function(){
+					alert("삭제 오류!");
+				}
+				
+			});
+				
+				
+			});
+		
+		});
+		</script>
 
 </html>
