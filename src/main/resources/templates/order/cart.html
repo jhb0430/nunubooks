@@ -75,7 +75,7 @@
 											<h6 class="font-weight-bold  text-center my-4" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">18,000 원</h6>
 											<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
 												<button type="button" class="btn btn-0 subBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">-</button>
-												<div class="mx-1" th:text="${cart.quantity}">1</div>
+												<div class="mx-1 qty" th:text="${cart.quantity}">1</div>
 												<button type="button" class="btn btn-0 addBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">+</button>
 											</div>
 										</div>
@@ -142,8 +142,9 @@
 		
 		$(document).ready(function(){
 
+	
 			
-			// addBtn 클릭시 quantity ++
+			// subBtn클릭시 quantity--;
 			$(".subBtn").on("click",function(){
 
 //				alert("--!!")
@@ -153,22 +154,82 @@
 				if(quantity > 1){ // quantity가 1보다 많으면 1 줄어든다 
 
 					quantity--;
+			        $(this).data("quantity-id", quantity); // data-quantity-id 업데이트
+			        $(this).siblings(".qty").text(quantity); // 화면에 수량 업데이트
+
+			        // 서버에 수량 업데이트 요청
+			        $.ajax({
+			            type: "put",
+			            url: "/cart/update",
+			            data: { "id": cartId, "quantity": quantity },
+			            success: function (response) {
+			                alert("수량이 업데이트되었습니다.");
+			                location.reload();
+			            },
+			            error: function () {
+			                alert("수량 업데이트 실패!");
+			            }
+			        });
+			        
+			        
 				} 
 				//if(quantity <= 1){ // 1 미만이 되면 삭제된다 
 				else{
-					 location.href = "/cart/delete?id=" + cartId;
+//					 location.href = "/cart/delete?id=" + cartId;
+					
+					$.ajax({
+						type:"delete"
+						,url:"/cart/delete"
+						,data:{"id":cartId}
+						,success:function(response){
+							if(response.result == "success"){
+							alert("선택하신 물품이 삭제되었습니다");
+							location.reload();
+							} else {
+							alert("삭제 실패!")
+							}
+						} 
+						,error:function(){
+							alert("삭제 오류!");
+						}
+						
+					});
 				}
 			
 			});
 			
 			
+			// addBtn 클릭시 quantity ++
 			$(".addBtn").on("click",function(){
 
 //				alert("++!!")
 				let cartId = $(this).data("cart-id");
+				let quantity = $(this).data("quantity-id");
+				quantity++;
+				$(this).data("quantity-id", quantity); // 업데이트된 수량 저장
+			    $(this).siblings(".qty").text(quantity); // 화면에 수량 반영
 				
-				
+			    
+		        $.ajax({
+		            type: "put",
+		            url: "/cart/update",
+		            data: { "id": cartId, "quantity": quantity },
+		            success: function (response) {
+		                alert("수량이 업데이트되었습니다.");
+		                location.reload();
+		            },
+		            error: function () {
+		                alert("수량 업데이트 실패!");
+		            }
+		        });
+			    
 			});
+			
+			
+			
+			
+			
+			
 			
 			
 			$(".deleteBtn").on("click",function(){
