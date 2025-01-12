@@ -70,6 +70,7 @@ public class BookController {
 		 BookDTO bookDTO = bookService.fetchBooks(query,maxResults);
 		 model.addAttribute("books",bookDTO);
 		 model.addAttribute("query",query);
+		 model.addAttribute("maxResults",maxResults);
 		 
 		 
 		 

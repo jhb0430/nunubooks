@@ -26,10 +26,10 @@
 			<div class="d-flex align-items-center justify-content-end my-3">
 				<!--  <h6><input type="checkbox"> 전체선택</h6>  체크박스 -->
 				<select class="form-control col-4 mr-2" id="maxResultSel">
-					<option selected value="10">10개씩 보기</option>
-					<option value="20">20개씩 보기</option>
-					<option value="50">50개씩 보기</option>
-					<option value="100">100개씩 보기</option>
+					<option th:selected="${maxResults == 10}" value="10">10개씩 보기</option>
+					<option th:selected="${maxResults == 20}" value="20">20개씩 보기</option>
+					<option th:selected="${maxResults == 50}" value="50">50개씩 보기</option>
+					<option th:selected="${maxResults == 100}" value="100">100개씩 보기</option>
 				</select>
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2" id="allSelectBtn">전체선택</button>
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2 cartBtn">장바구니</button>
@@ -42,8 +42,9 @@
 			</div>
 		 -->
 			
-			<div class="d-flex align-items-center book-info p-2 border m-3" th:each="book : ${books.item}">
+			<div class="d-flex align-items-center book-info p-2 border m-3" th:each="book, status: ${books.item}">
 				<div class="mx-3 info-checkbox">
+				<span th:text="${status.count}"></span>
 					<input type="checkbox" th:data-item-id="${book.itemId}" class="item-checkbox">
 				</div>
 				<img th:src="${book.cover}" class="info-img">
