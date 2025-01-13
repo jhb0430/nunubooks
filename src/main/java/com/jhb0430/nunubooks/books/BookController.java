@@ -32,7 +32,13 @@ public class BookController {
 	
 	
 	@GetMapping("/bestSeller")
-	public String bestSellerList() {
+	public String bestSellerList(Model model) {
+		WebClient webClient = webClientBuilder.build();
+		 
+		
+		 BookDTO bookDTO = bookService.bestSeller();
+		 model.addAttribute("book",bookDTO);
+		
 		
 		return "books/best-seller";
 	}
@@ -47,7 +53,7 @@ public class BookController {
 		 
 		
 		 BookDTO bookDTO = bookService.bookProduct(itemId);
-		 model.addAttribute("book",bookDTO);
+		 model.addAttribute("seller",bookDTO);
 		
 		return "books/product";
 	}
