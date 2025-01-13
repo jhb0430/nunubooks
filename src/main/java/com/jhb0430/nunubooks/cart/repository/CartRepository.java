@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jhb0430.nunubooks.cart.domain.Cart;
+import com.jhb0430.nunubooks.cart.dto.CartDTO;
 
 public interface CartRepository  extends JpaRepository<Cart, Integer>{
 
@@ -13,4 +14,6 @@ public interface CartRepository  extends JpaRepository<Cart, Integer>{
 	
 	public int countByUserId(int userId);
 	// update -- insert처럼 ... 
+
+	public List<CartDTO> findByUserId(int userId);
 }

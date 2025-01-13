@@ -1,14 +1,13 @@
 package com.jhb0430.nunubooks.cart;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jhb0430.nunubooks.cart.domain.Cart;
 import com.jhb0430.nunubooks.cart.dto.CartDTO;
 import com.jhb0430.nunubooks.cart.service.CartService;
 
@@ -42,6 +41,14 @@ public class CartController {
 		
 		int cartCount = cartService.countCart(userId); 
 		model.addAttribute("cartCount",cartCount);
+		
+		 // 총 가격과 총 적립금 계산
+		 Map<String, Integer> totals = cartService.totalPrice(userId);
+		 
+		    model.addAttribute("totalAmount", totals.get("totalAmount"));
+		    model.addAttribute("totalPoints", totals.get("totalPoints"));
+		
+		
 		
 		// 장바구니에 담긴 갯수도 가져와야함
 		return "order/cart";
