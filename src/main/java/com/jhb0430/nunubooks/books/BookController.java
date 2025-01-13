@@ -38,22 +38,24 @@ public class BookController {
 	public String bestSellerList(
 					@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
 					,@RequestParam(value="outofStock" , defaultValue = "0") int outofStock
+					,@RequestParam(value="period" , required = false, defaultValue = "week") String period
 					,Model model
 					) {
-		WebClient webClient = webClientBuilder.build();
-		 
+		    
+		
 		 LocalDate now = LocalDate.now();
-		 
-		    int weekOfYear = now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
+//			“Year=2022&Month=5&Week=3”형식으로 요청.
+//			생략하면 현재 주간의 정보 제공.
+		    int week = now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
 		    int year = now.getYear();
 		    int month = now.getMonthValue();
 		    
-		    model.addAttribute("week",weekOfYear);
+		    model.addAttribute("week",week);
 		    model.addAttribute("month",month);
 		    model.addAttribute("year",year);
 		
 		
-		 BookDTO bookDTO = bookService.bestSeller(maxResults,outofStock);
+		 BookDTO bookDTO = bookService.bestSeller(maxResults, outofStock, period);
 		 model.addAttribute("seller",bookDTO);
 		 
 		 model.addAttribute("maxResults",maxResults);

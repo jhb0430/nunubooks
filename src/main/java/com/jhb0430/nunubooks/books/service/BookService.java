@@ -1,7 +1,6 @@
 package com.jhb0430.nunubooks.books.service;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.temporal.WeekFields;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,19 +75,50 @@ public class BookService {
 	
 
 
-	public BookDTO bestSeller(int maxResults, int outofStock) {
+	public BookDTO bestSeller(int maxResults, int outofStock ,String period) {
 		
 		WebClient webClient = webClientBuilder.build();
 		
 		 LocalDate now = LocalDate.now();
-		 
-		    int weekOfYear = now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
+//			“Year=2022&Month=5&Week=3”형식으로 요청.
+//			생략하면 현재 주간의 정보 제공.
+		    int week = now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
 		    int year = now.getYear();
 		    int month = now.getMonthValue();
-		    		
 		
-		System.out.println(weekOfYear +"주" + year +"년" + month +"월");
-		
+		    //default = week=1.,2,3,4
+		    // 월간 선택시 = year=2025&month=1
+		    // 연간 선택시 year=2025 month=0, week=0;
+//		    if(period == "year") {
+//		    	
+//		    }
+		    
+//		    switch(period) {
+		    switch(period.toLowerCase()) {
+		    
+			    case "week":
+			    break;
+			    
+			    case "month" : 	
+			    	year= 0;
+			    	week = 0;
+			    break;
+			    
+			    case "year" : 
+			    	month = 0;
+			    	week= 0;
+			    break;
+			    
+			    default: // 예외처리
+		            throw new IllegalArgumentException(period + "는 사용하실 수 없습니다");
+		    }
+		    
+		    
+		    //Local variable year defined in an enclosing scope must be final or effectively final
+		    final int finalYear = year;
+		    final int finalMonth = month;
+		    final int finalWeek = week;
+		    
 		Mono<BookDTO> response = 
 				webClient.get()
 				.uri(uriBuilder -> uriBuilder
@@ -98,9 +128,9 @@ public class BookService {
 						.queryParam("ttbkey","ttbleky22241703001")
 						.queryParam("QueryType","Bestseller")
 						.queryParam("MaxResults",maxResults)
-						.queryParam("Year",year)
-						.queryParam("Month",month)
-						.queryParam("Week",weekOfYear)
+						.queryParam("Year",finalYear)
+						.queryParam("Month",finalMonth)
+						.queryParam("Week",finalWeek)
 						.queryParam("SearchTarget","Book")
 						.queryParam("start",1)
 						.queryParam("outofStockfilter",outofStock)
