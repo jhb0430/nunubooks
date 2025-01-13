@@ -94,7 +94,7 @@ public class CartService {
 //		  return response.block();
 		  BookDTO book = response.block();
 		  
-		  
+
 //		  private int discount = ( (priceStandard - priceSales) / priceStandard) * 100;
 		  
 		  CartDTO cartDTO = CartDTO.builder()
@@ -107,10 +107,11 @@ public class CartService {
 				  					.build();
 		  
 		  cartDTOList.add(cartDTO);
+		  
+		  
 		}
 		
-		
-		
+	
 		return cartDTOList;
 //		return bookList;
 	}
@@ -121,6 +122,13 @@ public class CartService {
 	public int countCart(int userId) {
 		
 		return cartRepository.countByUserId(userId);
+	}
+	
+	public int totalPrice(int userId, int id) {
+		// 유저정보, 카트 아이디 정보
+		// 로그인 되어있는 유저의 장바구니 -> 그 사람이 선택한 아이템 아이디 정보-> 가 있는 리스트의 priceSales값 
+		Optional<Cart> optionalCart = cartRepository.findById(id);
+		// itemId가 같은 상품의 priceSales
 	}
 	
 	
