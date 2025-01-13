@@ -24,13 +24,13 @@
 			<div>
 				<div class="d-flex align-items-center justify-content-between mt-4">
 					 <div class="d-flex align-items-center">
-						 <h3 class="font-weight-bold" >주간 베스트셀러</h3>
+						 <h3 class="font-weight-bold seller-option" >주간 베스트셀러</h3>
 						 <h5 class="font-weight-bold ml-1" th:text="|(${year}년  ${month}월 ${week}주)|"></h5>
 					 </div>
 					 <div>
-						<button type="button" class="btn btn-secondary mx-1" id="weekBtn" th:value="${week}">주간</button>
-						<button type="button" class="btn btn-secondary mx-1"id="monthBtn" th:value="${month}">월간</button>
-						<button type="button" class="btn btn-secondary mx-1" id="yearBtn" th:value="${year}">연간</button>
+						<button type="button" class="btn btn-secondary mx-1" id="weekBtn" value="week">주간</button>
+						<button type="button" class="btn btn-secondary mx-1" id="monthBtn" value="month">월간</button>
+						<button type="button" class="btn btn-secondary mx-1" id="yearBtn" value="year">연간</button>
 					 </div>
 				</div>
 				
@@ -44,7 +44,7 @@
 						</select>
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-cart"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn">품절/절판 제외</button>
+						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn" value="0">품절/절판 제외</button>
 					</div>
 				</div>
 			</div>	
@@ -78,10 +78,10 @@
 				</div>
 				<div class="info-cart" >
 					<div class="text-center my-3">
-						<button type="button" class="btn btn-outline-secondary cartBtn" >장바구니</button>
+						<button type="button" class="btn btn-outline-secondary cartBtn" th:data-item-id="${book.itemId}">장바구니</button>
 					</div>
 					<div class="text-center my-3">
-						<button type="button" class="btn btn-outline-secondary">바로구매</button>
+						<button type="button" class="btn btn-outline-secondary" th:data-item-id="${book.itemId}">바로구매</button>
 					</div>
 				</div>
 			</div>
@@ -92,40 +92,148 @@
 
 <script layout:fragment="script">
 
+
 $(document).ready(function(){
 	
+	// 주간/ 월간/ 연간 버튼을 누르면 주간 베스트셀러, 월간 베스트셀러, 연간 베스트셀러 목록을 띄워줌
+	// 품절/절판 제외 버튼을 누르면 outofStock = 1;이 된다
+	// 10개 , 20개, 50개씩 select를 누르면 10, 20, 50개씩 출력.
+	// 파라미터값엔 전체 다 필요하니까 초기변수로 주기
+
+	let period = "week";
+	let outofStock = 0;
+	let maxResults = 10;
+	let baseUrl = "/nunubooks/bestSeller";
 	
+	
+	function urlcomplete(){
+		$.ajax({
+			type:"get"
+			,url:"/nunubooks/bestSeller"
+			,data:{"maxResults":maxResults,"period":period,"outofStock":outofStock}
+			,success:function(response){
+				alert("성공")
+			}
+			,error:function(){
+	
+				alert("오류!!")
+			}
+		});
+	
+	}
+	
+//	location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+	
+	
+	
+	$("#maxResultSel").on("change",function(){
+        maxResults = $(this).val() || 10;
+		outofStock = $("#outofStockBtn").val()||0;
+		period = $("#weekBtn").val() || 'week';
+		alert(maxResults);
+//     let maxResults = $("#maxResultSel").val() || 10;
+       urlcomplete();
+//		let baseUrl = "/nunubooks/bestSeller";
+//       location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+	});
+	
+	
+	
+	
+	
+	// 장바구니 추가
+	$(".cartBtn").on("click",function(){
+		let itemId = $(this).data("item-id");
+        let quantity = 1;
+// 로그인 안해도 장바구니에 저장될 수 있도록         
+		$.ajax({
+
+			type:"post"
+			,url:"/cart/add"
+			,data:{"itemId":itemId,"quantity":quantity}
+			,success:function(response){
+
+				if(response.result =="success"){
+					alert("담기 성공!");
+				} else {
+					alert("담기 실패")
+				}
+			}
+			,error:function(){
+				alert("오류!!")
+			}
+		});
+		
+	});
 	
 	
 	
 	$("#outofStockBtn").on("click",function(){
-
-		// 버튼을 누르면 0->1로 바뀜 
-		//1일때 버튼을 누르면 0으로 바뀜
-		
-		let outofStock;
-		
-		
-	});
-	
-	$("#maxResultSel").on("change",function(){
-        // alert();
-       let maxResults = $(this).val();
-       if (!maxResults) {
-           maxResults = 10;
-       }
-//          alert(maxResults);
-     
-       // jquery test06
-       // name이 member인 input 태그 중에서 선택된 input태그 의 value 속성 가져오기 
-                           // $("input[name=type]:checked")
-       let query = $("input[name='query']").val();
-
+		maxResults = $("#maxResultSel").val() || 10;
+		outofStock = $(this).val()||0;
+ 		period = 'week';
+       
+       if (outofStock === "0") {
+			outofStock = 1; 
+			 $(this).val("1").text("품절/절판 포함");
+		} else {
+			outofStock = 0;; // 버튼의 value 값을 0으로 변경
+			 $(this).val("0").text("품절/절판 제외");
+		}
+       
+       urlcomplete();
+       
        let baseUrl = "/nunubooks/bestSeller";
        
-       location.href = baseUrl + "?maxResults=" + maxResults;
+       });
+	
+	
+	$("#weekBtn").on("click",function(){
+
+		maxResults = $("#maxResultSel").val() || 10;
+		outofStock = $("#outofStockBtn").val()||0;
+ 		period = $(this).val() || 'week';
+       	
+ 		alert(period)
+      	urlcomplete();
+	
+			$(".seller-option").text("주간 베스트셀러");
+ 		 
+//        let baseUrl = "/nunubooks/bestSeller";
+ //       location.href = baseUrl + "?" + period +"=" + + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+ 
+	});
+	$("#monthBtn").on("click",function(){
+
+		maxResults = $("#maxResultSel").val() || 10;
+		outofStock = $("#outofStockBtn").val()||0;
+ 		period = $(this).val() || 'week';
+ 		alert(period)
+     	urlcomplete();
+	
+			$(".seller-option").text("월간 베스트셀러");
+ 		 
+//        let baseUrl = "/nunubooks/bestSeller";
+ 
 	});
 	
+	$("#yearBtn").on("click",function(){
+
+		maxResults = $("#maxResultSel").val() || 10;
+		outofStock = $("#outofStockBtn").val()||0;
+ 		period = $(this).val() || 'week';
+ 		alert(period)
+     	urlcomplete();
+	
+			$(".seller-option").text("연간 베스트셀러");
+ 		 
+        let baseUrl = "/nunubooks/bestSeller";
+ 
+	});
+	
+	
+	
+
 	
 });
 
