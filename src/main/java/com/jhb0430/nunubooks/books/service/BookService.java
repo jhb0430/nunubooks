@@ -1,5 +1,9 @@
 package com.jhb0430.nunubooks.books.service;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.WeekFields;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -72,9 +76,18 @@ public class BookService {
 	
 
 
-	public BookDTO bestSeller() {
+	public BookDTO bestSeller(int maxResults, int outofStock) {
 		
 		WebClient webClient = webClientBuilder.build();
+		
+		 LocalDate now = LocalDate.now();
+		 
+		    int weekOfYear = now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
+		    int year = now.getYear();
+		    int month = now.getMonthValue();
+		    		
+		
+		System.out.println(weekOfYear +"주" + year +"년" + month +"월");
 		
 		Mono<BookDTO> response = 
 				webClient.get()
@@ -84,8 +97,13 @@ public class BookService {
 						.path("/ttb/api/ItemList.aspx")
 						.queryParam("ttbkey","ttbleky22241703001")
 						.queryParam("QueryType","Bestseller")
-						.queryParam("MaxResults",10)
+						.queryParam("MaxResults",maxResults)
+						.queryParam("Year",year)
+						.queryParam("Month",month)
+						.queryParam("Week",weekOfYear)
+						.queryParam("SearchTarget","Book")
 						.queryParam("start",1)
+						.queryParam("outofStockfilter",outofStock)
 						.queryParam("output","js")
 						.queryParam("Version","20131101")
 						.build()

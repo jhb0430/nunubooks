@@ -32,7 +32,12 @@ public class Data {
 	private boolean adult;
 	private boolean fixedPrice;
 	
+	private int customerReviewRank;
+	private String bestDuration;
+	private int bestRank;
+	
 	private Subinfo subInfo;
+//	private  seriesInfo;
 	
 
 	// 다시 정리하기 

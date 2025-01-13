@@ -5,133 +5,130 @@
      layout:decorate="~{layout/default}">
      
 
-		<section layout:fragment="contents" class="contents ">
+		<section layout:fragment="contents">
 			
 		
-			<div class="d-flex">
+		<div class="d-flex"> <!--  카테고리/ 결과 나란히 -->
+		
+		
 				<nav class="nav flex-column col-2 border-right text-center mr-4">
 					<h3 class="bg-secondary font-weight-bold my-4">국내도서</h3>
 					  <a class="nav-link text-dark" href="#">카테고리1</a>
 					  <a class="nav-link text-dark" href="#">카테고리2</a>
 					  <a class="nav-link text-dark" href="#">카테고리3</a>
-					  <a class="nav-link text-dark">카테고리4</a>
+					  <a class="nav-link text-dark" href="#">카테고리4</a>
 				</nav>
 		
 		
-
-		
+		<div class="contents">
 			<div>
-				<div class="order-menu w-100 mt-4 d-flex align-items-center justify-content-between">
-					<div class="d-flex">
-						<i class="bi bi-check-circle-fill mx-3 h5 checkbox"></i>
-						<input type="checkbox" class="d-none">
-						<h5 class=" font-weight-bold">전체</h5>
-					</div>
-					<div class="d-flex mr-3">
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-trash"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1">장바구니</button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1">품절/절판 제외</button>
-					</div>
-				</div>
-				<div class="d-flex mt-2">
-					<div>
-						<button type="button" class="btn btn-secondary mx-1">일간</button>
-						<button type="button" class="btn btn-secondary mx-1">주간</button>
-						<button type="button" class="btn btn-secondary mx-1">월간</button>
-					</div>
-					<select class="form-control col-2 mx-1">
-						<option selected>10개씩 보기</option>
-						<option>20개씩 보기</option>
-						<option>50개씩 보기</option>
-						<option>100개씩 보기</option>
-					</select>
-				</div>
-				
-				<div class="d-flex align-items-center book-info p-2 border m-3">
-					<div class="mx-3 info-checkbox">
-					<span >1</span>
-						<input type="checkbox" class="item-checkbox">
-					</div>
-					<img src="#" class="info-img">
-					<div class="mx-3 info-title">
-						<a href="#" class="text-dark">
-							<h5 class="font-weight-bold">책 제목 어쩌구저쩌구</h5>
-						</a>
-						<h6>저자</h6>
-						<div class="d-flex align-items-center">
-							<h6>출판사</h6>
-							<h6 class= "ml-3">출판일</h6>
-						</div>
-					</div>
-						<!-- 
-						<div class="mx-3 info-price">품절</div>
-						<div class="mx-3 info-price" th:if="${book.stockStatus =='절판'}">절판</div>
-						<div class="mx-3 info-price" th:if="${book.stockStatus ==''  or book.stockStatus =='예약판매'}">
-						 -->
+				<div class="d-flex align-items-center justify-content-between mt-4">
+					 <div class="d-flex align-items-center">
+						 <h3 class="font-weight-bold" >주간 베스트셀러</h3>
+						 <h5 class="font-weight-bold ml-1" th:text="|(${year}년  ${month}월 ${week}주)|"></h5>
+					 </div>
 					 <div>
-						<del><span >정가 </span></del>
-						<span class="text-success font-weight-bold h6">(10%)</span> 
-						<span class="font-weight-bold text-primary ml-1" >할인가</span>
-						<div class="font-weight-bold text-info ml-1 text-small" >포인트</div>
-					</div>
-					<div class="info-cart" >
-						<div class="text-center my-3">
-							<button type="button" class="btn btn-outline-secondary cartBtn" >장바구니</button>
-						</div>
-						<div class="text-center my-3">
-							<button type="button" class="btn btn-outline-secondary">바로구매</button>
-						</div>
-					</div>
-					</div>
-						<!-- 
-						<div class="info-cart" th:if="${book.stockStatus =='예약판매'}">
-							<div class="text-center my-3">
-								<button type="button" class="btn btn-outline-secondary cartBtn" id="preOrderBtn" th:data-item-id="${book.itemId}">예약하기</button>
-							</div>
-						</div>
-						 -->
-						
-											
-						
-				<!--
-								<div class="d-flex align-items-center book-info p-2 border">
-									<div class="mx-3">
-										<input type="checkbox">
-									</div>
-									<img src="/static/image/car.jpg" class="cart-book-img">
-									<div class="mx-3">
-										<h5 class="font-weight-bold">책 제목 어쩌구저쩌구</h5>
-										<h6>(10%) 18,000 원 마일리지 얼마얼마</h6>
-									</div>
-									<div class="d-flex align-items-center justify-content-center bg-primary border mx-4">
-										<div>
-											<h6 class="font-weight-bold my-4 text-center">수량</h6>
-											<div class="d-flex align-items-center justify-content-center bg-light border border-secondary">
-												<button type="button" class="btn btn-0">+</button>
-												<div>1</div>
-												<button type="button" class="btn btn-0">-</button>
-											</div>
-										</div>
-									</div>
-									
-									<div>
-										<div class="text-center bg-danger my-3">
-											<button type="button" class="btn btn-0">장바구니</button>
-										</div>
-										<div class="text-center bg-warning my-3">
-											<button type="button" class="btn btn-o">바로구매</button>
-										</div>
-									</div>
-									
-									
-								</div>
-		  -->		
+						<button type="button" class="btn btn-secondary mx-1" id="weekBtn" th:value="${week}">주간</button>
+						<button type="button" class="btn btn-secondary mx-1"id="monthBtn" th:value="${month}">월간</button>
+						<button type="button" class="btn btn-secondary mx-1" id="yearBtn" th:value="${year}">연간</button>
+					 </div>
+				</div>
 				
+				<div class="d-flex justify-content-end align-items-center my-3">
+					
+					<div class="d-flex">
+						<select class="form-control select mx-2" id="maxResultSel">
+							<option th:selected="${maxResults == 10}" value="10">10개씩 보기</option>
+							<option th:selected="${maxResults == 20}" value="20">20개씩 보기</option>
+							<option th:selected="${maxResults == 50}" value="50">50개씩 보기</option>
+						</select>
+						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
+						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-cart"></i></button>
+						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn">품절/절판 제외</button>
 					</div>
+				</div>
 			</div>	
+				
+			<div class="d-flex align-items-center book-info p-2 border my-3 mx-1" th:each="book, status: ${seller.item}">
+				<div class="mx-3 info-checkbox">
+				<span th:text="${status.count}">1</span>
+					<input type="checkbox" class="item-checkbox" th:data-item-id="${book.itemId}">
+				</div>
+				<img th:src="${book.cover}" class="info-img">
+				<div class="mx-3 info-title">
+					<a th:href="|/nunubooks/product?itemId=${book.itemId}|" class="text-dark">
+						<h5 class="font-weight-bold" th:text="${book.title}">책 제목 어쩌구저쩌구</h5>
+					</a>
+					<h6 th:text="|${book.author}|">저자</h6>
+					<div class="d-flex align-items-center">
+						<h6 th:text="${book.publisher}">출판사</h6>
+						<h6 class= "ml-3" th:text="${book.pubDate}">출판일</h6>
+					</div>
+				</div>
+					<!-- 
+					<div class="mx-3 info-price">품절</div>
+					<div class="mx-3 info-price" th:if="${book.stockStatus =='절판'}">절판</div>
+					<div class="mx-3 info-price" th:if="${book.stockStatus ==''  or book.stockStatus =='예약판매'}">
+					 -->
+				 <div>
+					<del><span th:text="|${#numbers.formatInteger(book.priceStandard, 3, 'COMMA')} 원|">정가 </span></del>
+				<span class="text-success font-weight-bold h6" th:text="|(${book.discount}%)|">(10%)</span> 
+				<span class="font-weight-bold text-primary ml-1" th:text="|${#numbers.formatInteger(book.priceSales, 3, 'COMMA')} 원|">할인가</span>
+				<div class="font-weight-bold text-info ml-1 text-small" th:text="|(${#numbers.formatInteger(book.mileage, 3, 'COMMA')} point)|">포인트</div>
+				</div>
+				<div class="info-cart" >
+					<div class="text-center my-3">
+						<button type="button" class="btn btn-outline-secondary cartBtn" >장바구니</button>
+					</div>
+					<div class="text-center my-3">
+						<button type="button" class="btn btn-outline-secondary">바로구매</button>
+					</div>
+				</div>
+			</div>
+	
+	</div>	<!--  전체 div -->
+	
 		</section>
 
-<script layout:fragment="script"></script>
+<script layout:fragment="script">
+
+$(document).ready(function(){
+	
+	
+	
+	
+	
+	$("#outofStockBtn").on("click",function(){
+
+		// 버튼을 누르면 0->1로 바뀜 
+		
+		let outofStock = 1;
+		let baseUrl = "/nunubooks/bestSeller"
+			 location.href = baseUrl + "?outofStock=" +outofStock;
+	});
+	
+	$("#maxResultSel").on("change",function(){
+        // alert();
+       let maxResults = $(this).val();
+       if (!maxResults) {
+           maxResults = 10;
+       }
+//          alert(maxResults);
+     
+       // jquery test06
+       // name이 member인 input 태그 중에서 선택된 input태그 의 value 속성 가져오기 
+                           // $("input[name=type]:checked")
+       let query = $("input[name='query']").val();
+
+       let baseUrl = "/nunubooks/bestSeller";
+       
+       location.href = baseUrl + "?maxResults=" + maxResults;
+	});
+	
+	
+});
+
+
+</script>
 
 </html>

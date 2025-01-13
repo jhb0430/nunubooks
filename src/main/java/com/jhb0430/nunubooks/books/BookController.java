@@ -1,5 +1,8 @@
 package com.jhb0430.nunubooks.books;
 
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,12 +35,28 @@ public class BookController {
 	
 	
 	@GetMapping("/bestSeller")
-	public String bestSellerList(Model model) {
+	public String bestSellerList(
+					@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
+					,@RequestParam(value="outofStock" , defaultValue = "0") int outofStock
+					,Model model
+					) {
 		WebClient webClient = webClientBuilder.build();
 		 
+		 LocalDate now = LocalDate.now();
+		 
+		    int weekOfYear = now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
+		    int year = now.getYear();
+		    int month = now.getMonthValue();
+		    
+		    model.addAttribute("week",weekOfYear);
+		    model.addAttribute("month",month);
+		    model.addAttribute("year",year);
 		
-		 BookDTO bookDTO = bookService.bestSeller();
-		 model.addAttribute("book",bookDTO);
+		
+		 BookDTO bookDTO = bookService.bestSeller(maxResults,outofStock);
+		 model.addAttribute("seller",bookDTO);
+		 
+		 model.addAttribute("maxResults",maxResults);
 		
 		
 		return "books/best-seller";
@@ -53,7 +72,7 @@ public class BookController {
 		 
 		
 		 BookDTO bookDTO = bookService.bookProduct(itemId);
-		 model.addAttribute("seller",bookDTO);
+		 model.addAttribute("book",bookDTO);
 		
 		return "books/product";
 	}
