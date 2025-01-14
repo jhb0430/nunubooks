@@ -38,9 +38,9 @@ public class BookController {
 	public String bestSellerList(
 					@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
 					,@RequestParam(value="outofStock" , defaultValue = "0") int outofStock
-					,@RequestParam(value="year",defaultValue = "0") int year
-					,@RequestParam(value="month" , defaultValue = "0") int month
-					,@RequestParam(value="week" , defaultValue = "0") int week
+					,@RequestParam(value = "year", required = false) Integer year
+				    ,@RequestParam(value = "month", required = false) Integer month
+				    ,@RequestParam(value = "week", required = false) Integer week
 					,Model model
 					) {
 		    
@@ -48,19 +48,18 @@ public class BookController {
 		 LocalDate now = LocalDate.now();
 //			“Year=2022&Month=5&Week=3”형식으로 요청.
 //			생략하면 현재 주간의 정보 제공.
-		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
-		    int nowYear = now.getYear();
-		    int nowMonth = now.getMonthValue();
+//		    int nowWeek = (Integer)now.get(WeekFields.ISO.weekOfMonth()) -1; // 알라딘은 주차가 -1 인가
+		    int nowYear = (Integer)now.getYear();
+		    int nowMonth = (Integer)now.getMonthValue();
 		    
-		    if (year == 0) {
+		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth()) == 0 ? 1 : now.get(WeekFields.ISO.weekOfMonth()) -1;
+		    
+		    if (year == null || month == null || week == null) {
 		    	year = nowYear;
-		    }
-		    if (month == 0) {
 		    	month = nowMonth;
-		    }
-		    if (week == 0) {
 		    	week = nowWeek;
-		    } 
+		    }
+		    
 		    
 		    
 		    model.addAttribute("nowYear",nowYear);
