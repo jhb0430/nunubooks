@@ -27,10 +27,18 @@
 						 <h3 class="font-weight-bold seller-option" >주간 베스트셀러</h3>
 						 <h5 class="font-weight-bold ml-1" th:text="|(${year}년  ${month}월 ${week}주)|"></h5>
 					 </div>
-					 <div>
+					 <div class="d-flex">
+						 <select class="form-control select mx-2" id="yearSel">
+						</select>
+						 <select class="form-control select mx-2" id="monthSel">
+						</select>
+						 <select class="form-control select mx-2" id="weekSel">
+						</select>
+					 <!-- 
 						<button type="button" class="btn btn-secondary mx-1" id="weekBtn" value="week">주간</button>
 						<button type="button" class="btn btn-secondary mx-1" id="monthBtn" value="month">월간</button>
 						<button type="button" class="btn btn-secondary mx-1" id="yearBtn" value="year">연간</button>
+					  -->
 					 </div>
 				</div>
 				
@@ -103,26 +111,24 @@ $(document).ready(function(){
 	let period = "week";
 	let outofStock = 0;
 	let maxResults = 10;
-	let baseUrl = "/nunubooks/bestSeller";
+	
+	setDateSelectBox();
+
+function setDateSelectBox(){
+	var now = new Date();
+	var now_year = now.getFullYear();
+	var now_month = now.getFullMonth();
 	
 	
-	function urlcomplete(){
-		$.ajax({
-			type:"get"
-			,url:"/nunubooks/bestSeller"
-			,data:{"maxResults":maxResults,"period":period,"outofStock":outofStock}
-			,success:function(response){
-				alert("성공")
-			}
-			,error:function(){
+	// 2005년 부터 올해까지
+	for(var i = now_year; i >= 2005; i--){
+	$("#yearSel").append("<option value='"+ i +"'>"+ i + " 년" +"</option>");
 	
-				alert("오류!!")
-			}
-		});
-	
+	for(var i = 1; i <= 12; i--){
+	$("#monthSel").append("<option value='"+ i +"'>"+ i + " 월" +"</option>");
 	}
+}
 	
-//	location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
 	
 	
 	
