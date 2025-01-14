@@ -15,5 +15,4 @@ public interface CartRepository  extends JpaRepository<Cart, Integer>{
 	public int countByUserId(int userId);
 	// update -- insert처럼 ... 
 
-	public List<CartDTO> findByUserId(int userId);
 }

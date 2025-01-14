@@ -109,7 +109,7 @@ public class BookService {
 			    	week= 0;
 			    break;
 			    
-			    default: // 예외처리
+			    default: // 예외처리..하래
 		            throw new IllegalArgumentException(period + "는 사용하실 수 없습니다");
 		    }
 		    

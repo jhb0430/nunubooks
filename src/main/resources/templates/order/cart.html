@@ -66,7 +66,7 @@
 										<div class="d-flex mt-2">
 											<div class="text-success font-weight-bold mr-2" th:text="|(${item.discount}%)|">할인율</div>
 											<del><div th:text="|${#numbers.formatInteger(item.priceStandard, 3, 'COMMA')} 원|">정가</div></del>
-											<div class="font-weight-bold mx-1" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">판매가</div>
+											<div class="font-weight-bold mx-1" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|" th:data-price-id="${item.priceSales}">판매가</div>
 											<div th:text="|(${#numbers.formatInteger(item.mileage, 3, 'COMMA')} point)|">point</div>
 										</div>
 									</div>
@@ -106,7 +106,10 @@
 					<table class="table table-borderless">
 						<tr>
 							<th>상품 금액</th>
-							<td  th:text="|${#numbers.formatInteger(totalAmount, 3, 'COMMA')} 원|">0000원</td>
+							<!-- 
+							<td  th:text="|${#numbers.formatInteger(totalPrice, 3, 'COMMA')} 원|">0000원</td>
+							 -->
+							<td  >0000원</td>
 						</tr>
 						<tr>
 							<th>배송비</th>
@@ -122,7 +125,10 @@
 						</tr>
 						<tr>
 							<th>적립 예정 포인트</th>
+							<!-- 
 							<td th:text="|${#numbers.formatInteger(totalPoints, 3, 'COMMA')} 원|">000 point</td>
+							 -->
+							<td>000 point</td>
 						</tr>
 					</table>
 						<button type="button" class="btn btn-primary my-3 w-100">구매하기</button>

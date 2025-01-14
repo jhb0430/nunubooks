@@ -71,6 +71,9 @@ public class CartService {
 		
 		List<CartDTO> cartDTOList = new ArrayList<>();
 		
+//        int totalPrice = 0;
+//        int totalPoints = 0;
+//		
 		for(Cart cart : cartList) {
 			
 			int itemId = cart.getItemId();
@@ -108,8 +111,16 @@ public class CartService {
 				  					.build();
 		  
 		  cartDTOList.add(cartDTO);
-		  
-		  
+
+//	        int quantity = cart.getQuantity();
+//	        
+//	        int priceSales  =  book.getItem().get(itemId).getPriceSales();
+//		  
+//	        int mileage = book.getItem().get(itemId).getMileage();
+//	        
+//	        totalPrice = priceSales * quantity;
+//	        totalPoints = mileage * quantity;
+	        
 		}
 		
 	
@@ -119,42 +130,15 @@ public class CartService {
 	
 	
 	
-	
+	// 장바구니에 들어있는 갯수 정보 
 	public int countCart(int userId) {
 		
 		return cartRepository.countByUserId(userId);
 	}
 	
-//	public int totalPrice(int userId, int id) {
-		// 유저정보, 카트 아이디 정보
-		// 로그인 되어있는 유저의 장바구니 -> 그 사람이 선택한 아이템 아이디 정보-> 가 있는 리스트의 priceSales값 
-		// itemId가 같은 상품의 priceSales
+	
+
 		
-		
-		
-		public  Map<String, Integer> totalPrice(int userId) {
-	        List<CartDTO> cartList = cartRepository.findByUserId(userId);
-
-	        int totalAmount = 0;
-	        int totalPoints = 0;
-
-	        int i = 0;
-	        
-	        for (CartDTO cart : cartList) {
-	            int quantity = cart.getQuantity();
-	            int priceSales = cart.getBookInfo().getItem().get(i).getPriceSales();
-	            int mileage = cart.getBookInfo().getItem().get(i).getMileage();
-
-	            totalAmount += priceSales * quantity;
-	            totalPoints += mileage * quantity;
-	        }
-
-	        Map<String, Integer> totals = new HashMap<>();
-	        totals.put("totalAmount", totalAmount);
-	        totals.put("totalPoints", totalPoints);
-
-	        return totals;
-	    }
 		
 	
 // 장바구니 삭제

@@ -42,11 +42,6 @@ public class CartController {
 		int cartCount = cartService.countCart(userId); 
 		model.addAttribute("cartCount",cartCount);
 		
-		 // 총 가격과 총 적립금 계산
-		 Map<String, Integer> totals = cartService.totalPrice(userId);
-		 
-		    model.addAttribute("totalAmount", totals.get("totalAmount"));
-		    model.addAttribute("totalPoints", totals.get("totalPoints"));
 		
 		
 		
