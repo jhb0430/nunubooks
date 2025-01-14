@@ -112,7 +112,7 @@ public class BookService {
 			    default: // 예외처리..하래
 		            throw new IllegalArgumentException(period + "는 사용하실 수 없습니다");
 		    }
-		    
+		    // 주간만 된대.. .ㅁㅊ
 		    
 		    //Local variable year defined in an enclosing scope must be final or effectively final
 		    final int finalYear = year;

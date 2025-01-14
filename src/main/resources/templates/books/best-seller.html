@@ -130,7 +130,6 @@ $(document).ready(function(){
         maxResults = $(this).val() || 10;
 		outofStock = $("#outofStockBtn").val()||0;
 		period = $("#weekBtn").val() || 'week';
-		alert(maxResults);
 
 		let baseUrl = "/nunubooks/bestSeller";
        location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
@@ -170,12 +169,13 @@ $(document).ready(function(){
 	$("#outofStockBtn").on("click",function(){
 		maxResults = $("#maxResultSel").val() || 10;
 		outofStock = $(this).val()||0;
+		
        
        if (outofStock === "0") {
 			outofStock = 1; 
 			 $(this).val("1").text("품절/절판 포함");
 		} else {
-			outofStock = 0;; // 버튼의 value 값을 0으로 변경
+			outofStock = 0; // 버튼의 value 값을 0으로 변경
 			 $(this).val("0").text("품절/절판 제외");
 		}
        
@@ -209,7 +209,7 @@ $(document).ready(function(){
 			$(".seller-option").text("월간 베스트셀러");
  		 
 			  let baseUrl = "/nunubooks/bestSeller";
-		       location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+		      location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
 		 
  
 	});
@@ -223,7 +223,7 @@ $(document).ready(function(){
 			$(".seller-option").text("연간 베스트셀러");
  		 
 			  let baseUrl = "/nunubooks/bestSeller";
-		       location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+		      location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
 		 
  
 	});

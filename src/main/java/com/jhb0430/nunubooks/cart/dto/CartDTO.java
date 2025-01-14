@@ -24,6 +24,5 @@ public class CartDTO {
 	 private BookDTO bookInfo;
 	 
 	 
-	 
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.cart.domain.Cart;
 import com.jhb0430.nunubooks.cart.dto.CartDTO;
+import com.jhb0430.nunubooks.cart.dto.TotalDTO;
 import com.jhb0430.nunubooks.cart.repository.CartRepository;
 import com.jhb0430.nunubooks.user.service.UserService;
 
@@ -59,7 +60,8 @@ public class CartService {
 	// 장바구니 리스트 출력
 	// 로그인 기반으로, 로그인 했을때만 수행되도록 1차 정리 후, 비로그인시에도 저장되도록 수정하기
 	// userId를 넣으면 -> 그 사람의 장바구니 목록을 보여준다 .
-	public List<CartDTO> getCartList(int userId
+	public TotalDTO getCartList(int userId
+//			public List<CartDTO> getCartList(int userId
 //			,HttpSession session
 			){
 //		int userId = (Integer)session.getAttribute("userId");
@@ -71,9 +73,11 @@ public class CartService {
 		
 		List<CartDTO> cartDTOList = new ArrayList<>();
 		
-//        int totalPrice = 0;
-//        int totalPoints = 0;
-//		
+        int totalPrice = 0;
+        int totalPoints = 0;
+        int totalDiscount = 0;
+        int totalStandard = 0;
+        
 		for(Cart cart : cartList) {
 			
 			int itemId = cart.getItemId();
@@ -100,6 +104,20 @@ public class CartService {
 		  
 
 //		  private int discount = ( (priceStandard - priceSales) / priceStandard) * 100;
+		 
+		  int quantity = cart.getQuantity();
+		  
+		  int priceSales  =  book.getItem().get(0).getPriceSales();
+		  int mileage = book.getItem().get(0).getMileage();
+		  
+		  int priceStandard =  book.getItem().get(0).getPriceStandard();
+		  
+		  totalPrice += priceSales * quantity;
+		  totalPoints += mileage * quantity;
+		  
+		  totalStandard += priceStandard * quantity;
+		  
+		  totalDiscount = totalStandard - totalPrice;
 		  
 		  CartDTO cartDTO = CartDTO.builder()
 				  					.id(cart.getId())
@@ -109,23 +127,26 @@ public class CartService {
 				  					.createdAt(cart.getCreatedAt())
 				  					.bookInfo(book)
 				  					.build();
-		  
 		  cartDTOList.add(cartDTO);
 
-//	        int quantity = cart.getQuantity();
-//	        
-//	        int priceSales  =  book.getItem().get(itemId).getPriceSales();
-//		  
-//	        int mileage = book.getItem().get(itemId).getMileage();
-//	        
-//	        totalPrice = priceSales * quantity;
-//	        totalPoints = mileage * quantity;
-	        
 		}
-		
+
+		TotalDTO totalDTO = TotalDTO.builder()
+				.cartId(cartDTOList.get(0).getId())
+				.itemId(cartDTOList.get(0).getItemId())
+				.userId(userId)
+				.cartDTOList(cartDTOList)
+				.totalPrice(totalPrice)
+				.totalPoints(totalPoints)
+				.totalDiscount(totalDiscount)
+				.build();
 	
-		return cartDTOList;
+//		return cartDTOList;
+		return totalDTO;
 //		return bookList;
+		
+		
+		/// 배송비는 지역에 따라 구분 할 수 있도록. 
 	}
 	
 	
@@ -138,7 +159,6 @@ public class CartService {
 	
 	
 
-		
 		
 	
 // 장바구니 삭제
