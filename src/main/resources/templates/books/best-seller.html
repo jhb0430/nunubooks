@@ -25,7 +25,7 @@
 				<div class="d-flex align-items-center justify-content-between mt-4">
 					 <div class="d-flex align-items-center">
 						 <h3 class="font-weight-bold seller-option" >주간 베스트셀러</h3>
-						 <h5 class="font-weight-bold ml-1" th:text="|(${year}년  ${month}월 ${week}주)|"></h5>
+						 <h5 class="font-weight-bold ml-1 week-info" th:text="|(${nowYear}년  ${nowMonth}월 ${nowWeek}주)|"></h5>
 					 </div>
 					 <div class="d-flex">
 						 <select class="form-control select mx-2" id="yearSel">
@@ -33,6 +33,10 @@
 						 <select class="form-control select mx-2" id="monthSel">
 						</select>
 						 <select class="form-control select mx-2" id="weekSel">
+							 <option value="1" th:selected="${nowWeek == 1 or week ==1}">1주</option>
+							 <option value="2" th:selected="${nowWeek == 2 or week ==2}">2주</option>
+							 <option value="3" th:selected="${nowWeek == 3 or week ==3}">3주</option>
+							 <option value="4" th:selected="${nowWeek == 4 or week ==4}">4주</option>
 						</select>
 					 <!-- 
 						<button type="button" class="btn btn-secondary mx-1" id="weekBtn" value="week">주간</button>
@@ -108,37 +112,150 @@ $(document).ready(function(){
 	// 10개 , 20개, 50개씩 select를 누르면 10, 20, 50개씩 출력.
 	// 파라미터값엔 전체 다 필요하니까 초기변수로 주기
 
-	let period = "week";
 	let outofStock = 0;
 	let maxResults = 10;
 	
 	setDateSelectBox();
 
-function setDateSelectBox(){
-	var now = new Date();
-	var now_year = now.getFullYear();
-	var now_month = now.getFullMonth();
-	
-	
-	// 2005년 부터 올해까지
-	for(var i = now_year; i >= 2005; i--){
-	$("#yearSel").append("<option value='"+ i +"'>"+ i + " 년" +"</option>");
-	
-	for(var i = 1; i <= 12; i--){
-	$("#monthSel").append("<option value='"+ i +"'>"+ i + " 월" +"</option>");
+	function setDateSelectBox(){
+		var now = new Date();
+		var now_year = now.getFullYear();
+		var now_month = now.getMonth() + 1;
+		
+		
+		// 2005년 부터 올해까지
+		for(var i = now_year; i >= 2005; i--){
+		$("#yearSel").append("<option value='"+ i +"'>"+ i + " 년" +"</option>");
+		}
+		// 월
+		for(var i = 1; i <= 12; i++){
+			 if (i === now_month) {
+		            $("#monthSel").append("<option value='" + i + "' selected>" + i + " 월" + "</option>");
+		        } else {
+		            $("#monthSel").append("<option value='" + i + "'>" + i + " 월" + "</option>");
+		        }
+		}
 	}
-}
+	
+
+	function updateBestSeller() {
+	    let maxResults = $("#maxResultSel").val() || 10;
+	    let outofStock = $("#outofStockBtn").val() || 0;
+	    let year = $("#yearSel").val(); 
+	    let month = $("#monthSel").val(); 
+	    let week = $("#weekSel").val();
+
+	    
+	    let baseUrl = "/nunubooks/bestSeller";
+	    // history.pushState() 새로고침 안되게함
+//	    history.pushState(null, null, baseUrl 
+		
+		location.href = baseUrl 
+	        + "?maxResults=" + maxResults 
+	        + "&outofStock=" + outofStock
+	        + "&Year=" + year
+	        + "&Month=" + month
+	        + "&Week=" + week;
+//	        );
+
+	    $(".week-info").text(`${year}년 ${month}월 ${week}주`);
+	}
+
+	
+	
+	$("#maxResultSel").on("change", updateBestSeller);
 	
 	
 	
+	
+	
+	// 장바구니 추가
+	$(".cartBtn").on("click",function(){
+		let itemId = $(this).data("item-id");
+        let quantity = 1;
+// 로그인 안해도 장바구니에 저장될 수 있도록         
+		$.ajax({
+
+			type:"post"
+			,url:"/cart/add"
+			,data:{"itemId":itemId,"quantity":quantity}
+			,success:function(response){
+
+				if(response.result =="success"){
+					alert("담기 성공!");
+				} else {
+					alert("담기 실패")
+				}
+			}
+			,error:function(){
+				alert("오류!!")
+			}
+		});
+		
+	});
+	
+	
+	$("#outofStockBtn").on("click",function(){
+		maxResults = $("#maxResultSel").val() || 10;
+		outofStock = $(this).val()||0;
+		
+       
+       if (outofStock === "0") {
+			outofStock = 1; 
+			 $(this).val("1").text("품절/절판 포함");
+		} else {
+			outofStock = 0; // 버튼의 value 값을 0으로 변경
+			 $(this).val("0").text("품절/절판 제외");
+		}
+       
+       let year = $("#yearSel").val(); 
+	    let month = $("#monthSel").val(); 
+	    let week = $("#weekSel").val();
+
+	    
+	    let baseUrl = "/nunubooks/bestSeller";
+	    // history.pushState() 새로고침 안되게함
+	    
+//	    history.pushState(null, null, baseUrl 
+	  location.href = baseUrl 
+	        + "?maxResults=" + maxResults 
+	        + "&outofStock=" + outofStock
+	        + "&Year=" + year
+	        + "&Month=" + month
+	        + "&Week=" + week;
+//	        );
+
+	    $(".week-info").text(`${year}년 ${month}월 ${week}주`);
+		 
+       });
+	$("#maxResultSel").on("change", updateBestSeller);
+		 
+	
+	
+	// sel 버튼 누르면 .. 함수참조!!! 
+	$("#yearSel, #monthSel, #weekSel").on("change", updateBestSeller);
+	
+
+	
+	/*
 	
 	$("#maxResultSel").on("change",function(){
         maxResults = $(this).val() || 10;
 		outofStock = $("#outofStockBtn").val()||0;
-		period = $("#weekBtn").val() || 'week';
+		let textYear = $("#yearSel").val(); 
+		let textMonth = $("#monthSel").val(); 
 
-		let baseUrl = "/nunubooks/bestSeller";
-       location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+		let year = textYear.replace("년", ""); 
+		let month = textMonth.replace("월", ""); 
+		let week = $("#weekSel").val();
+		 
+		  let baseUrl = "/nunubooks/bestSeller";
+		  location.href = baseUrl 
+		  + "?maxResults=" + maxResults 
+				  + "&outofStock=" + outofStock
+				  +"&Year=" + year
+				  +"&Month=" + month
+				  +"&Week=" + week;
 	});
 	
 	
@@ -184,58 +301,99 @@ function setDateSelectBox(){
 			outofStock = 0; // 버튼의 value 값을 0으로 변경
 			 $(this).val("0").text("품절/절판 제외");
 		}
-       
-       let baseUrl = "/nunubooks/bestSeller";
-       location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+       let textYear = $("#yearSel").val(); 
+		let textMonth = $("#monthSel").val(); 
+
+		let year = textYear.replace("년", ""); 
+		let month = textMonth.replace("월", ""); 
+		let week = $("#weekSel").val();
+		 
+		  let baseUrl = "/nunubooks/bestSeller";
+		  
+		  location.href = baseUrl 
+		  + "?maxResults=" + maxResults 
+				  + "&outofStock=" + outofStock
+				  +"&Year=" + year
+				  +"&Month=" + month
+				  +"&Week=" + week;
  
+		 
        });
 	
 	
-	$("#weekBtn").on("click",function(){
+	
+	$("#weekSel").on("change",function(){
 
 		maxResults = $("#maxResultSel").val() || 10;
 		outofStock = $("#outofStockBtn").val()||0;
- 		period = 'week';
-       	
- 		alert(period)
-      	urlcomplete();
-	
-			$(".seller-option").text("주간 베스트셀러");
- 		 
-        let baseUrl = "/nunubooks/bestSeller";
-       location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
- 
-	});
-	$("#monthBtn").on("click",function(){
+		
+		let textYear = $("#yearSel").val(); 
+		let textMonth = $("#monthSel").val(); 
 
-		maxResults = $("#maxResultSel").val() || 10;
-		outofStock = $("#outofStockBtn").val()||0;
- 		period = 'month';
-	
-			$(".seller-option").text("월간 베스트셀러");
- 		 
-			  let baseUrl = "/nunubooks/bestSeller";
-		      location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
+		let year = textYear.replace("년", ""); 
+		let month = textMonth.replace("월", ""); 
+		let week = $("#weekSel").val();
 		 
- 
+		  let baseUrl = "/nunubooks/bestSeller";
+		  location.href = baseUrl 
+		  + "?maxResults=" + maxResults 
+				  + "&outofStock=" + outofStock
+				  +"&Year=" + year
+				  +"&Month=" + month
+				  +"&Week=" + week;
+		  
+		  $(this).siblings(".week-info").text(textYear + " " + textMonth + " " + week +"주"); 
 	});
 	
-	$("#yearBtn").on("click",function(){
+	
+	$("#monthSel").on("change",function(){
 
 		maxResults = $("#maxResultSel").val() || 10;
 		outofStock = $("#outofStockBtn").val()||0;
- 		period = 'year';
+		
+		let textYear = $("#yearSel").val(); 
+		let textMonth = $("#monthSel").val(); 
+
+		let year = textYear.replace("년", ""); 
+		let month = textMonth.replace("월", ""); 
 	
-			$(".seller-option").text("연간 베스트셀러");
+		let week = $("#weekSel").val();
  		 
-			  let baseUrl = "/nunubooks/bestSeller";
-		      location.href = baseUrl + "?period=" + period + "&maxResults=" + maxResults + "&outofStock=" + outofStock;
-		 
+	  let baseUrl = "/nunubooks/bestSeller";
+	  location.href = baseUrl 
+	  + "?maxResults=" + maxResults 
+			  + "&outofStock=" + outofStock
+			  +"&Year=" + year
+			  +"&Month=" + month
+			  +"&Week=" + week;
  
+	  $(this).siblings(".week-info").text(textYear + " " + textMonth + " " + week +"주"); 
 	});
 	
+	$("#yearSel").on("change",function(){
+
+		maxResults = $("#maxResultSel").val() || 10;
+		outofStock = $("#outofStockBtn").val()||0;
+		let textYear = $("#yearSel").val(); 
+		let textMonth = $("#monthSel").val(); 
+
+		let year = textYear.replace("년", ""); 
+		let month = textMonth.replace("월", ""); 
 	
-	
+		let week = $("#weekSel").val();
+ 		 
+	  let baseUrl = "/nunubooks/bestSeller";
+	  location.href = baseUrl 
+	  + "?maxResults=" + maxResults 
+			  + "&outofStock=" + outofStock
+			  +"&Year=" + year
+			  +"&Month=" + month
+			  +"&Week=" + week;
+ 
+	  $(this).siblings(".week-info").text(textYear + " " + textMonth + " " + week +"주"); 
+ 
+	});
+*/	
 
 	
 });
