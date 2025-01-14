@@ -62,9 +62,9 @@ public class BookController {
 		    
 		    
 		    
-		    model.addAttribute("nowYear",nowYear);
-		    model.addAttribute("nowMonth",nowMonth);
-		    model.addAttribute("nowWeek",nowWeek);
+		    model.addAttribute("nowYear",year);
+		    model.addAttribute("nowMonth",month);
+		    model.addAttribute("nowWeek",week);
 		
 		
 		 BookDTO bookDTO = bookService.bestSeller(maxResults, outofStock, year, month, week);

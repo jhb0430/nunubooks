@@ -145,7 +145,6 @@ $(document).ready(function(){
 	    let month = $("#monthSel").val(); 
 	    let week = $("#weekSel").val();
 
-	    
 	    let baseUrl = "/nunubooks/bestSeller";
 	    // history.pushState() 새로고침 안되게함
 //	    history.pushState(null, null, baseUrl 
@@ -157,8 +156,24 @@ $(document).ready(function(){
 	        + "&Month=" + month
 	        + "&Week=" + week;
 //	        );
-
+//		$(this).siblings(".week-info").text(`${year}년 ${month}월 ${week}주`);
 	    $(".week-info").text(`${year}년 ${month}월 ${week}주`);
+/*	    
+	    $.ajax({
+				type:"get"
+				,url:"/nunubooks/bestSeller"
+				,data:{"maxResults":maxResults,"outofStock":outofStock,"year":year,"month":month,"week":week}
+			    ,success:function(){
+			    	 $(".week-info").text(`${year}년 ${month}월 ${week}주`);
+				}
+			    ,error:function(){
+		
+			    	alert("오류!");
+			    }
+	    });
+	*/    
+	    
+	    
 	}
 
 	
