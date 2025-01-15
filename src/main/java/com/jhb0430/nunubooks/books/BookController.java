@@ -28,7 +28,30 @@ public class BookController {
 	
 	
 	@GetMapping("/main")
-	public String mainPage() {
+	public String mainPage(@RequestParam(value = "queryType", required = false) String queryType
+			,Model model) {
+		
+//		QueryType
+
+
+		String bestSeller = "Bestseller";
+		String newItem = "ItemNewAll"; //		ItemNewAll : 신간 전체 리스트
+		String newSpecial = "ItemNewSpecial"; //		ItemNewSpecial : 주목할 만한 신간 리스트
+		String editerChoice = "ItemEditorChoice"; //		ItemEditorChoice : 편집자 추천 리스트
+		
+		queryType = newItem;
+		BookDTO newBook = bookService.mainBookList(queryType);
+		model.addAttribute("newBook",newBook);
+		
+		queryType = bestSeller;
+		BookDTO best = bookService.mainBookList(queryType);
+		model.addAttribute("best",best);
+		
+		queryType = newSpecial;
+		BookDTO specialNew = bookService.mainBookList(queryType);
+		model.addAttribute("special",specialNew);
+		
+		
 		
 		return "books/main";
 	}

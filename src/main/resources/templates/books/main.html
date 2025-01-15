@@ -6,7 +6,8 @@
      
 
 		<section layout:fragment="contents" class="container">
-				<div class="bg-warning banner d-flex justify-content-around"><!-- banner -->
+				<!-- banner
+				<div class="bg-warning banner d-flex justify-content-around">
 					<div>
 						<img alt="추천 동화 10선 "src="/static/image/teddy.jpg" class="banner-image">
 						<span class="image-text">아가야들이 좋아하는 동화 10선</span>
@@ -17,37 +18,50 @@
 					</div>
 				
 				</div>
+				 -->
 				
-					<div class="bg-info">
-						<h2 class="font-weight-bold">새로 나온 도서</h2>
+					<div class="border" >
+						<h2 class="font-weight-bold m-3 ">새로 나온 도서</h2>
 						<div class="d-flex"> <!--  리스트 옆으로 출력시키기 위함임 -->
-								<div>
-									<img src="/static/image/car.jpg" class="info-img">
-									<h5 class="font-weigh-bold">책이름</h5>
-									<span>작가 이름</span>
-									<span>출판사 이름</span>
+							<div th:each="newBook : ${newBook.item}">
+								<div  class="m-3">
+									<img th:src="${newBook.cover}">
+									<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark">
+										<h5 class="font-weight-bold" th:text="${newBook.title}">책이름</h5>
+									</a>
+									<div th:text="${newBook.author}">작가 이름</div>
+									<div th:text="${newBook.publisher}">출판사 이름</div>
 								</div>
 							</div>
+						</div>
 					</div>
-					<div class="bg-secondary">
-						<h2 class="font-weight-bold">베스트셀러</h2>
+					<div class="border">
+						<h2 class="font-weight-bold m-3">베스트셀러</h2>
 						<div class="d-flex"> <!--  리스트 옆으로 출력시키기 위함임 -->
-								<div>
-									<img src="/static/image/car.jpg" class="info-img">
-									<h5 class="font-weigh-bold">책이름</h5>
-									<span>작가 이름</span>
-									<span>출판사 이름</span>
+							<div th:each="best : ${best.item}">
+								<div  class="m-3">
+									<img th:src="${best.cover}">
+									<a th:href="|/nunubooks/product?itemId=${best.itemId}|" class="text-dark">
+										<h5 class="font-weight-bold" th:text="${best.title}">책이름</h5>
+									</a>
+									<span th:text="${best.author}">작가 이름</span>
+									<span th:text="${best.publisher}">출판사 이름</span>
 								</div>
 							</div>
+						</div>
 					</div>
-					<div class="bg-warning ">
-						<h2 class="font-weight-bold">화제의 신간</h2>
+					<div class="border ">
+						<h2 class="font-weight-bold m-3">화제의 신간</h2>
 							<div class="d-flex"> <!--  리스트 옆으로 출력시키기 위함임 -->
-								<div>
-									<img src="/static/image/car.jpg" class="info-img">
-									<h5 class="font-weigh-bold">책이름</h5>
-									<span>작가 이름</span>
-									<span>출판사 이름</span>
+								<div th:each="special : ${special.item}">
+									<div  class="m-3">
+										<img th:src="${special.cover}">
+										<a th:href="|/nunubooks/product?itemId=${special.itemId}|" class="text-dark">
+											<h5 class="font-weight-bold" th:text="${special.title}">책이름</h5>
+										</a>
+										<span th:text="${special.author}">작가 이름</span>
+										<span th:text="${special.publisher}">출판사 이름</span>
+									</div>
 								</div>
 							</div>
 					</div>

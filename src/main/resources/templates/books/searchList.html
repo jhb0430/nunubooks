@@ -85,22 +85,22 @@
 			</div>
 		
 		<!--  페이지 넘버 -->
-			<div class="d-flex align-items-center justify-content-center">
-				<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div>
-				<div class="pageNum-now number-wrapper">1</div>
-<!-- 
-				<div class="pageNum">2</div>
- -->
-
-				<div><i class="bi bi-three-dots text-secondary"></i></div>
-				<div class="pageNum">10</div>
-				<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div>
+			<div class="d-flex align-items-center justify-content-center pagination-container">
+				<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div><!--  이전 -->
+				<div class="d-flex number-wrapper">
+					<div class="pageNum-now ">1</div>
+					<!-- 
+					<div><i class="bi bi-three-dots text-secondary"></i></div>
+					<div class="pageNum">10</div>
+					 -->
+				</div>
+				<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div><!--  이후 -->
 			</div>
 		</div>
 		
 		</section>
 
-<script src="./pagination.min.js"></script>
+
 <script layout:fragment="script">
 
 
@@ -112,13 +112,37 @@
 		const totalResults = $("#totalResults").val();
 		const maxResults = $("#maxResultSel").val();
 		
-		const getTotalPageCount = () => {
+		function dataSource(){
+			var result = [];
+			
+		    for(var i = 1; i <= totalResults; i++){
+		        result.push(i);
+		    }
+		    return result;
+		}
+		
+		const getTotalPageCount = () => { // 총 페이지 수 
 			  return Math.ceil(totalResults / maxResults);
 			};
+			
 		
 		
-		const numberButtonWrapper = document.querySelector('.number-button-wrapper');
+			
+		const numberWrapper = $('.number-wrapper');
 		
+		const setPageButtons = () => {
+			numberWrapper.innerHTML = ''; // 페이지 번호 wrapper 내부를 비워줌
+
+			  for (let i = 1; i <= getTotalPageCount(); i++) {
+				  numberWrapper.innerHTML += `<div class="pageNum">${i} </div>`;
+			  }
+			  numberWrapper.firstChild.classList.add('pageNum-now');
+			  pageNumberButtons = $(".pageNum");
+			//https://pagination.js.org/docs/index.html  
+			//https://github.com/jhsung23/vanillajs-web-project/blob/master/pagination/script.js
+			//https://getbootstrap.com/docs/4.6/components/pagination/
+			// https://pabeba.tistory.com/177 아오... 
+			};
 		
 		
 		$("#maxResultSel").on("change",function(){
