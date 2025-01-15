@@ -120,7 +120,8 @@ public class BookController {
 	public String bookList(
 			@RequestParam("query") String query
 			,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
-			, @RequestParam(value = "page", defaultValue = "1") int page
+//			, @RequestParam(value = "page", defaultValue = "1") int page
+			,@RequestParam(value = "start", defaultValue = "1") int start
 			,Model model) {
 		 WebClient webClient = webClientBuilder.build();
 		 
@@ -129,6 +130,7 @@ public class BookController {
 //		 if((Integer)maxResults == null) {
 			 
 //		 }
+		 int page = (start - 1) / maxResults + 1; 
 		 
 		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page);
 		 model.addAttribute("books",bookDTO);

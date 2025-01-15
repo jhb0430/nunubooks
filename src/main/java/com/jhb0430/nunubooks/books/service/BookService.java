@@ -21,12 +21,11 @@ public class BookService {
 	
 	public BookDTO fetchBooks(String query
 			,int maxResults
-			,int page
+			,int start
 			) {
 		
 		 WebClient webClient = webClientBuilder.build();
 		 
-		 int start = (page - 1) * maxResults + 1;
 		 
 		 Mono<BookDTO> response = 
 				 webClient.get()
