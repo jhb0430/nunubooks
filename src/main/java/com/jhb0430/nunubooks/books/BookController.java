@@ -120,6 +120,7 @@ public class BookController {
 	public String bookList(
 			@RequestParam("query") String query
 			,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
+			, @RequestParam(value = "page", defaultValue = "1") int page
 			,Model model) {
 		 WebClient webClient = webClientBuilder.build();
 		 
@@ -129,11 +130,11 @@ public class BookController {
 			 
 //		 }
 		 
-		 BookDTO bookDTO = bookService.fetchBooks(query,maxResults);
+		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page);
 		 model.addAttribute("books",bookDTO);
 		 model.addAttribute("query",query);
 		 model.addAttribute("maxResults",maxResults);
-		 
+		 model.addAttribute("page", page); 
 		 
 		 
 	    return "books/searchList";

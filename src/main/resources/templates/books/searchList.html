@@ -109,61 +109,101 @@
 		
 		//페이지네이션
 		
-		const totalResults = $("#totalResults").val();
-		const maxResults = $("#maxResultSel").val();
+		const totalResults = parseInt($("#totalResults").text()) || 0;
+		let maxResults = parseInt($("#maxResultSel").val())|| 10;
+		let currentPage = 1; // 현재 페이지 초기값
 		
-		function dataSource(){
-			var result = [];
+		const getTotalPageCount = () =>  // 총 페이지 수 
+			 Math.ceil(totalResults / maxResults);
 			
-		    for(var i = 1; i <= totalResults; i++){
-		        result.push(i);
-		    }
-		    return result;
-		}
-		
-		const getTotalPageCount = () => { // 총 페이지 수 
-			  return Math.ceil(totalResults / maxResults);
-			};
-			
-		
 		
 			
 		const numberWrapper = $('.number-wrapper');
 		
+		
+		//https://pagination.js.org/docs/index.html  
+		//https://github.com/jhsung23/vanillajs-web-project/blob/master/pagination/script.js
+		//https://getbootstrap.com/docs/4.6/components/pagination/
+		// https://pabeba.tistory.com/177 아오... 
+		
 		const setPageButtons = () => {
-			numberWrapper.innerHTML = ''; // 페이지 번호 wrapper 내부를 비워줌
-
-			  for (let i = 1; i <= getTotalPageCount(); i++) {
-				  numberWrapper.innerHTML += `<div class="pageNum">${i} </div>`;
+			numberWrapper.empty(); // 페이지 번호 wrapper 내부를 비워줌
+			
+			const totalPageCount = getTotalPageCount();
+			
+			  for (let i = 1; i <= totalPageCount; i++) {
+				  const pageButton = $(`<div class="pageNum">${i}</div>`);
+				  if (i === currentPage) {
+			            pageButton.addClass("pageNum-now"); // 현재 페이지 강조
+			        }
+				  numberWrapper.append(pageButton);
 			  }
-			  numberWrapper.firstChild.classList.add('pageNum-now');
-			  pageNumberButtons = $(".pageNum");
-			//https://pagination.js.org/docs/index.html  
-			//https://github.com/jhsung23/vanillajs-web-project/blob/master/pagination/script.js
-			//https://getbootstrap.com/docs/4.6/components/pagination/
-			// https://pabeba.tistory.com/177 아오... 
+			  attachPageButtonEvents(); // 각 버튼에 클릭 이벤트 연결
+		
 			};
 		
 		
-		$("#maxResultSel").on("change",function(){
+			 // 페이지 버튼 클릭 이벤트 연결
+			const attachPageButtonEvents = () => {
+		        $(".pageNum").on("click", function () {
+		            const selectedPage = parseInt($(this).text());
+		            
+		            if (selectedPage !== currentPage) {
+		                currentPage = selectedPage;
+		                setPageButtons(); // 페이지 버튼 다시 그리기
+		                updateUrl();
+		            }
+		        });
+		    };
+			
+			
+			function updateUrl(){
+				 let baseUrl = "/nunubooks/searchList";
+		     	 let query = $("input[name='query']").val() || ""; // 검색어 가져오기
+		     	 let maxResults = $("#maxResultSel").val() || 10;
+		     	 
+		     	 location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&page=" + currentPage;
+			}
+			
+			
+			
+			
+
+		    // 이전/다음 버튼 동작
+		    $("#prevBtn").on("click", function () {
+		        if (currentPage > 1) {
+		            currentPage--;
+		            setPageButtons();
+		            updateUrl();
+		        }
+		    });
+
+		    $("#nextBtn").on("click", function () {
+		        if (currentPage < getTotalPageCount()) {
+		            currentPage++;
+		            setPageButtons();
+		            updateUrl();
+		        }
+		    });
+			
+			
+			
+			
+			$("#maxResultSel").on("change", updateUrl);
             // alert();
-           let maxResults = $(this).val();
-           if (!maxResults) {
-               maxResults = 10;
-           }
  //          alert(maxResults);
          
            // jquery test06
            // name이 member인 input 태그 중에서 선택된 input태그 의 value 속성 가져오기 
                                // $("input[name=type]:checked")
-           let query = $("input[name='query']").val();
 
-           let baseUrl = "/nunubooks/searchList";
+		// 초기 렌더링
+    setPageButtons();
+
            
-           location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults;
-		});
-
-		
+           
+           
+           
 		
 		$(".cartBtn").on("click",function(){
 		let itemId = $(this).data("item-id");
@@ -173,23 +213,23 @@
 //	alert(itemId);
 // 로그인 안해도 장바구니에 저장될 수 있도록         
         
-		$.ajax({
-
-			type:"post"
-			,url:"/cart/add"
-			,data:{"itemId":itemId,"quantity":quantity}
-			,success:function(response){
-
-				if(response.result =="success"){
-					alert("담기 성공!");
-				} else {
-					alert("담기 실패")
+			$.ajax({
+	
+				type:"post"
+				,url:"/cart/add"
+				,data:{"itemId":itemId,"quantity":quantity}
+				,success:function(response){
+	
+					if(response.result =="success"){
+						alert("담기 성공!");
+					} else {
+						alert("담기 실패")
+					}
 				}
-			}
-			,error:function(){
-				alert("오류!!")
-			}
-		});
+				,error:function(){
+					alert("오류!!")
+				}
+			});
 		
 		});
 	
