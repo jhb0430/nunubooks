@@ -246,6 +246,14 @@ color: #7CC491;
 	text-align: center;
 	margin-right:4px;
 }
+.chevron{
+	width:20px;
+	height:20px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	margin-right:4px;
+}
 
 .outline{
 	border:solid 1px #E7E5E5;

@@ -20,7 +20,7 @@
 			 <div class="d-flex">
 				<div class="mr-2" th:if="${books.query !=null}" th:text="|' ${books.query} ' 검색 결과|">'검색어' 검색 결과  </div>
 				<h5 class="font-weight-bold mr-2">전체</h5>
-				<h5 class="text-success font-weight-bold" th:text="|${books.totalResults} 건|">00건</h5>
+				<h5 class="text-success font-weight-bold" th:text="|${books.totalResults} 건|" id="totalResults" th:value="${books.totalResults}">00건</h5>
 			 </div>
 			 
 			<div class="d-flex align-items-center justify-content-end my-3">
@@ -86,21 +86,40 @@
 		
 		<!--  페이지 넘버 -->
 			<div class="d-flex align-items-center justify-content-center">
-				<div class="pageNum-now">1</div>
+				<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div>
+				<div class="pageNum-now number-wrapper">1</div>
+<!-- 
 				<div class="pageNum">2</div>
-				<div class="pageNum">3</div>
+ -->
+
 				<div><i class="bi bi-three-dots text-secondary"></i></div>
 				<div class="pageNum">10</div>
+				<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div>
 			</div>
 		</div>
 		
-		
 		</section>
 
+<script src="./pagination.min.js"></script>
 <script layout:fragment="script">
+
 
 	$(document).ready(function(){
 	
+		
+		//페이지네이션
+		
+		const totalResults = $("#totalResults").val();
+		const maxResults = $("#maxResultSel").val();
+		
+		const getTotalPageCount = () => {
+			  return Math.ceil(totalResults / maxResults);
+			};
+		
+		
+		const numberButtonWrapper = document.querySelector('.number-button-wrapper');
+		
+		
 		
 		$("#maxResultSel").on("change",function(){
             // alert();
