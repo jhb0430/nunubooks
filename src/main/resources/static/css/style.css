@@ -111,6 +111,7 @@ color: #7CC491;
 	background-color : #FEF9F9"
 }
 
+/*
 .banner {
 	
 	width:1400px;
@@ -133,6 +134,48 @@ color: #7CC491;
 	font-weight:bold;
 	font-size:38px;
 }
+*/
+.main-box{
+	width: 1200px;
+  overflow: scroll;
+   /* 가로 스크롤 */
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.main-bookbox{
+	width: 190px;
+	height:400px;
+}
+.main-img{
+	width: 150px;
+	height:220px;
+	object-fit: cover;
+}
+
+.main-info{
+	width: 160px;
+	height:130px;
+}
+.main-title-info{
+	width: 150px;
+	 height:72px;
+	overflow:hidden;
+	display: 
+	-webkit-box;
+    -webkit-line-clamp: 3; /* 텍스트를 3줄까지만 표시 */
+    -webkit-box-orient: vertical;
+	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
+    white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+}
+.main-pub-info{
+	width: 150px;
+	height:80px;
+	overflow:hidden;
+	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
+    white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+}
+
 
 .book-image {
 	width:250px;
