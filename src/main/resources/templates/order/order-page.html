@@ -42,18 +42,18 @@
 					<h4 class="font-weight-bold my-3 ">배송지 정보</h4>
 					<div class="d-flex">
 						<div class="mr-2">
-							<input type="radio"><label  class="ml-1">주문자와 동일</label>
+							<label  class="mr-1"><input type="radio" name="addressInfo" id="userAdrBtn" checked>기본 배송지</label>
 						</div>
 						<div>
-							<input type="radio"><label class="ml-1">신규 배송지 입력</label>
+							<label class="mㄱ-1"><input type="radio" name="addressInfo" id="newAdrBtn">신규 배송지 입력</label>
 						</div>
 					</div>
 					
 					<div class="order-address">
 						<div class="my-3">
 						 <h5 class="font-weight-bold">받는 분</h5>
-						 <div>
-						 	<input type="text" placeholder="이름을 입력해 주세요" class="form-control">
+						 <div><!--  사용자의 정보를 value 로 불러와서 출력시키기 -->
+						 	<input type="text" placeholder="이름을 입력해 주세요" class="form-control" >
 						 </div>
 						 <input type="text" placeholder="휴대폰 번호를 입력해주세요" class="form-control">
 						</div>
