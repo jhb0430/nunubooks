@@ -59,7 +59,8 @@ public class BookController {
 	
 	@GetMapping("/bestSeller")
 	public String bestSellerList(
-					@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
+					@RequestParam(value="queryType" , defaultValue = "Bestseller") String queryType
+					,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
 					,@RequestParam(value="outofStock" , defaultValue = "0") int outofStock
 					,@RequestParam(value = "year", required = false) Integer year
 				    ,@RequestParam(value = "month", required = false) Integer month
@@ -85,15 +86,17 @@ public class BookController {
 		    
 		    
 		    
+		    
 		    model.addAttribute("nowYear",year);
 		    model.addAttribute("nowMonth",month);
 		    model.addAttribute("nowWeek",week);
 		
 		
-		 BookDTO bookDTO = bookService.bestSeller(maxResults, outofStock, year, month, week);
+		 BookDTO bookDTO = bookService.bestSeller(queryType, maxResults, outofStock, year, month, week);
 		 model.addAttribute("seller",bookDTO);
 		 
 		 model.addAttribute("maxResults",maxResults);
+		 model.addAttribute("queryType",queryType);
 		
 		
 		return "books/best-seller";

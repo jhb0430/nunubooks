@@ -125,8 +125,8 @@
 							<td th:text="|${#numbers.formatInteger(cartList.totalPoints, 3, 'COMMA')} point|">000 point</td>
 						</tr>
 					</table>
-						<button type="button" class="btn btn-primary my-3 w-100">구매하기</button>
-						<button type="button" class="btn btn-primary my-3 w-100">수령 매장 선택</button>
+						<button type="button" class="btn btn-primary my-3 w-100 " id="orderBtn">구매하기</button>
+						<button type="button" class="btn btn-primary my-3 w-100">방문 수령</button>
 				</div>
 			
 				
@@ -145,6 +145,12 @@
 		$(document).ready(function(){
 
 	
+			
+			$("#orderBtn").on("click",function(){
+
+				
+				location.href="/nunubooks/order/order";
+			});
 			
 			// subBtn클릭시 quantity--;
 			$(".subBtn").on("click",function(){

@@ -76,7 +76,9 @@ public class BookService {
 	
 
 
-	public BookDTO bestSeller(int maxResults
+	public BookDTO bestSeller(
+			String queryType
+			,int maxResults
 			, int outofStock 
 			,int year
 			,int month
@@ -96,7 +98,8 @@ public class BookService {
 						.host("www.aladin.co.kr")
 						.path("/ttb/api/ItemList.aspx")
 						.queryParam("ttbkey","ttbleky22241703001")
-						.queryParam("QueryType","Bestseller")
+						.queryParam("QueryType",queryType)
+//						.queryParam("QueryType","Bestseller")
 						.queryParam("MaxResults",maxResults)
 						.queryParam("Year",year)
 						.queryParam("Month",month)
