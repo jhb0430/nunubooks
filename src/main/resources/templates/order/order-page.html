@@ -154,7 +154,8 @@
 		</section>
 
 		<script layout:fragment="script">
-		
+		$(document).ready(function(){
+
 
 		//userAdrBtn을 누르면 user가 등록해둔 정보가 출력됨 
 		//newAdrBtn을 누르면 필드 초기화(비워짐)
@@ -165,8 +166,8 @@
 		let detailAddr = $('#detailAddr').val();
 		
 		
-		 $('#userAdrBtn').on('click', function() {
-	            // user 정보 다시 채워주기
+		 $("#userAdrBtn").on('click', function() {
+	            // user 정보 채우기
 	            $('#userName').val(name);
 	            $('#userPhone').val(phone);
 	            $('#postcode').val(postcode);
@@ -175,13 +176,15 @@
 	        });
 
 	        // 신규 배송지 입력 선택시
-	        $('#newAdrBtn').on('click', function() {
+	        $("#newAdrBtn").on('click', function() {
 	            // 입력 필드 비우기
 	            $('#userName').val('');
 	            $('#userPhone').val('');
 	            $('#postcode').val('');
 	            $('#addr').val('');
 	            $('#detailAddr').val('');
+	            
+	            // 배송지 저장
 	        });
 		
 		
@@ -234,6 +237,7 @@
 	                document.getElementById("addr").value += extraAddr;
 	                // 커서를 상세주소 필드로 이동한다.
 	                document.getElementById("detailAddr").focus();
+	                
 	            } 
 			// 자바문법 위랑 통일 시키기 
 	        
@@ -244,7 +248,7 @@
 		
 		});
 		
-		
+	});	
 		</script>
 
 </html>
