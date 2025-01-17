@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jhb0430.nunubooks.order.dto.OrderDTO;
 import com.jhb0430.nunubooks.order.service.OrderService;
 import com.jhb0430.nunubooks.user.domain.User;
 import com.jhb0430.nunubooks.user.service.UserService;
@@ -37,11 +38,19 @@ public class OrderController {
 		String[] detailAddress = user.getAddress().split("\\)");
 		String userAddr = detailAddress[0] + ")";
 		String detailAddr = detailAddress[1];
+		
 		model.addAttribute("user",user);
 		model.addAttribute("userAddr",userAddr);
 		model.addAttribute("detailAddr",detailAddr);
 		
+		OrderDTO orderDTO = orderService.getOrderList(userId);
 
+		
+		model.addAttribute("order",orderDTO);
+		
+//		model.addAttribute("item",);
+//		orderDTO.getTotalDTO().getCartDTOList().get(0).getBookInfo();
+//		orderDTO.getTotalDTO().getCartDTOList().get(0).getQuantity();
 		
 		
 		return "order/order-page";

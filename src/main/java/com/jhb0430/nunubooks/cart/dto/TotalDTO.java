@@ -21,4 +21,7 @@ public class TotalDTO {
 	private int totalStandard;
 	private int totalDiscount;
 	private int finalPrice;
+	
+	private int cartCount;
+	
 }

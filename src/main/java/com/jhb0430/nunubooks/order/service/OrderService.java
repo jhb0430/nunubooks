@@ -9,6 +9,7 @@ import com.jhb0430.nunubooks.cart.service.CartService;
 import com.jhb0430.nunubooks.order.dto.OrderDTO;
 import com.jhb0430.nunubooks.order.repository.OrderRepository;
 import com.jhb0430.nunubooks.user.domain.User;
+import com.jhb0430.nunubooks.user.service.UserService;
 
 @Service
 public class OrderService {
@@ -20,10 +21,15 @@ public class OrderService {
 	
 	private OrderRepository orderRepository;
 	private CartService cartService;
+	private UserService userService;
 	
-	public OrderService(OrderRepository orderRepository, CartService cartService) {
+	public OrderService(OrderRepository orderRepository
+			,CartService cartService
+			,UserService userService
+			) {
 		this.orderRepository = orderRepository;
 		this.cartService = cartService;
+		this.userService = userService;
 	}
 	
 	
@@ -44,7 +50,11 @@ public class OrderService {
 //		} 배송비 - TotalDTO로 넘김. cart에서도 쓰기 때문...
 		
 		
+		// 주문상품 갯수 => totalDTO-cartDTO
+		// 주문 상품 정보 -> cartDTO.bookInfo
+		
 		return orderDTO;
+		
 
 		
 	}
