@@ -223,6 +223,9 @@ color: #7CC491;
 }
 .cart-book-img{
 	width:90px;
+	height:140px;
+	object-fit: contain;
+	vertical-align: middle;
 }
 .cart-total-price{
 	width:290px;

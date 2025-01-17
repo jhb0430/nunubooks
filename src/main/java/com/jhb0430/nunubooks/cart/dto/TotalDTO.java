@@ -15,8 +15,10 @@ public class TotalDTO {
 	
 	private List<CartDTO> cartDTOList;
 	
+	private int shippingFee;
 	private int totalPrice;
 	private int totalPoints;
 	private int totalStandard;
 	private int totalDiscount;
+	private int finalPrice;
 }

@@ -53,20 +53,20 @@
 						<div class="my-3">
 						 <h5 class="font-weight-bold">받는 분</h5>
 						 <div><!--  사용자의 정보를 value 로 불러와서 출력시키기 -->
-						 	<input type="text" placeholder="이름을 입력해 주세요" class="form-control" >
+						 	<input type="text" placeholder="이름을 입력해 주세요" class="form-control"  th:value="${user.name}">
 						 </div>
-						 <input type="text" placeholder="휴대폰 번호를 입력해주세요" class="form-control">
+						 <input type="text" placeholder="휴대폰 번호를 입력해주세요" class="form-control" th:value="${user.phoneNumber}">
 						</div>
 						
 						<div class="my-3">
 						 <h5 class="font-weight-bold">주소</h5>
 						 <button type="button" class="btn btn-outline-secondary w-100" id="postCodeBtn"> <i class="bi bi-search mr-3"></i>주소 찾기</button>
 						 	<div class="user-address">
-						 		<input type="text" class="form-control w-25 mt-2"  placeholder="우편번호" id="postcode">
-						 		<input type="text" class="form-control mt-2" placeholder="기본배송지" id="addr">
-						 		<input type="text" class="form-control mt-2" placeholder="상세주소" id="detailAddr">
+						 		<input type="text" class="form-control w-25 mt-2"  placeholder="우편번호" id="postcode" th:value="${user.postcode}">
+						 		<input type="text" class="form-control mt-2" placeholder="기본배송지" id="addr" th:value="${userAddr}">
+						 		<input type="text" class="form-control mt-2" placeholder="상세주소" id="detailAddr" th:value="${detailAddr}">
 						 	</div>
-						 <div><input type="checkbox" class="mt-3 mr-1">기본배송지로 설정</div>
+						 <div><input type="checkbox" checked class="mt-3 mr-1">기본배송지로 설정</div>
 						</div>
 					</div>
 					</div><!-- 박스 안에서 마진값 전체로 주는 역할 -->
@@ -86,8 +86,12 @@
 					판매가 145
 					 -->
 						<tr class="order-bookInfo ">
-							<td class="order-book-img"><img src="https://image.aladin.co.kr/product/35255/76/coversum/k112934145_1.jpg " ></td>
-							<td class="order-book-title align-middle"><div class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구 </div></td>
+							<td class="order-book-img">
+								<img src="https://image.aladin.co.kr/product/35255/76/coversum/k112934145_1.jpg " >
+							</td>
+							<td class="order-book-title align-middle">
+								<div class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구 </div>
+							</td>
 							<td class="order-book-amount align-middle text-center">
 								<div class="font-weight-bold">1개</div>
 							</td>

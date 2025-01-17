@@ -77,7 +77,8 @@ public class CartService {
         int totalPoints = 0;
         int totalDiscount = 0;
         int totalStandard = 0;
-        
+        int shippingFee = 0;
+        int finalPrice = 0;
 		for(Cart cart : cartList) {
 			
 			int itemId = cart.getItemId();
@@ -107,6 +108,7 @@ public class CartService {
 		 
 		  int quantity = cart.getQuantity();
 		  
+		  
 		  int priceSales  =  book.getItem().get(0).getPriceSales();
 		  int mileage = book.getItem().get(0).getMileage();
 		  
@@ -118,6 +120,13 @@ public class CartService {
 		  totalStandard += priceStandard * quantity;
 		  
 		  totalDiscount = totalStandard - totalPrice;
+		  
+		  if(totalPrice >= 15000 ){
+				shippingFee = 0;
+			}  else {
+				shippingFee = 4000;
+			}
+		  finalPrice = totalPrice + shippingFee;
 		  
 		  CartDTO cartDTO = CartDTO.builder()
 				  					.id(cart.getId())
@@ -139,6 +148,8 @@ public class CartService {
 				.totalPrice(totalPrice)
 				.totalPoints(totalPoints)
 				.totalDiscount(totalDiscount)
+				.shippingFee(shippingFee)
+				.finalPrice(finalPrice)
 				.build();
 	
 //		return cartDTOList;

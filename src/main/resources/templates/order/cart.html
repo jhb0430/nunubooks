@@ -60,7 +60,9 @@
 									<div class="cart-check mr-4">
 										<input type="checkbox" class="mx-3" th:data-cart-id="${cart.id}">
 									</div>
+									<div>
 									<img th:src="${item.cover}" class="cart-book-img mx-2">
+									</div>
 									<div class="mx-3 cart-title"> <!--  책 정보 -->
 										<h5 class="font-weight-bold" th:text="${item.title}">책 제목 어쩌구저쩌구저쩌구</h5>
 										<div class="d-flex mt-2">
@@ -110,7 +112,8 @@
 						</tr>
 						<tr>
 							<th>배송비</th>
-							<td>0000원</td>
+							<td th:if= "${cartList.shippingFee > 0}" th:text="|${#numbers.formatInteger(cartList.shippingFee, 3, 'COMMA')} 원|">0000원</td>
+							<td th:if= "${cartList.shippingFee == 0}" class="text-success font-weight-bold">무료 배송</td>
 						</tr>
 						<tr>
 							<th>상품 할인</th>
@@ -118,7 +121,7 @@
 						</tr>
 						<tr class=" border-top">
 							<th>결제 예정 금액</th>
-							<td>0000원</td>
+							<td th:text="|${#numbers.formatInteger(cartList.finalPrice, 3, 'COMMA')} 원|">0000원</td>
 						</tr>
 						<tr>
 							<th>적립 예정 포인트</th>
