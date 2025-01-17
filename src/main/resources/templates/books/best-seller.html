@@ -33,11 +33,11 @@
 						 <select class="form-control select mx-2" id="monthSel">
 						</select>
 						 <select class="form-control select mx-2" id="weekSel">
-							 <option value="1" th:selected="${nowWeek == 1 or week ==1}">1주</option>
-							 <option value="2" th:selected="${nowWeek == 2 or week ==2}">2주</option>
-							 <option value="3" th:selected="${nowWeek == 3 or week ==3}">3주</option>
-							 <option value="4" th:selected="${nowWeek == 4 or week ==4}">4주</option>
-						</select>
+						  <option value="1" th:selected="${nowWeek == 1 or week == 1}">1주</option>
+			              <option value="2" th:selected="${nowWeek == 2 or week == 2}">2주</option>
+			              <option value="3" th:selected="${nowWeek == 3 or week == 3}">3주</option>
+			              <option value="4" th:selected="${nowWeek == 4 or week == 4}">4주</option>
+			             </select>
 					 <!-- 
 						<button type="button" class="btn btn-secondary mx-1" id="weekBtn" value="week">주간</button>
 						<button type="button" class="btn btn-secondary mx-1" id="monthBtn" value="month">월간</button>
@@ -121,48 +121,58 @@ $(document).ready(function(){
 	let outofStock = 0;
 	let maxResults = 10;
 	
-	setDateSelectBox();
+	const now = new Date();
+	const now_year = now.getFullYear();
+	const now_month = now.getMonth()+1;
 
+	setDateSelectBox(); // 세렉트박스 초기화
+	
 	function setDateSelectBox(){
-		var now = new Date();
-		var now_year = now.getFullYear();
-		var now_month = now.getMonth() + 1;
-		
+
+		/*
 		let year = $("#yearSel").val(); 
 	    let month = $("#monthSel").val(); 
 	    let week = $("#weekSel").val();
+		*/
+		const urlParams = new URLSearchParams(window.location.search); // url에서 파라미터 가져오기 
+		const selectedY = urlParams.get('year') || now_year;
+		const selectedM = urlParams.get('month') || now_month;
 		
-		// 2005년 부터 올해까지
-		for(var i = now_year; i >= 2005; i--){
-		//|| (주소창 활용해서 조건주기)
-			if(i === now_year ){
-				$("#yearSel").append("<option value='" + i + "' selected>" + i + " 년" + "</option>");
-			} 
-			else {
-				$("#yearSel").append("<option value='"+ i +"'>"+ i + " 년" +"</option>");
-			}
-		}
-		// 월
-		for(var i = 1; i <= 12; i++){
-			 if (i === now_month) {
-		            $("#monthSel").append("<option value='" + i + "' selected>" + i + " 월" + "</option>");
-		        } else {
-		            $("#monthSel").append("<option value='" + i + "'>" + i + " 월" + "</option>");
-		        }
-		}
+		       for (let i = now_year; i >= 2005; i--) {
+            $("#yearSel").append(
+                `<option value="${i}" ${i == selectedY ? "selected" : ""}>${i} 년</option>`
+            );
+        }
+
+        // 월 선택
+        for (let i = 1; i <= 12; i++) {
+            $("#monthSel").append(
+                `<option value="${i}" ${i == selectedM ? "selected" : ""}>${i} 월</option>`
+            );
+        }
+
+	    
+	    
+	    
+	    
+	    
+	    
 	}
 	
+	
+		
 
 	function updateBestSeller() {
-	    let maxResults = $("#maxResultSel").val() || 10;
-	    let outofStock = $("#outofStockBtn").val() || 0;
-	    let year = $("#yearSel").val() || 0; 
-	    let month = $("#monthSel").val() || 0; 
-	    let week = $("#weekSel").val() || 0; 
 
-	    let queryType = $(".queryType").data("query-id") || 'Bestseller'; 
-	    	
-	    let baseUrl = "/nunubooks/bestSeller";
+		const year = $("#yearSel").val() || 0; 
+		const month = $("#monthSel").val() || 0; 
+		const week = $("#weekSel").val() || 0; 
+
+		const maxResults = $("#maxResultSel").val() || 10;
+		const outofStock = $("#outofStockBtn").val() || 0;
+		const queryType = $(".queryType").data("query-id") || 'Bestseller'; 
+    	
+		const baseUrl = "/nunubooks/bestSeller";
 	    // history.pushState() 새로고침 안되게함
 //	    history.pushState(null, null, baseUrl 
 		
@@ -173,6 +183,7 @@ $(document).ready(function(){
 	        + "&year=" + year
 	        + "&month=" + month
 	        + "&week=" + week;
+	}
 //	        );
 //		$(this).siblings(".week-info").text(`${year}년 ${month}월 ${week}주`);
 /*	    
@@ -190,21 +201,21 @@ $(document).ready(function(){
 	    });
 	*/    
 	    
-	    
-	}
 
 	
 	
 	$("#maxResultSel").on("change", updateBestSeller);
 	
 	
+	// sel 버튼 누르면 .. 함수참조!!! 
+	$("#yearSel, #monthSel, #weekSel").on("change", updateBestSeller);
 	
 	
 	
 	// 장바구니 추가
 	$(".cartBtn").on("click",function(){
-		let itemId = $(this).data("item-id");
-        let quantity = 1;
+		const itemId = $(this).data("item-id");
+		const quantity = 1;
 // 로그인 안해도 장바구니에 저장될 수 있도록         
 		$.ajax({
 
@@ -228,11 +239,16 @@ $(document).ready(function(){
 	
 	
 	$("#outofStockBtn").on("click",function(){
+		//outofStock 값이 0이면 1로 변경하고// 1이면 0으로 변경
+		
+		
+        outofStock = (outofStock === 0) ? 1 : 0;
+        
+        // outofStock의 value가 0이면 품절/절판 제외 표시. 1이면 포함으로 표시 (url=1일때는 품절/절판 제외중이니까 )
+        $(this).val(outofStock).text(outofStock === 0 ? "품절/절판 제외" : "품절/절판 포함");
 
-		maxResults = $("#maxResultSel").val() || 10;
-		
+		/* 아 왜 안돼~!~!~~!!~내가 삼항조건어쩌구도 알아왔는데~!~!~~!~! 
 		outofStock = $(this).val()||0;
-		
        if (outofStock === "0") {
 			outofStock = 1; 
 			 $(this).val("1").text("품절/절판 포함");
@@ -241,63 +257,22 @@ $(document).ready(function(){
 			 $(this).val("0").text("품절/절판 제외");
 		}
 		
-       
-	    let year = $("#yearSel").val() || 0; 
-	    let month = $("#monthSel").val() || 0; 
-	    let week = $("#weekSel").val() || 0; 
-
-	    let queryType = $(".queryType").data("query-id") || 'Bestseller'; 
+       */
        
        
-	    
-	    let baseUrl = "/nunubooks/bestSeller";
-	    // history.pushState() 새로고침 안되게함
-//	    history.pushState(null, null, baseUrl 
-		
-	  location.href = baseUrl 
-	 		+ "?queryType=" + queryType 
-	        + "&maxResults=" + maxResults 
-	        + "&outofStock=" + outofStock
-	        + "&Year=" + year
-	        + "&Month=" + month
-	        + "&Week=" + week;
+ //      alert(outofStock); url function 없애고 검사했을땐 잘되는데... ?? ㅠㅠ url이 문젠가 
+       
+        updateBestSeller();
+    });
        });
 	
 	
 	
-	$("#maxResultSel").on("change", updateBestSeller);
 		 
 	
-	
-	// sel 버튼 누르면 .. 함수참조!!! 
-	$("#yearSel, #monthSel, #weekSel").on("change", updateBestSeller);
-	
 
 	
-	// 장바구니 추가
-	$(".cartBtn").on("click",function(){
-		let itemId = $(this).data("item-id");
-        let quantity = 1;
-// 로그인 안해도 장바구니에 저장될 수 있도록         
-		$.ajax({
 
-			type:"post"
-			,url:"/cart/add"
-			,data:{"itemId":itemId,"quantity":quantity}
-			,success:function(response){
-
-				if(response.result =="success"){
-					alert("담기 성공!");
-				} else {
-					alert("담기 실패")
-				}
-			}
-			,error:function(){
-				alert("오류!!")
-			}
-		});
-		
-	});
 	
 
 	
