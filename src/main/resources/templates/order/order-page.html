@@ -76,36 +76,28 @@
 				
 				<div class="border rounded order-box p-1 mt-4"> <!--  주문하려는 책 정보 -->
 				<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
-					<h4 class="font-weight-bold my-3" >주문 상품 (0)</h4>
-					<table class="table" >
-						<tr class="order-bookInfo ">
+					<h4 class="font-weight-bold my-3" th:text="|주문 상품 (${orderDTO.totalDTO.cartCount})|">주문 상품 (0)</h4>
+					<!-- 
+					<div th:if="${order.totalDTO.cartDTOList}" >
+					<p th:text="${#lists.size(order.totalDTO.cartDTOList)}">리스트 크기</p>
+					</div>
+					 -->
+					<table class="table" th:each="orderBook : ${orderDTO.totalDTO.cartDTOList}" >
+						<tr class="order-bookInfo">
 							<td class="order-book-img">
-								<img src="https://image.aladin.co.kr/product/35255/76/coversum/k112934145_1.jpg " >
+								<img th:src="${orderBook.bookInfo.item[0].cover}" >
 							</td>
 							<td class="order-book-title align-middle">
-								<div class="font-weight-bold" >책 제목 어쩌구저쩌구저쩌구 </div>
+								<div class="font-weight-bold" th:text="${orderBook.bookInfo.item[0].title}">책 제목 어쩌구저쩌구저쩌구 </div>
 							</td>
 							<td class="order-book-amount align-middle text-center">
-								<div class="font-weight-bold" >1개</div>
+								<div class="font-weight-bold" th:text="|${orderBook.quantity}개|">1개</div>
 							</td>
 							<td class="order-book-price align-middle  text-center">
-								<div class="font-weight-bold">판매가</div>
-								<del><div>정가</div></del>
+								<div class="font-weight-bold text-primary" th:text="|${#numbers.formatInteger(orderBook.bookInfo.item[0].priceSales, 3, 'COMMA')} 원|">판매가</div>
+								<del><div th:text="|${#numbers.formatInteger(orderBook.bookInfo.item[0].priceStandard, 3, 'COMMA')} 원|"> 정가</div></del>
 							</td>
 						</tr>
-						
-						<tr class="order-bookInfo ">
-							<td class="order-book-img"><img src="https://image.aladin.co.kr/product/35255/76/coversum/k112934145_1.jpg " ></td>
-							<td class="order-book-title align-middle"><div class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구 </div></td>
-							<td class="order-book-amount align-middle text-center">
-								<div class="font-weight-bold">1개</div>
-							</td>
-							<td class="order-book-price align-middle  text-center">
-								<div class="font-weight-bold">판매가</div>
-								<del><div>정가</div></del>
-							</td>
-						</tr>
-						
 						
 					</table>
 					</div><!-- 박스 안에서 마진값 전체로 주는 역할 -->
@@ -123,23 +115,24 @@
 						<table class="table table-borderless">
 							<tr>
 								<th>상품 금액</th>
-								<td> >0000원</td>
+								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.totalPrice, 3, 'COMMA')} 원|"> 0000원</td>
 							</tr>
 							<tr>
 								<th>배송비</th>
-								<td>0000원</td>
+								<td th:if= "${orderDTO.totalDTO.shippingFee > 0}" th:text="|${#numbers.formatInteger(orderDTO.totalDTO.shippingFee, 3, 'COMMA')} 원|">0000원</td>
+								<td th:if= "${orderDTO.totalDTO.shippingFee == 0}" class="text-success font-weight-bold">무료 배송</td>
 							</tr>
 							<tr>
 								<th>상품 할인</th>
-								<td >0000원</td>
+								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.totalDiscount, 3, 'COMMA')} 원|">0000원</td>
 							</tr>
 							<tr class=" border-top">
 								<th>결제 예정 금액</th>
-								<td>0000원</td>
+								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.finalPrice, 3, 'COMMA')} 원|" class="text-primary font-weight-bold">0000원</td>
 							</tr>
 							<tr>
 								<th>적립 예정 포인트</th>
-								<td>000 point</td>
+								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.totalPoints, 3, 'COMMA')} 원|">000 point</td>
 							</tr>
 						</table>
 							<button type="button" class="btn btn-primary my-3 w-100">결제하기</button>
@@ -163,6 +156,37 @@
 		<script layout:fragment="script">
 		
 
+		//userAdrBtn을 누르면 user가 등록해둔 정보가 출력됨 
+		//newAdrBtn을 누르면 필드 초기화(비워짐)
+		let name = $('#userName').val();
+		let phone = $('#userPhone').val();
+		let postcode = $('#postcode').val();
+		let addr = $('#addr').val();
+		let detailAddr = $('#detailAddr').val();
+		
+		
+		 $('#userAdrBtn').on('click', function() {
+	            // user 정보 다시 채워주기
+	            $('#userName').val(name);
+	            $('#userPhone').val(phone);
+	            $('#postcode').val(postcode);
+	            $('#addr').val(addr);
+	            $('#detailAddr').val(detailAddr);
+	        });
+
+	        // 신규 배송지 입력 선택시
+	        $('#newAdrBtn').on('click', function() {
+	            // 입력 필드 비우기
+	            $('#userName').val('');
+	            $('#userPhone').val('');
+	            $('#postcode').val('');
+	            $('#addr').val('');
+	            $('#detailAddr').val('');
+	        });
+		
+		
+		
+		// 다음 주소 api
 		$("#postCodeBtn").on("click",function(){
 
 			

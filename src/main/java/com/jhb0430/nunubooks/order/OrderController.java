@@ -46,7 +46,7 @@ public class OrderController {
 		OrderDTO orderDTO = orderService.getOrderList(userId);
 
 		
-		model.addAttribute("order",orderDTO);
+		model.addAttribute("orderDTO",orderDTO);
 		
 //		model.addAttribute("item",);
 //		orderDTO.getTotalDTO().getCartDTOList().get(0).getBookInfo();
