@@ -58,6 +58,13 @@ color: #7CC491;
   color: inherit;
 }
 
+.category{
+	width:160px;
+}
+.mypage{
+	height:100px;
+	align-items: center;
+}
 
 .logo-color{
 color: #7CC491;
@@ -267,6 +274,17 @@ color: #7CC491;
 	font-weight: bolder;
 }
 	*/
+
+
+.order-header{
+	width:900px;
+	height:120px;
+}
+.order-info-none{
+	width:900px;
+	height:400px;
+}
+
 
 
 .contents > .input-box {

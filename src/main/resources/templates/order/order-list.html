@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/default}">
+     
 
-</body>
+		<section layout:fragment="contents">
+		<div class="d-flex container">
+			<nav class="nav flex-column category border-right mr-4">
+			<div class="mt-4 mypage mr-1 border-bottom">
+				<h4 class="font-weight-bold mt-3">마이 페이지</h4>
+				<h6 class="text-right mr-2 mt-2">김뫄뫄님</h6>
+			</div>
+				<div class="mr-1 text-center  mt-4">
+					<h6 class="font-weight-bold mb-2">쇼핑 내역</h6>
+					  <a class="nav-link text-dark" href="/nunubooks/order/order-list">주문 내역</a>
+					  <!-- 
+					  <a class="nav-link text-dark" href="#">카테고리2</a>
+					  <a class="nav-link text-dark" href="#">카테고리3</a>
+					  <a class="nav-link text-dark" href="#">카테고리4</a>
+					   -->
+				</div>
+			</nav>
+			<div class="contents">
+			
+					<div  class="order-header d-flex justify-content-between align-items-center border-bottom">
+						<h3 class="font-weight-bold" >주문 / 배송 목록</h3>
+						
+						<div class="d-flex">
+							<button type="button" class="btn btn-outline-secondary">
+								<i class="bi bi-calendar4"></i><span class="ml-1">상세 조회</span>
+							</button>
+						</div>
+					</div>
+			
+			
+				<div class="order-info-none d-flex align-items-center justify-content-center d-none"><!--주문내역확인 페이지 없는 경우-->
+					<div class="text-center d-none ">
+						<i class="h1 bi bi-exclamation-circle-fill font-weight-bold text-secondary"></i>
+						<div class="mt-3">
+							<h6>최근 주문된 내역이 없습니다</h6>
+						</div>
+					</div>
+				</div>
+				
+				<div class="order-box"><!--주문내역확인 페이지 리스트-->
+					<table class="table">
+						<thead>
+							<tr>
+								<th  colspan="3">2025년 0월 00일</th>
+								<th class="text-success">1231241245</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="order-bookInfo">
+								<td class="order-book-img bg-info">
+									<img src="#" >
+								</td>
+								<td class="order-book-title align-middle">
+									<div class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구 </div>
+									<div>수량 :1개 </div>
+								</td>
+								<td class="order-book-amount align-middle text-center">
+									<div class="font-weight-bold">1개</div>
+								</td>
+								<td rowspan="2" class="order-book-amount align-middle text-center border-left">
+									<button type="button" class="btn btn-outline-secondary">
+										<span>배송조회</span>
+									</button>
+								</td> <!--  rowspan="" 은 출력되는 리스트 수 만큼 적혀야함. 그리고 이 버튼 td는 반복되지 않아야함 -->
+							</tr>
+							
+						</tbody>
+							
+					</table>
+				
+				</div>
+						
+			
+			
+			
+			</div><!-- contents -->
+		</div>
+		</section>
+
+
+
+	<script layout:fragment="script">
+	</script>
+
 </html>

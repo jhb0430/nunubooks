@@ -61,6 +61,11 @@ public class OrderController {
 		return "order/order-complete";
 	}
 	
+	@GetMapping("/order-list")
+	public String UserorderList() {
+		return "order/order-list";
+	}
+	
 	
 	
 }
