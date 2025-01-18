@@ -45,7 +45,7 @@
 							<label  class="mr-1"><input type="radio" name="addressInfo" id="userAdrBtn" checked>기본 배송지</label>
 						</div>
 						<div>
-							<label class="mㄱ-1"><input type="radio" name="addressInfo" id="newAdrBtn">신규 배송지 입력</label>
+							<label class="mr-1"><input type="radio" name="addressInfo" id="newAdrBtn">신규 배송지 입력</label>
 						</div>
 					</div>
 					
@@ -71,6 +71,67 @@
 					</div>
 					</div><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 				
+				</div>
+				
+				
+				<div class="border rounded order-box p-1 mt-4"> <!--  결제 정보 -->
+					<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
+						<div class="border-bottom">
+							<h5 class="font-weight-bold my-3">결제수단</h5>
+						</div>
+						<div class="my-3">
+							<table class="table table-borderless w-75 font-weight-bold">
+								<tr>
+									<td>보유 포인트</td>
+									<td class="d-flex">
+										<span class="text-success"> 000</span>
+										<span> 원</span>
+									</td>
+									<td>
+										<input type="text" class="form-control text-right font-weight-bold" placeholder="000원">
+									</td>
+									<td>
+										<button type="button" class="btn btn-outline-secondary w-10 font-weight-bold">사용</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="my-3 border-top">
+							<div class="d-flex mt-3 ml-1">
+								<div class="mr-2">
+									<label  class="mr-1"><input type="radio" name="paymentSelect" id="creditRadio" checked>신용카드</label>
+								</div>
+								<div>
+									<label class="mr-1"><input type="radio" name="paymentSelect" id="bankRadio">무통장입금</label>
+								</div>
+							</div>
+						</div>
+						<div class="my-3 d-flex">
+							<select class="form-control w-25">
+								<option>신용카드 선택</option>
+								<option>삼성카드</option>
+								<option>신한카드</option>
+								<option>우리카드</option>
+							</select>
+							<select class="form-control w-25 ml-3">
+								<option>할부 선택</option>
+								<option>일시불</option>
+								<option>2개월</option>
+								<option>3개월</option>
+							</select>
+						</div>
+						
+						<div class="my-3 d-flex"> <!-- d-none 되어야함 -->
+							<select class="form-control w-25">
+								<option>은행을 선택해주세요</option>
+								<option>국민은행</option>
+								<option>신한은행</option>
+								<option>우리은행</option>
+							</select>
+							<input type="text" class="form-control w-25 ml-3 " placeholder="입금자명">
+						</div>
+					
+					</div><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 				</div>
 				
 				
@@ -102,6 +163,8 @@
 					</table>
 					</div><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 				</div>
+
+
 
 
 				
