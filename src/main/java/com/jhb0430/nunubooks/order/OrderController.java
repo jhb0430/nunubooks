@@ -56,6 +56,10 @@ public class OrderController {
 		return "order/order-page";
 	}
 	
+	@GetMapping("/order-complete")
+	public String completeOrder() {
+		return "order/order-complete";
+	}
 	
 	
 	
