@@ -17,6 +17,7 @@
 					,`postcode`
 					, `address`
 					, `phoneNumber`
+					, `point`
 				)
 				VALUE
 				(
@@ -27,6 +28,7 @@
 					,#{postcode}
 					,#{address}
 					,#{phoneNumber}
+					,#{point}
 				)
 	 				
 	 	</insert>
@@ -52,6 +54,7 @@
 				, `postcode`
 				, `address`
 				, `phoneNumber`
+				, `point`
 				, `createdAt`
 				, `updatedAt`
 		FROM 
@@ -90,6 +93,7 @@
 			, `postcode`
 			, `address`
 			, `phoneNumber`
+			, `point`
 			, `createdAt`
 			, `updatedAt`
 		FROM 

@@ -18,6 +18,7 @@ public interface UserRepository {
 			,@Param("postcode")String postcode
 			,@Param("address")String address
 			,@Param("phoneNumber")String phoneNumber
+			,@Param("point") int point
 			);
 	
 	

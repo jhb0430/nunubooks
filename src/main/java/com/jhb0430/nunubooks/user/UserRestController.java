@@ -41,7 +41,9 @@ public class UserRestController {
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(userSevice.addUser(loginId, name, email, password, postcode, address, phoneNumber)) {
+		int point = 3000;
+		
+		if(userSevice.addUser(loginId, name, email, password, postcode, address, phoneNumber, point)) {
 			resultMap.put("result", "success");
 		}else {
 			resultMap.put("result", "fail");

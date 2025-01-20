@@ -86,11 +86,11 @@
 								<tr>
 									<td>보유 포인트</td>
 									<td class="d-flex">
-										<span class="text-success"> 000</span>
+										<span class="text-success mr-1" th:text="${#numbers.formatInteger(user.point, 3, 'COMMA')}"> 000</span>
 										<span> 원</span>
 									</td>
 									<td>
-										<input type="text" class="form-control text-right font-weight-bold" placeholder="000원">
+										<input type="text" class="form-control text-right font-weight-bold" placeholder="000 원">
 									</td>
 									<td>
 										<button type="button" class="btn btn-outline-secondary w-10 font-weight-bold">사용</button>
@@ -101,10 +101,10 @@
 						<div class="my-3 border-top">
 							<div class="d-flex mt-3 ml-1">
 								<div class="mr-2">
-									<label  class="mr-1"><input type="radio" name="paymentSelect" id="creditRadio" checked>신용카드</label>
+									<label  class="mr-1"><input type="radio" name="paymentSelect" id="creditRadio" value="신용카드" checked>신용카드</label>
 								</div>
 								<div>
-									<label class="mr-1"><input type="radio" name="paymentSelect" id="bankRadio">무통장입금</label>
+									<label class="mr-1"><input type="radio" name="paymentSelect" id="bankRadio" value="무통장입금">무통장입금</label>
 								</div>
 							</div>
 						</div>
@@ -116,7 +116,7 @@
 									<option>신한카드</option>
 									<option>우리카드</option>
 								</select>
-								<select class="form-control w-25 ml-3" id="creditCardSel">
+								<select class="form-control w-25 ml-3" id="">
 									<option>할부 선택</option>
 									<option>일시불</option>
 									<option>2개월</option>
@@ -204,7 +204,7 @@
 								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.totalPoints, 3, 'COMMA')} 원|">000 point</td>
 							</tr>
 						</table>
-							<button type="button" class="btn btn-primary my-3 w-100">결제하기</button>
+							<button type="button" class="btn btn-primary my-3 w-100" id="orderBtn">결제하기</button>
 							<button type="button" class="btn btn-primary my-3 w-100">수령 매장 선택</button>
 							<!-- 
 						<button type="button" class="btn btn-primary my-3 w-100">이전 화면으로</button>
@@ -235,6 +235,14 @@
 		let detailAddr = $('#detailAddr').val();
 		
 		
+		$("#orderBtn").on("click",function(){
+
+			
+		
+		});
+		
+		
+		
 		 $("#userAdrBtn").on('click', function() {
 	            // user 정보 채우기
 	            $('#userName').val(name);
@@ -260,12 +268,15 @@
 		// 
 	        $("#creditRadio").on('click',function(){
 
+	//        	 alert($("#creditRadio").val());
+	        	
 	        	$("#bankBox").addClass("d-none");
 	        	$("#creditBox").removeClass("d-none");
 	        
 	        
 	        });
 	        $("#bankRadio").on('click',function(){
+//	        	 alert($("#bankRadio").val());
 	        	$("#creditBox").addClass("d-none");
 	        	$("#bankBox").removeClass("d-none");
 

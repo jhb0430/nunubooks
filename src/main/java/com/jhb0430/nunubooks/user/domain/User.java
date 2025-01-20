@@ -36,6 +36,9 @@ public class User {
 	private String  address;
 	@Column(name="phoneNumber")
 	private String  phoneNumber;
+	
+	private int point;
+	
 	@Column(name="createdAt")
 	@CreationTimestamp
 	private LocalDateTime  createdAt;

@@ -26,13 +26,14 @@ public class UserService {
 			,String postcode
 			,String address
 			,String phoneNumber
+			,int point
 			) {
 		// 암호화 해줘야함
 		
 		String encodingPassword = SHA256HashingEncoder.encode(password);
 		
 		
-		int count = userRepository.addUser(loginId, name, email, encodingPassword, postcode, address, phoneNumber);
+		int count = userRepository.addUser(loginId, name, email, encodingPassword, postcode, address, phoneNumber, point);
 		if(count == 1) {
 			return true;
 		}
