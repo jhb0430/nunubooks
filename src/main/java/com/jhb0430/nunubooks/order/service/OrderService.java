@@ -81,6 +81,7 @@ public class OrderService {
 				.address(address)
 				.totalPrice(totalPrice)
 				.shippingFee(shippingFee)
+				.payments(payments)
 				.point(point)
 				.build();
 		
