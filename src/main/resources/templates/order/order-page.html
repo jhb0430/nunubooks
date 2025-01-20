@@ -8,7 +8,7 @@
 		<section layout:fragment="contents" class="container">
 			<div class=" contents">
 				<div>
-					<div  class="d-flex justify-content-between mt-3">
+					<div  class="d-flex justify-content-between my-3">
 						<h2 class="font-weight-bold" >주문/결제</h2>
 						
 						<div class="d-flex">
@@ -192,16 +192,16 @@
 								<td th:if= "${orderDTO.totalDTO.shippingFee == 0}" class="text-success font-weight-bold">무료 배송</td>
 							</tr>
 							<tr>
-								<th>상품 할인</th>
-								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.totalDiscount, 3, 'COMMA')} 원|">0000원</td>
+								<th>적립금 할인</th>
+								<td id="usedPoint" >사용 안함</td>
 							</tr>
 							<tr>
-								<th>적립금 할인</th>
-								<td>0000원</td>
+								<th>상품 할인</th>
+								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.totalDiscount, 3, 'COMMA')} 원|" th:data-total-discount="${orderDTO.totalDTO.totalDiscount}" id="totalBookDiscount">0000원</td>
 							</tr>
 							<tr class=" border-top">
 								<th>결제 예정 금액</th>
-								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.finalPrice, 3, 'COMMA')} 원|" class="text-primary font-weight-bold">0000원</td>
+								<td th:text="|${#numbers.formatInteger(orderDTO.totalDTO.finalPrice, 3, 'COMMA')} 원|" class="text-primary font-weight-bold bookTotalPrice" th:data-total-price="${orderDTO.totalDTO.finalPrice}" id="bookTotalPrice">0000원</td>
 							</tr>
 							<tr>
 								<th>적립 예정 포인트</th>
@@ -241,15 +241,36 @@
 		let payments = $("input[name=paymentSelect]:checked").val();
 		let usedPoint = $("usePointInput").val();
 		
-		let address = addr + " " + detailAddr;
-		let havePoint =$("#havePoint").data("have-point");
-		let usePoint =$("#usePointInput").val();
+		let address = addr + " " + detailAddr; // 주소 합쳐서 저장 
 		
-		let nowPoint = havePoint - usePoint;
+		let havePoint =$("#havePoint").data("have-point"); // 보유 포인트
+		let usePoint =$("#usePointInput").val() || 0; // 사용 포인트
+		let nowPoint = havePoint - usePoint; // 사용 후 남은 포인트
+		let savePoint = $("#savePoint").data("save-point") // 적립 예정 포인트
+		let point = nowPoint + savePoint; // 구매 후 보유 포인트
 		
-		let savePoint = $("#savePoint").data("save-point")
-		let point = nowPoint + savePoint;
-		
+		let totalPrice = $("#bookTotalPrice").data("total-price");
+	    let finalPrice = totalPrice - usePoint;
+	    
+	    let shippingFee = 4000;
+	    
+	    if(totalPrice >= 15000){
+	    	shippingFee = 0;
+	    }
+	    
+	    if (nowPoint != havePoint) {
+	        // 포인트 사용 시 결제 예정 금액 업데이트
+	        let formattedPoint = new Intl.NumberFormat().format(usePoint); 
+	        $("#usedPoint").text(formattedPoint + " 원");
+
+	        let totalPrice =$("#bookTotalPrice").data("total-price");
+	        let finalPrice = totalPrice - usePoint;
+	        let formattedFinalPrice = new Intl.NumberFormat().format(finalPrice);
+	        $("#bookTotalPrice").text(formattedFinalPrice + " 원");
+	    }
+	    
+	    
+	    
 		// 보유금액 이상은 넣을 수 없음
 		$("#usePointInput").on("keyup", function () {
 		    let havePoint = $("#havePoint").data("have-point");
@@ -264,24 +285,41 @@
 		    }
 		});
 		
+		
 		// 포인트 사용버튼을 누르면 point값이 저장됨 -> 
 		$("#usePointBtn").on("click",function(){
 
-			let havePoint =$("#havePoint").data("have-point");
-			let usePoint =$("#usePointInput").val();
+			havePoint =$("#havePoint").data("have-point");
+			usePoint =$("#usePointInput").val() || havePoint;
 			
-			let nowPoint = havePoint - usePoint;
-		
+			nowPoint = havePoint - usePoint;
+			
+		    formattedPoint = new Intl.NumberFormat().format(usePoint);
+		    $("#usedPoint").text(formattedPoint + " 원");   
+		    
+		    totalPrice =$("#bookTotalPrice").data("total-price");
+	        finalPrice = totalPrice - usePoint;
+	        formattedFinalPrice = new Intl.NumberFormat().format(finalPrice);
+	        $("#bookTotalPrice").text(formattedFinalPrice + " 원");
+		   
 		});
 		
 		
 		// 결제하기 버튼
 		$("#orderBtn").on("click",function(){
 
-			payments = $("input[name=paymentSelect]:checked").val();
+			let payments = $("input[name=paymentSelect]:checked").val();
 		
-			alert(point);
 			
+			console.log("name"+name
+					,"phoneNumber :"+phone
+					,"postcode :"+postcode
+					,"address : "+address
+					,"totalPrice :"+finalPrice
+					,"payments :"+payments
+					,"shippingFee : "+shippingFee
+					,"point : "+point
+					);
 			
 			if(!name){
 			alert("수령인을 기입해주세요");
@@ -302,7 +340,8 @@
 					"name":name
 					,"phoneNumber":phone
 					,"postcode":postcode
-					,"totalPrice":totalPrice
+					,"address":address
+					,"totalPrice":finalPrice
 					,"shippingFee":shippingFee
 					,"payments":payments
 					,"point":point
@@ -310,7 +349,6 @@
 				,success:function(response){
 
 					if(response.result == "success"){
-	
 						location.href="/nunubooks/order/order-complete";
 					} else {
 						alert("주문 실패")

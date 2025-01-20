@@ -41,6 +41,10 @@ public class OrderRestController {
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
+		if(userId == 0) { //로그인 정보가 없으면
+			resultMap.put("result", "fail");
+		}
+		
 		if(orderService.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments, point)) {
 			resultMap.put("result", "success");
 		} else{
