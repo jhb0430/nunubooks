@@ -37,5 +37,12 @@ public class UserController {
 	}
 	
 	
+	@GetMapping("/find-account")
+	public String findUser() {
+		
+		return "account/findUser";
+	}
+	
+	
 
 }

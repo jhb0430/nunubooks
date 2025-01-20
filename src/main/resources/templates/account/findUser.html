@@ -7,44 +7,97 @@
 
 		<section layout:fragment="contents" class="d-flex justify-content-center">
 		
-		<div class="border-bottom">
-			<h3>내 계정 찾기</h3>
+			<div class="contents">
+		
+				<div class="input-box mb-4 border">
+					
+					<div class="info-btn btn-lgn border border-dark border-bottom-0  d-flex align-items-center justify-content-center">
+						<h3>내 계정 찾기</h3>
+					</div>
+							<!-- 
+					<div class="border-bottom">
+						<h3>내 계정 찾기</h3>
+					</div>
+							 -->
+				<div class="outline">
+					<div>
+						<h4>아이디 / 비밀번호 찾기</h4>
+					</div>
+				
+				<button type="button" class="btn  btn-lgn btn-outline-secondary my-2">회원 정보에 등록된 이메일로 찾기</button>
+					<!--  버튼 누르면 인풋창 show -->
+					<div id="#findbyEmail">
+						<div>
+							<input type="text" class="form-control my-2" placeholder="이름">
+						</div>
+						<div>
+							<input type="text" class="form-control my-2" placeholder="이메일">
+						</div>
+						<div class="d-flext justify-content-end my-2">
+							<button class="btn btn btn-outline-secondary">찾기</button>
+						</div>
+					</div>
+				
+				<button type="button" class="btn btn-lgn btn-outline-secondary my-2">회원 정보에 등록된 휴대폰으로 찾기</button>
+					<!--  버튼 누르면 인풋창 show -->
+					<div id="#findbyPhone">
+						<div>
+							<input type="text" class="form-control my-2" placeholder="이름">
+						</div>
+						<div>
+							<input type="text" class="form-control my-2" placeholder="휴대폰 번호">
+						</div>
+						<div class="d-flext justify-content-end my-2">
+							<button class="btn btn btn-outline-secondary">찾기</button>
+						</div>
+					</div>
+				
+				<!-- 
+				<div class="border btn-lgn">
+					<h4>새로운 비밀번호 설정하기</h4>
+				</div>
+				 -->
+	
+				</div>
+			</div>
+				
+				
+				
+				
+				<div class="col-4 border">
+					<div class="my-4">
+						<span>고객님의 아이디는 </span>
+						<span class="text-success font-weight-bold">00000</span>
+						<span>입니다</span>
+					</div>
+					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
+				</div>
+				
+				<div class="col-4 border">
+					<div class="my-4">
+						<span>고객님이 설정하신 비밀번호는 </span>
+						<span class="text-success font-weight-bold">00000</span>
+						<span>입니다</span>
+					</div>
+					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
+				</div>
+				
+				
+				<div class="col-4 border">
+					<h5 class="font-weight-bold mt-4">새로운 비밀번호를 설정해주세요</h5>
+					<input type="password" placeholder="비밀번호" class="form-control my-2">
+					<input type="password" placeholder="비밀번호 확인"  class="form-control my-2">
+					<button type="button" class="btn btn-success mb-4">설정완료</button>
+				</div>
+				
+				<div class="col-4 border">
+					<div class="my-3">새로운 비밀번호 설정이 완료되었습니다.</div>
+					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
+				</div>
+				
+				
+				
 		</div>
-	
-	<div class="border btn-lgn">
-		<h4>아이디와 비밀번호 찾기</h4>
-	</div>
-	
-	<button type="button" class="btn">회원 정보에 등록된 이메일로 찾기 찾기</button>
-		<!--  버튼 누르면 인풋창 show -->
-		<div>
-			<div>
-				<input type="text" class="form-control" placeholder="이름">
-			</div>
-			<div>
-				<input type="text" class="form-control" placeholder="이메일">
-			</div>
-			<button class="btn btn">찾기</button>
-		</div>
-	
-	<button type="button" class="btn btn-lgn">회원 정보에 등록된 휴대폰으로 찾기</button>
-		<!--  버튼 누르면 인풋창 show -->
-		<div>
-			<div>
-				<input type="text" class="form-control" placeholder="이름">
-			</div>
-			<div>
-				<input type="text" class="form-control" placeholder="휴대폰 번호">
-			</div>
-			<button class="btn btn">찾기</button>
-		</div>
-	
-	
-	<div class="border btn-lgn">
-		<h4>새로운 비밀번호 설정하기</h4>
-	</div>
-	
-	
 	
 	
 	
