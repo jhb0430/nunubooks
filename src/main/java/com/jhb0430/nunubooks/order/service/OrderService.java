@@ -70,6 +70,7 @@ public class OrderService {
 			,int totalPrice
 			,int shippingFee
 			,String payments
+			,int point
 			) {
 		
 		Order order = Order.builder()
@@ -80,6 +81,7 @@ public class OrderService {
 				.address(address)
 				.totalPrice(totalPrice)
 				.shippingFee(shippingFee)
+				.point(point)
 				.build();
 		
 		if(totalPrice >= 15000 ){

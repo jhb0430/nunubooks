@@ -3,6 +3,7 @@ package com.jhb0430.nunubooks.order;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class OrderRestController {
 	}
 	
 	// 주문 db에 추가
+	@PostMapping("/order-add")
 	public Map<String,String> completeOrder(
 			@RequestParam("name") String name
 			,@RequestParam("phoneNumber") String phoneNumber
@@ -31,6 +33,7 @@ public class OrderRestController {
 			,@RequestParam("totalPrice") int totalPrice
 			,@RequestParam("shippingFee") int shippingFee
 			,@RequestParam("payments") String payments
+			,@RequestParam("point") int point
 			,HttpSession session
 			){
 	
@@ -38,7 +41,7 @@ public class OrderRestController {
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(orderService.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments)) {
+		if(orderService.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments, point)) {
 			resultMap.put("result", "success");
 		} else{
 			resultMap.put("result", "fail");
