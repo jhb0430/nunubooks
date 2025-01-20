@@ -61,7 +61,7 @@ public class BookController {
 	public String bestSellerList(
 					@RequestParam(value="queryType" , defaultValue = "Bestseller") String queryType
 					,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
-					,@RequestParam(value="outofStock" , defaultValue = "0") int outofStock
+					,@RequestParam(value="outofStockfilter" , defaultValue = "0") int outofStockfilter
 					,@RequestParam(value = "year", required = false) Integer year
 				    ,@RequestParam(value = "month", required = false) Integer month
 				    ,@RequestParam(value = "week", required = false) Integer week
@@ -92,11 +92,12 @@ public class BookController {
 		    model.addAttribute("nowWeek",week);
 		
 		
-		 BookDTO bookDTO = bookService.bestSeller(queryType, maxResults, outofStock, year, month, week);
+		 BookDTO bookDTO = bookService.bestSeller(queryType, maxResults, outofStockfilter, year, month, week);
 		 model.addAttribute("seller",bookDTO);
 		 
 		 model.addAttribute("maxResults",maxResults);
 		 model.addAttribute("queryType",queryType);
+		 model.addAttribute("outofStock",outofStockfilter);
 		
 		
 		return "books/best-seller";
@@ -125,6 +126,7 @@ public class BookController {
 			,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
 //			, @RequestParam(value = "page", defaultValue = "1") int page
 			,@RequestParam(value = "start", defaultValue = "1") int start
+			,@RequestParam(value="outofStockfilter" , defaultValue = "0") int outofStockfilter
 			,Model model) {
 		 WebClient webClient = webClientBuilder.build();
 		 
@@ -135,11 +137,12 @@ public class BookController {
 //		 }
 		 int page = (start - 1) / maxResults + 1; 
 		 
-		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page);
+		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page,outofStockfilter);
 		 model.addAttribute("books",bookDTO);
 		 model.addAttribute("query",query);
 		 model.addAttribute("maxResults",maxResults);
 		 model.addAttribute("page", page); 
+		 model.addAttribute("outofStock", outofStockfilter); 
 		 
 		 
 	    return "books/searchList";

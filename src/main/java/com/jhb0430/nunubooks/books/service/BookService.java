@@ -22,6 +22,7 @@ public class BookService {
 	public BookDTO fetchBooks(String query
 			,int maxResults
 			,int start
+			,int outofStockfilter
 			) {
 		
 		 WebClient webClient = webClientBuilder.build();
@@ -40,6 +41,7 @@ public class BookService {
 							.queryParam("MaxResults",maxResults)
 							.queryParam("start",start)
 							.queryParam("SearchTarget","Book")
+							.queryParam("outofStockfilter",outofStockfilter)
 							.queryParam("output","js")
 							.queryParam("Version","20131101")
 							.build()
@@ -79,7 +81,7 @@ public class BookService {
 	public BookDTO bestSeller(
 			String queryType
 			,int maxResults
-			, int outofStock 
+			, int outofStockfilter 
 			,int year
 			,int month
 			,int week
@@ -106,7 +108,7 @@ public class BookService {
 						.queryParam("Week",week)
 						.queryParam("SearchTarget","Book")
 						.queryParam("start",1)
-						.queryParam("outofStockfilter",outofStock)
+						.queryParam("outofStockfilter",outofStockfilter)
 						.queryParam("output","js")
 						.queryParam("Version","20131101")
 						.build()

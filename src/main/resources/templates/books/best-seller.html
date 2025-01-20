@@ -32,7 +32,7 @@
 						</select>
 						 <select class="form-control select mx-2" id="monthSel">
 						</select>
-						 <select class="form-control select mx-2" id="weekSel">
+						 <select class="form-control select ml-2" id="weekSel">
 						  <option value="1" th:selected="${nowWeek == 1 or week == 1}">1주</option>
 			              <option value="2" th:selected="${nowWeek == 2 or week == 2}">2주</option>
 			              <option value="3" th:selected="${nowWeek == 3 or week == 3}">3주</option>
@@ -62,7 +62,13 @@
 						</select>
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-cart"></i></button>
+						<!-- 
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn" value="0">품절/절판 제외</button>
+						 -->
+						 <select class="form-control" id="outofStockSel">
+							<option value="0" th:selected="${outofStock == 0}">품절/절판 포함</option>
+							<option value="1" th:selected="${outofStock == 1}">품절/절판 제외</option>
+						 </select>
 					</div>
 				</div>
 			</div>	
@@ -169,7 +175,7 @@ $(document).ready(function(){
 		const week = $("#weekSel").val() || 0; 
 
 		const maxResults = $("#maxResultSel").val() || 10;
-		const outofStock = $("#outofStockBtn").val() || 0;
+		const outofStock = $("#outofStockSel").val() || 0;
 		const queryType = $(".queryType").data("query-id") || 'Bestseller'; 
     	
 		const baseUrl = "/nunubooks/bestSeller";
@@ -179,28 +185,11 @@ $(document).ready(function(){
 		location.href = baseUrl 
 	        + "?queryType=" + queryType 
 	        + "&maxResults=" + maxResults 
-	        + "&outofStock=" + outofStock
+	        + "&outofStockfilter=" + outofStock
 	        + "&year=" + year
 	        + "&month=" + month
 	        + "&week=" + week;
 	}
-//	        );
-//		$(this).siblings(".week-info").text(`${year}년 ${month}월 ${week}주`);
-/*	    
-	    $.ajax({
-				type:"get"
-				,url:"/nunubooks/bestSeller"
-				,data:{"maxResults":maxResults,"outofStock":outofStock,"year":year,"month":month,"week":week}
-			    ,success:function(){
-			    	 $(".week-info").text(`${year}년 ${month}월 ${week}주`);
-				}
-			    ,error:function(){
-		
-			    	alert("오류!");
-			    }
-	    });
-	*/    
-	    
 
 	
 	
@@ -238,32 +227,11 @@ $(document).ready(function(){
 	});
 	
 	
-	$("#outofStockBtn").on("click",function(){
-		//outofStock 값이 0이면 1로 변경하고// 1이면 0으로 변경
-		
-		
-        outofStock = (outofStock === 0) ? 1 : 0;
-        
-        // outofStock의 value가 0이면 품절/절판 제외 표시. 1이면 포함으로 표시 (url=1일때는 품절/절판 제외중이니까 )
-        $(this).val(outofStock).text(outofStock === 0 ? "품절/절판 제외" : "품절/절판 포함");
+	$("#outofStockSel").on("change",function(){
 
-		/* 아 왜 안돼~!~!~~!!~내가 삼항조건어쩌구도 알아왔는데~!~!~~!~! 
-		outofStock = $(this).val()||0;
-       if (outofStock === "0") {
-			outofStock = 1; 
-			 $(this).val("1").text("품절/절판 포함");
-		} else {
-			outofStock = 0; // 버튼의 value 값을 0으로 변경
-			 $(this).val("0").text("품절/절판 제외");
-		}
-		
-       */
-       
-       
- //      alert(outofStock); url function 없애고 검사했을땐 잘되는데... ?? ㅠㅠ url이 문젠가 
-       
-        updateBestSeller();
-       });
+		let outofStock = $("#outofStockSel").val();
+		updateBestSeller();
+	});
 	
 	
 	

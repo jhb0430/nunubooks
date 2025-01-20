@@ -30,9 +30,15 @@
 					<option th:selected="${maxResults == 20}" value="20">20개씩 보기</option>
 					<option th:selected="${maxResults == 50}" value="50">50개씩 보기</option>
 				</select>
+				<!-- 
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2" id="allSelectBtn">전체선택</button>
-				<button type="button" class="btn btn-light btn-outline-secondary mx-2 cartBtn">장바구니</button>
+				 -->
+				<button type="button" class="btn btn-light btn-outline-secondary mx-2 cartBtn"><i class="bi bi-cart"></i></button>
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2"><i class="bi bi-heart"></i></button>
+				<select class="form-control" id="outofStockSel">
+					<option value="0" th:selected="${outofStock == 0}">품절/절판 포함</option>
+					<option value="1" th:selected="${outofStock == 1}">품절/절판 제외</option>
+				</select>
 			</div>
 		</div>
 		<!-- 
@@ -120,7 +126,6 @@
 		
 		const totalPageCount = getTotalPageCount();
 			
-		
 		
 		//https://pagination.js.org/docs/index.html  
 		//https://github.com/jhsung23/vanillajs-web-project/blob/master/pagination/script.js
@@ -215,12 +220,18 @@
 		     	 let query = $("input[name='query']").val() || ""; // 검색어 가져오기
 		     	 let maxResults = $("#maxResultSel").val() || 10;
 				 let start = (currentPage - 1) * maxResults + 1; 
+				 let outofStock = $("#outofStockSel").val() ||0; 
 				 let baseUrl = "/nunubooks/searchList";
-		     	 location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start;
+				 
+		     	 location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start +"&outofStockfilter=" + outofStock;
 			}
 			
 			
-			
+			$("#outofStockSel").on("change",function(){
+
+				let outofStock = $("#outofStockSel").val();
+				 updateUrl();
+			});
 
 		    // 이전/다음 버튼 동작
 		    $("#prevBtn").on("click", function () {
