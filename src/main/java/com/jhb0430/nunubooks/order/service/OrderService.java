@@ -1,5 +1,6 @@
 package com.jhb0430.nunubooks.order.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -55,9 +56,32 @@ public class OrderService {
 		
 		return orderDTO;
 		
+	}
 
 		
+	public boolean addOrder(
+			int userId
+			,String name
+			,String phoneNumber
+			,String postcode
+			,String address
+			,int totalPrice
+			,int shippingFee
+			,String payments
+			) {
+		
+		int count = orderRepository.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments);
+	
+		if(count ==1 ) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
+	
+	// 주문완료-> 주문번호 생성 
+	
 	
 	
 	

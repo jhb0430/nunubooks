@@ -26,15 +26,15 @@
 				
 				<button type="button" class="btn  btn-lgn btn-outline-secondary my-2">회원 정보에 등록된 이메일로 찾기</button>
 					<!--  버튼 누르면 인풋창 show -->
-					<div id="#findbyEmail">
+					<div class="findbyEmail">
 						<div>
-							<input type="text" class="form-control my-2" placeholder="이름">
+							<input type="text" class="form-control my-2" placeholder="이름" id="userNamebyEInput">
 						</div>
 						<div>
-							<input type="text" class="form-control my-2" placeholder="이메일">
+							<input type="text" class="form-control my-2" placeholder="이메일" id="userEmailInput">
 						</div>
 						<div class="d-flext justify-content-end my-2">
-							<button class="btn btn btn-outline-secondary">찾기</button>
+							<button class="btn btn btn-outline-secondary" id="findbyEmailBtn">찾기</button>
 						</div>
 					</div>
 				
@@ -42,13 +42,13 @@
 					<!--  버튼 누르면 인풋창 show -->
 					<div id="#findbyPhone">
 						<div>
-							<input type="text" class="form-control my-2" placeholder="이름">
+							<input type="text" class="form-control my-2" placeholder="이름" id="userNamebyPInput">
 						</div>
 						<div>
-							<input type="text" class="form-control my-2" placeholder="휴대폰 번호">
+							<input type="text" class="form-control my-2" placeholder="휴대폰 번호" id="userPhoneInput">
 						</div>
 						<div class="d-flext justify-content-end my-2">
-							<button class="btn btn btn-outline-secondary">찾기</button>
+							<button class="btn btn btn-outline-secondary" id="findbyPhoneBtn">찾기</button>
 						</div>
 					</div>
 				
@@ -85,8 +85,8 @@
 				
 				<div class="col-4 border">
 					<h5 class="font-weight-bold mt-4">새로운 비밀번호를 설정해주세요</h5>
-					<input type="password" placeholder="비밀번호" class="form-control my-2">
-					<input type="password" placeholder="비밀번호 확인"  class="form-control my-2">
+					<input type="password" placeholder="비밀번호" id="newPwInput" class="form-control my-2">
+					<input type="password" placeholder="비밀번호 확인" id="newPwConfirmInput" class="form-control my-2">
 					<button type="button" class="btn btn-success mb-4">설정완료</button>
 				</div>
 				
@@ -105,6 +105,37 @@
 		</section>
 		
 		<script layout:fragment="script">
+		
+		$(document).ready(function(){
+
+			let name=$("#userNamebyPInput").val();
+			// 뭐지...?? 
+			
+			
+			
+			
+			$("#findbyEmailBtn").on("click",function(){
+
+				$.ajax({
+
+					type:"post"
+					,url:"/user/findId"
+					,data:{"email":email}
+				
+				});
+			
+			});
+			
+			
+			
+			$("#findbyPhoneBtn").on("click",function(){});
+				$.ajax({});
+		
+		
+		
+		});
+		
+		
 		</script>
 
 </html>

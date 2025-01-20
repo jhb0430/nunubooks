@@ -26,7 +26,7 @@ public class OrderController {
 	
 	
 	
-	@GetMapping("order")
+	@GetMapping("/order")
 	public String bookOrder(
 			HttpSession session
 			,Model model) {
