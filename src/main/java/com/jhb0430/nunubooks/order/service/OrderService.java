@@ -1,16 +1,16 @@
 package com.jhb0430.nunubooks.order.service;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jhb0430.nunubooks.books.service.BookService;
 import com.jhb0430.nunubooks.cart.dto.TotalDTO;
 import com.jhb0430.nunubooks.cart.service.CartService;
 import com.jhb0430.nunubooks.order.domain.Order;
 import com.jhb0430.nunubooks.order.dto.OrderDTO;
 import com.jhb0430.nunubooks.order.repository.OrderRepository;
-import com.jhb0430.nunubooks.user.domain.User;
+import com.jhb0430.nunubooks.order.repository.OrderedBookListRepositoy;
 import com.jhb0430.nunubooks.user.service.UserService;
 
 @Service
@@ -22,17 +22,23 @@ public class OrderService {
 	WebClient.Builder webClientBuilder;
 	
 	private OrderRepository orderRepository;
+	private OrderedBookListRepositoy orderedBookListRepositoy;
 	
 	private CartService cartService;
 	private UserService userService;
+	private BookService bookService;
 	
 	public OrderService(OrderRepository orderRepository
 			,CartService cartService
 			,UserService userService
+			,BookService bookService
+			,OrderedBookListRepositoy orderedBookListRepositoy
 			) {
 		this.orderRepository = orderRepository;
 		this.cartService = cartService;
 		this.userService = userService;
+		this.bookService = bookService;
+		this.orderedBookListRepositoy = orderedBookListRepositoy;
 	}
 	
 	
