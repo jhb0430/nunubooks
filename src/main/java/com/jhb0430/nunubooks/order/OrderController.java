@@ -35,9 +35,12 @@ public class OrderController {
 		int userId = (Integer)session.getAttribute("userId");
 		
 		User user = userService.getUserById(userId);
+		
 		String[] detailAddress = user.getAddress().split("\\)");
+		
 		String userAddr = detailAddress[0] + ")";
 		String detailAddr = detailAddress[1];
+		
 		
 		model.addAttribute("user",user);
 		model.addAttribute("userAddr",userAddr);

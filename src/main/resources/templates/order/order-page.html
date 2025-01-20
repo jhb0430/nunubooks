@@ -55,7 +55,9 @@
 						 <div><!--  사용자의 정보를 value 로 불러와서 출력시키기 -->
 						 	<input type="text" placeholder="이름을 입력해 주세요" class="form-control" id="nameInput" th:value="${user.name}">
 						 </div>
-						 <input type="text" placeholder="휴대폰 번호를 입력해주세요" class="form-control" id="passwordInput" th:value="${user.phoneNumber}">
+						 <div class="my-2">
+						 	<input type="text" placeholder="하이픈('-')을 포함한 휴대폰 번호를 입력해주세요" class="form-control" id="passwordInput" th:value="${user.phoneNumber}">
+						 </div>
 						</div>
 						
 						<div class="my-3">
@@ -106,29 +108,33 @@
 								</div>
 							</div>
 						</div>
-						<div class="my-3 d-flex">
-							<select class="form-control w-25">
-								<option>신용카드 선택</option>
-								<option>삼성카드</option>
-								<option>신한카드</option>
-								<option>우리카드</option>
-							</select>
-							<select class="form-control w-25 ml-3">
-								<option>할부 선택</option>
-								<option>일시불</option>
-								<option>2개월</option>
-								<option>3개월</option>
-							</select>
+						<div id="creditBox">
+							<div class="my-3 d-flex">
+								<select class="form-control w-25" id="creditCardSel">
+									<option>신용카드 선택</option>
+									<option>삼성카드</option>
+									<option>신한카드</option>
+									<option>우리카드</option>
+								</select>
+								<select class="form-control w-25 ml-3" id="creditCardSel">
+									<option>할부 선택</option>
+									<option>일시불</option>
+									<option>2개월</option>
+									<option>3개월</option>
+								</select>
+							</div>
 						</div>
 						
-						<div class="my-3 d-flex"> <!-- d-none 되어야함 -->
-							<select class="form-control w-25">
-								<option>은행을 선택해주세요</option>
-								<option>국민은행</option>
-								<option>신한은행</option>
-								<option>우리은행</option>
-							</select>
-							<input type="text" class="form-control w-25 ml-3 " placeholder="입금자명">
+						<div class="d-none" id="bankBox">
+							<div class="my-3 d-flex"> <!-- d-none 되어야함 -->
+								<select class="form-control w-25" id="bankSel">
+									<option>은행을 선택해주세요</option>
+									<option>국민은행</option>
+									<option>신한은행</option>
+									<option>우리은행</option>
+								</select>
+								<input type="text" class="form-control w-25 ml-3 " placeholder="입금자명" id="depositorInput">
+							</div>
 						</div>
 					
 					</div><!-- 박스 안에서 마진값 전체로 주는 역할 -->
@@ -222,8 +228,8 @@
 
 		//userAdrBtn을 누르면 user가 등록해둔 정보가 출력됨 
 		//newAdrBtn을 누르면 필드 초기화(비워짐)
-		let name = $('#userName').val();
-		let phone = $('#userPhone').val();
+		let name = $('#nameInput').val();
+		let phone = $('#passwordInput').val();
 		let postcode = $('#postcode').val();
 		let addr = $('#addr').val();
 		let detailAddr = $('#detailAddr').val();
@@ -232,7 +238,7 @@
 		 $("#userAdrBtn").on('click', function() {
 	            // user 정보 채우기
 	            $('#userName').val(name);
-	            $('#userPhone').val(phone);
+	            $('#passwordInput').val(phone);
 	            $('#postcode').val(postcode);
 	            $('#addr').val(addr);
 	            $('#detailAddr').val(detailAddr);
@@ -241,8 +247,8 @@
 	        // 신규 배송지 입력 선택시
 	        $("#newAdrBtn").on('click', function() {
 	            // 입력 필드 비우기
-	            $('#userName').val('');
-	            $('#userPhone').val('');
+	            $('#nameInput').val('');
+	            $('#passwordInput').val('');
 	            $('#postcode').val('');
 	            $('#addr').val('');
 	            $('#detailAddr').val('');
@@ -251,7 +257,24 @@
 	        });
 		
 		
-		
+		// 
+	        $("#creditRadio").on('click',function(){
+
+	        	$("#bankBox").addClass("d-none");
+	        	$("#creditBox").removeClass("d-none");
+	        
+	        
+	        });
+	        $("#bankRadio").on('click',function(){
+	        	$("#creditBox").addClass("d-none");
+	        	$("#bankBox").removeClass("d-none");
+
+	        
+	        
+	        });
+	        
+	        
+	        
 		// 다음 주소 api
 		$("#postCodeBtn").on("click",function(){
 

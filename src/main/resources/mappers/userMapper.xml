@@ -68,10 +68,13 @@
 		`loginId`
 	FROM 
 		`user`
+		
+		<!-- 
 	WHERE 
 		`email` = #{email}
 		AND 
 		`phoneNumber` = #{phoneNumber};
+		 -->
 	</select>
  	
  	

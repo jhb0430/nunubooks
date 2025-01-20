@@ -24,13 +24,25 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(name="`userId`")
 	private int userId;
+	
+	private String name;
+	
+	@Column(name="`phoneNumber`")
+	private String phoneNumber;
+	
+	private String postcode;
+	
 	private String address;
+	
 	@Column(name="`totalPrice`")
 	private int totalPrice;
+	
 	@Column(name="`shippingFee`")
 	private int shippingFee;
+	
 	private String payments;
 	@CreationTimestamp
 	@Column(name="`createdAt`")

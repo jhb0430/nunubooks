@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.jhb0430.nunubooks.cart.dto.TotalDTO;
 import com.jhb0430.nunubooks.cart.service.CartService;
+import com.jhb0430.nunubooks.order.domain.Order;
 import com.jhb0430.nunubooks.order.dto.OrderDTO;
 import com.jhb0430.nunubooks.order.repository.OrderRepository;
 import com.jhb0430.nunubooks.user.domain.User;
@@ -21,6 +22,7 @@ public class OrderService {
 	WebClient.Builder webClientBuilder;
 	
 	private OrderRepository orderRepository;
+	
 	private CartService cartService;
 	private UserService userService;
 	
@@ -70,11 +72,28 @@ public class OrderService {
 			,String payments
 			) {
 		
-		int count = orderRepository.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments);
-	
-		if(count ==1 ) {
-			return true;
-		} else {
+		Order order = Order.builder()
+				.userId(userId)
+				.name(name)
+				.phoneNumber(phoneNumber)
+				.postcode(postcode)
+				.address(address)
+				.totalPrice(totalPrice)
+				.shippingFee(shippingFee)
+				.build();
+		
+		if(totalPrice >= 15000 ){
+			shippingFee = 0;
+		}  else {
+			shippingFee = 4000;
+		}
+		
+		
+		try {
+		 orderRepository.save(order);
+		
+		return true;
+		} catch(Exception e) {
 			return false;
 		}
 		

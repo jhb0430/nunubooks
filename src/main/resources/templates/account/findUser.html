@@ -28,13 +28,13 @@
 					<!--  버튼 누르면 인풋창 show -->
 					<div class="findbyEmail">
 						<div>
-							<input type="text" class="form-control my-2" placeholder="이름" id="userNamebyEInput">
+							<input type="text" class="form-control my-2 userNameInput" placeholder="이름">
 						</div>
 						<div>
-							<input type="text" class="form-control my-2" placeholder="이메일" id="userEmailInput">
+							<input type="text" class="form-control my-2 findInfoInput" placeholder="이메일">
 						</div>
 						<div class="d-flext justify-content-end my-2">
-							<button class="btn btn btn-outline-secondary" id="findbyEmailBtn">찾기</button>
+							<button class="btn btn btn-outline-secondary">찾기</button>
 						</div>
 					</div>
 				
@@ -42,13 +42,13 @@
 					<!--  버튼 누르면 인풋창 show -->
 					<div id="#findbyPhone">
 						<div>
-							<input type="text" class="form-control my-2" placeholder="이름" id="userNamebyPInput">
+							<input type="text" class="form-control my-2 userNameInput" placeholder="이름">
 						</div>
 						<div>
-							<input type="text" class="form-control my-2" placeholder="휴대폰 번호" id="userPhoneInput">
+							<input type="text" class="form-control my-2 findInfoInput" placeholder="휴대폰 번호" >
 						</div>
 						<div class="d-flext justify-content-end my-2">
-							<button class="btn btn btn-outline-secondary" id="findbyPhoneBtn">찾기</button>
+							<button class="btn btn btn-outline-secondary findBtn" >찾기</button>
 						</div>
 					</div>
 				
@@ -89,7 +89,7 @@
 					<input type="password" placeholder="비밀번호 확인" id="newPwConfirmInput" class="form-control my-2">
 					<button type="button" class="btn btn-success mb-4">설정완료</button>
 				</div>
-				
+			<!-- ↓ -->	
 				<div class="col-4 border">
 					<div class="my-3">새로운 비밀번호 설정이 완료되었습니다.</div>
 					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
@@ -108,28 +108,30 @@
 		
 		$(document).ready(function(){
 
-			let name=$("#userNamebyPInput").val();
+			let name =$(".userNameInput").val();
 			// 뭐지...?? 
+			let userInfo = $(".findInfoInput").val();
+			
+			// 비밀번호 찾기 -> 버튼을 누르면 비밀번호 새로 설정할 수 있게 해야함...냅다 비번 알려주면 x 
 			
 			
-			
-			
-			$("#findbyEmailBtn").on("click",function(){
+			$(".findBtn").on("click",function(){
 
 				$.ajax({
 
 					type:"post"
 					,url:"/user/findId"
-					,data:{"email":email}
-				
+					,data:{"name":name,"userInfo":userInfo}
+					,success:function(){}
+					,error:function(){}
 				});
 			
+				
+				
 			});
 			
 			
 			
-			$("#findbyPhoneBtn").on("click",function(){});
-				$.ajax({});
 		
 		
 		
