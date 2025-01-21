@@ -1,6 +1,6 @@
 package com.jhb0430.nunubooks.order.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,7 +115,6 @@ ordered_list 테이블에 항목에 맞게 저장하면 되요!
 OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작업을 수행하면 됩니다.
 즉 해당 메소드에서 해당 코드를 이어서 작성하면 되요!!
  */
-		Optional<Order> optionalOrder = orderRepository.findById(userId);
 		
 		
 		try {
@@ -157,5 +156,8 @@ OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작
 	
 	
 	
-	
+	public List<OrderedBookList> getOrderedBookList(int orderId) {
+		
+		return orderedBookListRepositoy.findByOrderId(orderId);
+	}
 }

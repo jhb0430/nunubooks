@@ -47,6 +47,15 @@
 			
 			
 			<div class="d-flex"><!--  장바구니 정보- 배송정보 전체 묶는 div-->
+					<div class="order-info-none d-flex align-items-center justify-content-center" ><!--주문내역확인 페이지 없는 경우-->
+						<div class="text-center">
+							<i class="h1 bi bi-exclamation-circle-fill font-weight-bold text-secondary"></i>
+							<div class="mt-3">
+								<h6>장바구니가 비었습니다</h6>
+							</div>
+						</div>
+					</div>
+
 
 				<div>
 					<div th:each="cart:${cartList.cartDTOList}">

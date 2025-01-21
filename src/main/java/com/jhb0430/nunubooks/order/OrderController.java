@@ -65,7 +65,11 @@ public class OrderController {
 	}
 	
 	@GetMapping("/order-list")
-	public String UserorderList() {
+	public String UserorderList(HttpSession session, Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		
+		
 		return "order/order-list";
 	}
 	
