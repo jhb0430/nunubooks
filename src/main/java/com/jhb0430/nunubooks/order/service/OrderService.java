@@ -2,12 +2,12 @@ package com.jhb0430.nunubooks.order.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
 import com.jhb0430.nunubooks.cart.dto.CartDTO;
 import com.jhb0430.nunubooks.cart.dto.TotalDTO;
@@ -18,6 +18,8 @@ import com.jhb0430.nunubooks.order.dto.OrderDTO;
 import com.jhb0430.nunubooks.order.repository.OrderRepository;
 import com.jhb0430.nunubooks.order.repository.OrderedBookListRepositoy;
 import com.jhb0430.nunubooks.user.service.UserService;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class OrderService {
@@ -107,18 +109,6 @@ public class OrderService {
 		}
 		
 		
-/*
-이제 말한대로 주문에 포함된 책 정보들만 ordered_list에 insert하면됩니다
-insert할 대상은 cart에 담긴 목록들이고요. 이를 조회 해서
-ordered_list 테이블에 항목에 맞게 저장하면 되요!
-
-말한대로 카트도 비우면 되고요.
-
-OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작업을 수행하면 됩니다.
-즉 해당 메소드에서 해당 코드를 이어서 작성하면 되요!!
- */
-		
-		
 		try {
 			
 			 orderRepository.save(order);// 주문 저장
@@ -158,37 +148,61 @@ OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작
 	// 주문완료-> 주문번호 생성 
 	
 	
-	
-	public OrderDTO getOrderedBookList(int orderId) {
+	// 주문번호 1개에 대한 주문 정보 조회
+	public List<OrderDTO> getOrderedBookList(int orderId, int userId) {
 		
-		// 주문 조회
-		Order order = orderRepository.findById(orderId)
-				.orElse(null);
 		
+		WebClient webClient = webClientBuilder.build();
 		// orderId마다 정보 가져오기 
 		List<OrderedBookList> orderedList = orderedBookListRepositoy.findAllByOrderId(orderId);
 	
-		if (orderedList.isEmpty()) {
-			return 
-					OrderDTO.builder()
-					.orderId(order.getId())
-					.userId(order.getUserId())
-					.orderedBooks(new ArrayList<>())
-					.build();
-					
+		// 주문 완료 - > orderId, itemId, quantity, price , createdAt
+		// orderId가 같은 itemId의 정보를 조회해온다 ?? 
+		// itemId를 기준으로 책 정보를 가져오는 건 bookService에 있긴 한데.. .
+		// cartService를 가져올 필요는 없음 
+		// 하지만 cartService처럼 리스트를 만들어야 할 필요는 있다.
+	
+		List<OrderDTO> orderDTOList = new ArrayList<>();
+	
+		for(OrderedBookList orderedBookList : orderedList) {
 			
+			int itemId = orderedBookList.getItemId();
+			int quantity = orderedBookList.getQuantity();
+			
+			  Mono<BookDTO> response = 
+						webClient.get()
+						.uri(uriBuilder -> uriBuilder
+								.scheme("https")
+								.host("www.aladin.co.kr")
+								.path("/ttb/api/ItemLookUp.aspx")
+								.queryParam("ttbkey","ttbleky22241703001")
+								.queryParam("itemIdType","itemId")
+								.queryParam("itemId",itemId)
+								.queryParam("Cover","Mid")
+								.queryParam("output","js")
+								.queryParam("Version","20131101")
+								.build()
+								)
+						.retrieve()
+						.bodyToMono(BookDTO.class);
+			  
+			  BookDTO book = response.block();
+			  
+			  OrderDTO orderDTO = OrderDTO.builder()
+					  						.orderId(orderId)
+					  						.itemId(itemId)
+					  						.quantity(quantity)
+					  						.userId(userId)
+					  						.book(book)
+					  						.build();
+			  
+			  orderDTOList.add(orderDTO);
 		}
 		
-		TotalDTO cart = cartService.getCartList(order.getUserId());
-		
-		OrderDTO orderDTO = OrderDTO.builder()
-									.orderId(order.getId())
-									.userId(order.getUserId())
-									.totalDTO(cart)
-									.orderedBooks(orderedList)
-									.build();
-		
-		return orderDTO;
-	
+		return orderDTOList;
 	}
+	
+	
+	
+	// 주문 번호를 출력해주는 페이지의 필요성.
 }

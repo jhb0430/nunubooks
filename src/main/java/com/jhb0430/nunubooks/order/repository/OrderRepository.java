@@ -9,7 +9,6 @@ import com.jhb0430.nunubooks.order.domain.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Integer>{
 
-	Optional<Order> findById(Order order);
 
 	
 //	public findAllByUserIdOrderByIdDesc(int userId);

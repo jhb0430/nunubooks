@@ -49,16 +49,16 @@
 						<thead>
 							<tr>
 								<th  colspan="3">2025년 0월 00일</th>
-								<th class="text-success">1231241245</th>
+								<th class="text-success" th:text="${orderedList.orderId}">1231241245</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="order-bookInfo">
+							<tr class="order-bookInfo" th:each="orderList : ${orderedList.orderedBooks}">
 								<td class="order-book-img bg-info">
 									<img src="#" >
 								</td>
 								<td class="order-book-title align-middle">
-									<div class="font-weight-bold">책 제목 어쩌구저쩌구저쩌구 </div>
+									<div class="font-weight-bold" th:text=${orderList.totalDTO.cartDTOList.bookInfo.item.title}>책 제목 어쩌구저쩌구저쩌구 </div>
 									<div>수량 :1개 </div>
 								</td>
 								<td class="order-book-amount align-middle text-center">
