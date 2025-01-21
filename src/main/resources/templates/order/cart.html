@@ -47,7 +47,8 @@
 			
 			
 			<div class="d-flex"><!--  장바구니 정보- 배송정보 전체 묶는 div-->
-					<div class="order-info-none d-flex align-items-center justify-content-center" ><!--주문내역확인 페이지 없는 경우-->
+			
+					<div class="order-info-none d-flex align-items-center justify-content-center" th:if="${cartCount == 0}"><!--주문내역확인 페이지 없는 경우-->
 						<div class="text-center">
 							<i class="h1 bi bi-exclamation-circle-fill font-weight-bold text-secondary"></i>
 							<div class="mt-3">
@@ -57,7 +58,7 @@
 					</div>
 
 
-				<div>
+				<div th:if="${cartCount > 0}">
 					<div th:each="cart:${cartList.cartDTOList}">
 						<div class="cart-box d-flex align-items-center p-1 border"> <!-- 책 정보부분 (++++ ) -->
 							<div th:each="item : ${cart.bookInfo.item}"> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
@@ -144,7 +145,7 @@
 				
 			</div>
 					
-		<button type="button" class="btn btn-info col-8 mt-4">더 고르러 가기</button>
+		<a href="/nunubooks/main" class="btn btn-info col-8 mt-4">더 고르러 가기</a>
 			
 			
 			

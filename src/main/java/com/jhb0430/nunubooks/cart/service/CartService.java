@@ -68,8 +68,23 @@ public class CartService {
 		
 		WebClient webClient = webClientBuilder.build();
 		
-		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
 // 리스트를 반복하면서 itemId마다 정보 가져오게 됨.... 
+		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
+		
+		 // 장바구니가 비어 있는 경우
+	    if (cartList.isEmpty()) {
+	        return TotalDTO.builder()
+	                .userId(userId)
+	                .cartDTOList(new ArrayList<>()) // 빈 리스트 반환
+	                .cartCount(0)
+	                .totalPrice(0)
+	                .totalPoints(0)
+	                .totalDiscount(0)
+	                .shippingFee(0)
+	                .finalPrice(0)
+	                .build();
+	    }
+		
 		
 		List<CartDTO> cartDTOList = new ArrayList<>();
 		

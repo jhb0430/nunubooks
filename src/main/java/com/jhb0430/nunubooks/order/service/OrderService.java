@@ -130,7 +130,8 @@ OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작
 						 .orderId(order.getId())
 						 .itemId(cartDTO.getItemId())
 						 .quantity(cartDTO.getQuantity())
-						 .price(totalPrice)
+//						 .price(totalPrice)
+						 .price(cartDTO.getBookInfo().getItem().get(0).getPriceSales())
 						 .build();
 				 
 				 orderedBookListRepositoy.save(orderedBookList);
