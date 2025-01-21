@@ -102,4 +102,12 @@
 			`id` = #{id} 
  	</select>
  
+ 
+	 <update id="updateUser" parameterType="map">
+			UPDATE `user`
+			SET
+				`point` = #{point}
+			WHERE
+				`id` = #{id} 	
+	 	</update>
  </mapper>

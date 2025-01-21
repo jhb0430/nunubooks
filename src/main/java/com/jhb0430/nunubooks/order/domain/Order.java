@@ -12,12 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="`order`")
+@Getter
 @Entity
 public class Order {
 
@@ -50,6 +52,7 @@ public class Order {
 	@CreationTimestamp
 	@Column(name="createdAt")
 	private LocalDateTime createdAt;
+
 	
 	
 	

@@ -26,12 +26,17 @@ public class OrderedBookList {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(name="orderId")
 	private int orderId;
+	
 	@Column(name="itemId")
-	private String itemId;
+	private int itemId;
+	
 	private int quantity;
+	
 	private int price;
+	
 	@CreationTimestamp
 	@Column(name="createdAt")
 	private LocalDateTime createdAt;

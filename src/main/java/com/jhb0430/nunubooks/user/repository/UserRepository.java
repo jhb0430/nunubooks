@@ -39,4 +39,8 @@ public interface UserRepository {
 	
 	// 사용자의 id값 조회
 	public User selectUserById(@Param("id") int id);
+	
+	public int updateUser(@Param("id") int id
+			,@Param("point") int point
+			);
 }

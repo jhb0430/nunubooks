@@ -88,4 +88,8 @@ public class UserService {
 		return userRepository.selectUserById(id);
 	}
 	
+	public int updateUserPoint(int id, int point) {
+		return userRepository.updateUser(id, point);
+	}
+	
 }
