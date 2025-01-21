@@ -114,28 +114,55 @@
 					</div>
 				</div>
 						
-				<div class="col-3 border p-2 cart-total-price ml-1">
+				<div class="col-3 border p-2 cart-total-price ml-1" th:if="${cartCount > 0}">
 					<table class="table table-borderless">
 						<tr>
 							<th>상품 금액</th>
-							<td th:text="|${#numbers.formatInteger(cartList.totalPrice, 3, 'COMMA')} 원|"> >0000원</td>
+							<td th:text="|${#numbers.formatInteger(cartList.totalPrice, 3, 'COMMA')} 원|" class="text-right"> >0000원</td>
 						</tr>
 						<tr>
 							<th>배송비</th>
-							<td th:if= "${cartList.shippingFee > 0}" th:text="|${#numbers.formatInteger(cartList.shippingFee, 3, 'COMMA')} 원|">0000원</td>
-							<td th:if= "${cartList.shippingFee == 0}" class="text-success font-weight-bold">무료 배송</td>
+							<td th:if= "${cartList.shippingFee > 0}" th:text="|${#numbers.formatInteger(cartList.shippingFee, 3, 'COMMA')} 원|" class="text-right">0000원</td>
+							<td th:if= "${cartList.shippingFee == 0}" class="text-success font-weight-bold text-right">무료 배송</td>
 						</tr>
 						<tr>
 							<th>상품 할인</th>
-							<td th:text="|${#numbers.formatInteger(cartList.totalDiscount, 3, 'COMMA')} 원|">0000원</td>
+							<td th:text="|${#numbers.formatInteger(cartList.totalDiscount, 3, 'COMMA')} 원|" class="text-right">0000원</td>
 						</tr>
 						<tr class=" border-top">
 							<th>결제 예정 금액</th>
-							<td th:text="|${#numbers.formatInteger(cartList.finalPrice, 3, 'COMMA')} 원|">0000원</td>
+							<td th:text="|${#numbers.formatInteger(cartList.finalPrice, 3, 'COMMA')} 원|" class="text-right">0000원</td>
 						</tr>
 						<tr>
 							<th>적립 예정 포인트</th>
-							<td th:text="|${#numbers.formatInteger(cartList.totalPoints, 3, 'COMMA')} point|">000 point</td>
+							<td th:text="|${#numbers.formatInteger(cartList.totalPoints, 3, 'COMMA')} point|" class="text-right">000 point</td>
+						</tr>
+					</table>
+						<button type="button" class="btn btn-primary my-3 w-100 " id="orderBtn">구매하기</button>
+						<button type="button" class="btn btn-primary my-3 w-100">방문 수령</button>
+				</div>
+				
+				<div class="col-3 border p-2 cart-total-price ml-1" th:if="${cartCount == 0}">
+					<table class="table table-borderless">
+						<tr>
+							<th>상품 금액</th>
+							<td class="text-right">원 </td>
+						</tr>
+						<tr>
+							<th>배송비</th>
+							<td class="text-right">원</td>
+						</tr>
+						<tr>
+							<th>상품 할인</th>
+							<td class="text-right">원</td>
+						</tr>
+						<tr class=" border-top">
+							<th>결제 예정 금액</th>
+							<td class="text-right">원</td>
+						</tr>
+						<tr>
+							<th>적립 예정 포인트</th>
+							<td class="text-right">point</td>
 						</tr>
 					</table>
 						<button type="button" class="btn btn-primary my-3 w-100 " id="orderBtn">구매하기</button>

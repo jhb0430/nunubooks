@@ -1,6 +1,8 @@
 package com.jhb0430.nunubooks.order.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -157,8 +159,36 @@ OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작
 	
 	
 	
-	public List<OrderedBookList> getOrderedBookList(int orderId) {
+	public OrderDTO getOrderedBookList(int orderId) {
 		
-		return orderedBookListRepositoy.findByOrderId(orderId);
+		// 주문 조회
+		Order order = orderRepository.findById(orderId)
+				.orElse(null);
+		
+		// orderId마다 정보 가져오기 
+		List<OrderedBookList> orderedList = orderedBookListRepositoy.findAllByOrderId(orderId);
+	
+		if (orderedList.isEmpty()) {
+			return 
+					OrderDTO.builder()
+					.orderId(order.getId())
+					.userId(order.getUserId())
+					.orderedBooks(new ArrayList<>())
+					.build();
+					
+			
+		}
+		
+		TotalDTO cart = cartService.getCartList(order.getUserId());
+		
+		OrderDTO orderDTO = OrderDTO.builder()
+									.orderId(order.getId())
+									.userId(order.getUserId())
+									.totalDTO(cart)
+									.orderedBooks(orderedList)
+									.build();
+		
+		return orderDTO;
+	
 	}
 }

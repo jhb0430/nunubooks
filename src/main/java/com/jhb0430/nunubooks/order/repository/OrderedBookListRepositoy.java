@@ -9,5 +9,6 @@ import com.jhb0430.nunubooks.order.domain.OrderedBookList;
 
 public interface OrderedBookListRepositoy extends JpaRepository<OrderedBookList, Integer>{
 
-public List<OrderedBookList> findByOrderId(int orderId);
+	// orderId를 입력하면 orderId가 들어있는 전체 쿼리를 보여준다
+public List<OrderedBookList> findAllByOrderId(int orderId);
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jhb0430.nunubooks.order.dto.OrderDTO;
 import com.jhb0430.nunubooks.order.service.OrderService;
@@ -64,11 +65,21 @@ public class OrderController {
 		return "order/order-complete";
 	}
 	
+	
+	
 	@GetMapping("/order-list")
-	public String UserorderList(HttpSession session, Model model) {
+	public String UserorderList(
+			@RequestParam("orderId") int orderId
+			,HttpSession session
+			, Model model) {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		
+		
+		OrderDTO orderedList = orderService.getOrderedBookList(orderId);
+		
+		
+		model.addAttribute("orderedList",orderedList);
 		
 		return "order/order-list";
 	}
