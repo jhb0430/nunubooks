@@ -2,6 +2,7 @@ package com.jhb0430.nunubooks.order.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -152,13 +153,6 @@ public class OrderService {
 	// 주문번호 1개에 대한 주문 정보 조회
 	public OrderDTO getOrderedBookList(int orderId, int userId) {
 		
-		
-		WebClient webClient = webClientBuilder.build();
-		// orderId마다 정보 가져오기 
-		List<OrderedBookList> orderedList = orderedBookListRepositoy.findAllByOrderId(orderId);
-		
-		
-	
 		// 주문 완료 - > orderId, itemId, quantity, price , createdAt
 		// orderId가 같은 itemId의 정보를 조회해온다 ?? 
 		// itemId를 기준으로 책 정보를 가져오는 건 bookService에 있긴 한데.. .
@@ -169,14 +163,23 @@ public class OrderService {
 		// 근데 Item List만 가져와도 되지않나..? @-@
 		// 주문자의 정보 -> Order에 저장된 정보도 가져와야함...
 		// bookDTO->item()의 정보.
+		
 //		List<OrderDTO> orderDTOList = new ArrayList<>();
 //		List<BookDTO> books = new ArrayList<>();
-		List<Data> bookinfo = new ArrayList<>();
+		
+		
+		WebClient webClient = webClientBuilder.build();
+		// orderId마다 정보 가져오기 
+		List<OrderedBookList> orderedList = orderedBookListRepositoy.findAllByOrderId(orderId);
+		List<Data> orderedbookInfo = new ArrayList<>(); // 주문된 책 정보 담기
 	
+		int quantity = 0;
+		
 		for(OrderedBookList orderedBook : orderedList) {
 			
-			int itemId = orderedBook.getItemId();
-			int quantity = orderedBook.getQuantity();
+			 int itemId = orderedBook.getItemId();
+			
+			 quantity = orderedBook.getQuantity();
 			
 			  Mono<BookDTO> response = 
 						webClient.get()
@@ -197,17 +200,31 @@ public class OrderService {
 			  
 			  BookDTO book = response.block();
 			  
-			  OrderDTO orderDTO = OrderDTO.builder()
-					  						.orderId(orderId)
-					  						.itemId(itemId)
-					  						.quantity(quantity)
-					  						.userId(userId)
-					  						.book(book)
-					  						.build();
+			  // 정보값이 있으면 - 예외처리
+			  if (book != null && book.getItem() != null && !book.getItem().isEmpty()) {
+				  orderedbookInfo.add(book.getItem().get(0)); // 정보 추가
+		        }
+			  
 			  
 		}
+		return OrderDTO.builder()
+				.orderId(orderId)
+				.userId(userId)
+//				.itemId(itemId)
+				.item(orderedbookInfo)
+				.orderedBooks(orderedList)
+				.quantity(quantity)
+				.build();
 		
-		return orderedBook;
+		
+	}
+	
+	
+	// 주문자의 정보 출력
+	public Order OrderUserInfo(int orderId) {
+		Optional<Order> optionalOrderInfo = orderRepository.findById(orderId);
+		
+		return optionalOrderInfo.orElse(null);
 	}
 	
 	

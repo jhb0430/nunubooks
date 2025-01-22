@@ -24,19 +24,20 @@ public class OrderDTO {
 	
 	private int quantity;
 	private int price;
+	private int totalPrice;
+	
+	private LocalDateTime createdAt; //주문 시간을 출력?
 	
 	private Order order;
 	
-	private TotalDTO totalDTO;
+	private TotalDTO totalDTO; // 장바구니를 가져오기 위함
 	
 	 private List<OrderedBookList> orderedBooks; 
 	 
 	 private BookDTO book;
-	 
-	 private LocalDateTime createdAt; //주문 시간을 출력?
 	
-	 
 	 private List<OrderDTO> orderDTOList;
 	 private List<BookDTO> books;
-	 private List<Data> bookinfo;
+	 
+	 private List<Data> item;
 }
