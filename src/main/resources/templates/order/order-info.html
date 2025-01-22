@@ -25,13 +25,14 @@
 			<div class="contents">
 			
 					<div  class="order-header d-flex justify-content-between align-items-center border-bottom">
-						<h3 class="font-weight-bold" >주문 / 배송 목록</h3>
-						
+						<h3 class="font-weight-bold" >주문 / 배송 조회</h3>
+						<!-- 
 						<div class="d-flex">
 							<button type="button" class="btn btn-outline-secondary">
 								<i class="bi bi-calendar4"></i><span class="ml-1">상세 조회</span>
 							</button>
 						</div>
+						 -->
 					</div>
 			
 				<div class="border p-2 my-4 order-box">
@@ -43,11 +44,11 @@
 							<th>주문상태</th>
 						</tr>
 						<tr>
-							<td>2025/00/00</td>
-							<td>11111</td>
+							<td th:text="${#temporals.format(orderUser.createdAt,'yyyy/MM/dd')}">2025/00/00</td>
+							<td th:text="${orderInfo.orderId}">11111</td>
 							<td>
-							<div>12124원</div>
-							<div>(000point 적립)</div>
+							<div th:text="|${#numbers.formatInteger(orderUser.totalPrice, 3, 'COMMA')} 원|">12124원</div>
+							<div th:text="|(${#numbers.formatInteger(orderUser.point, 3, 'COMMA')} point 적립)|">(000point 적립)</div>
 							</td>
 							<td>주문완료</td>
 						</tr>
@@ -62,10 +63,13 @@
 						<th>배송지 정보</th>
 						<td>
 							<div>
-							이름 /전화번호
+							<span th:text="${orderUser.name}">이름</span>
+							<span>/</span>
+							<span th:text="${orderUser.phoneNumber}">전화번호</span>
 							</div>
 							<div>
-							주소
+							<span th:text="|[${orderUser.postcode}]|"></span>
+							<span th:text="${orderUser.address}"></span>
 							</div>
 						</td>
 					</tr>
@@ -80,7 +84,7 @@
 					<tr>
 						<th>결제수단</th>
 						<td>
-						<span>신용카드</span>
+						<span th:text="${orderUser.payments}">신용카드</span>
 						<span>어쩌구카드(*000)</span>
 						</td>
 					</tr>
@@ -92,7 +96,10 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th  colspan="2">주문 상품 정보</th>
+								<th  colspan="2">
+								<span>주문 상품 정보</span>
+								<span th:text="|(${orderInfo.item.size()})|">(9)</span>
+								</th>
 								<th class="text-success">
 								<button type="button" class="btn btn-outline-secondary">
 										<span>배송조회</span>
@@ -100,17 +107,17 @@
 								</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr class="order-bookInfo" >
-								<td class="order-book-img bg-info">
-									<img src="#" >
+						<tbody th:each="orderInfo :${orderInfo}">
+							<tr class="order-bookInfo" th:each="bookInfo : ${orderInfo.item}">
+								<td  class="order-book-img">
+									<img th:src="${bookInfo.cover}">
 								</td>
 								<td class="order-book-title align-middle">
-									<div class="font-weight-bold" >책 제목 어쩌구저쩌구저쩌구 </div>
-									<div>수량 :1개 </div>
+									<div class="font-weight-bold" th:text="${bookInfo.title}">책 제목 어쩌구저쩌구저쩌구 </div>
+									<div  th:text="|수량 : ${orderInfo.quantity} 개|">수량 :1개 </div>
 								</td>
 								<td class="order-book-amount align-middle text-center">
-									<div class="font-weight-bold">00000원</div>
+									<div class="font-weight-bold" th:text="|${#numbers.formatInteger(bookInfo.priceSales, 3, 'COMMA')} 원|">00000원</div>
 								</td>
 							</tr>
 							

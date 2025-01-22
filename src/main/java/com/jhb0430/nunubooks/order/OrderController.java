@@ -1,13 +1,12 @@
 package com.jhb0430.nunubooks.order;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jhb0430.nunubooks.order.domain.Order;
 import com.jhb0430.nunubooks.order.dto.OrderDTO;
 import com.jhb0430.nunubooks.order.service.OrderService;
 import com.jhb0430.nunubooks.user.domain.User;
@@ -78,19 +77,21 @@ public class OrderController {
 	//주문 상세정보
 	@GetMapping("/orderInfo")
 	public String UserorderList(
-//			@RequestParam("orderId") int orderId
-//			,HttpSession session
-//			, Model model
+			@RequestParam("orderId") int orderId
+			,HttpSession session
+			, Model model
 			) {
 		
-//		int userId = (Integer)session.getAttribute("userId");
-//		
-//		
-//		List<OrderDTO> orderInfo = orderService.getOrderedBookList(orderId, userId);
-//		
-//		
-//		model.addAttribute("orderInfo",orderInfo);
-//		
+		int userId = (Integer)session.getAttribute("userId");
+		
+		
+		OrderDTO orderInfo = orderService.getOrderedBookList(orderId, userId);
+		
+		Order orderUserInfo = orderService.getOrderUserInfo(orderId,userId);
+		
+		model.addAttribute("orderInfo",orderInfo);
+		model.addAttribute("orderUser",orderUserInfo);
+		
 		return "order/order-info";
 	}
 	
