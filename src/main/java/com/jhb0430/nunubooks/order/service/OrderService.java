@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jhb0430.nunubooks.books.domain.Data;
 import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
 import com.jhb0430.nunubooks.cart.dto.CartDTO;
@@ -149,25 +150,33 @@ public class OrderService {
 	
 	
 	// 주문번호 1개에 대한 주문 정보 조회
-	public List<OrderDTO> getOrderedBookList(int orderId, int userId) {
+	public OrderDTO getOrderedBookList(int orderId, int userId) {
 		
 		
 		WebClient webClient = webClientBuilder.build();
 		// orderId마다 정보 가져오기 
 		List<OrderedBookList> orderedList = orderedBookListRepositoy.findAllByOrderId(orderId);
+		
+		
 	
 		// 주문 완료 - > orderId, itemId, quantity, price , createdAt
 		// orderId가 같은 itemId의 정보를 조회해온다 ?? 
 		// itemId를 기준으로 책 정보를 가져오는 건 bookService에 있긴 한데.. .
 		// cartService를 가져올 필요는 없음 
 		// 하지만 cartService처럼 리스트를 만들어야 할 필요는 있다.
+		
+		// 주문에 포함된 책들을 리스트로 가져온다...? BookDTO가 List여야하나..? 
+		// 근데 Item List만 가져와도 되지않나..? @-@
+		// 주문자의 정보 -> Order에 저장된 정보도 가져와야함...
+		// bookDTO->item()의 정보.
+//		List<OrderDTO> orderDTOList = new ArrayList<>();
+//		List<BookDTO> books = new ArrayList<>();
+		List<Data> bookinfo = new ArrayList<>();
 	
-		List<OrderDTO> orderDTOList = new ArrayList<>();
-	
-		for(OrderedBookList orderedBookList : orderedList) {
+		for(OrderedBookList orderedBook : orderedList) {
 			
-			int itemId = orderedBookList.getItemId();
-			int quantity = orderedBookList.getQuantity();
+			int itemId = orderedBook.getItemId();
+			int quantity = orderedBook.getQuantity();
 			
 			  Mono<BookDTO> response = 
 						webClient.get()
@@ -196,10 +205,9 @@ public class OrderService {
 					  						.book(book)
 					  						.build();
 			  
-			  orderDTOList.add(orderDTO);
 		}
 		
-		return orderDTOList;
+		return orderedBook;
 	}
 	
 	

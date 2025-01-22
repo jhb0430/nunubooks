@@ -71,25 +71,26 @@ public class OrderController {
 	// 주문 내역 페이지
 	@GetMapping("/orderHistory")
 	public String OrderHistory() {
-		return "order/order-list";
+		return "order/order-history";
 	}
 	
 	
 	//주문 상세정보
 	@GetMapping("/orderInfo")
 	public String UserorderList(
-			@RequestParam("orderId") int orderId
-			,HttpSession session
-			, Model model) {
+//			@RequestParam("orderId") int orderId
+//			,HttpSession session
+//			, Model model
+			) {
 		
-		int userId = (Integer)session.getAttribute("userId");
-		
-		
-		List<OrderDTO> orderedList = orderService.getOrderedBookList(orderId, userId);
-		
-		
-		model.addAttribute("orderedList",orderedList);
-		
+//		int userId = (Integer)session.getAttribute("userId");
+//		
+//		
+//		List<OrderDTO> orderInfo = orderService.getOrderedBookList(orderId, userId);
+//		
+//		
+//		model.addAttribute("orderInfo",orderInfo);
+//		
 		return "order/order-info";
 	}
 	

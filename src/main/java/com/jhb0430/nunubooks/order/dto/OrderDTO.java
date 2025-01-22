@@ -3,6 +3,7 @@ package com.jhb0430.nunubooks.order.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.jhb0430.nunubooks.books.domain.Data;
 import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.cart.dto.TotalDTO;
 import com.jhb0430.nunubooks.order.domain.Order;
@@ -34,4 +35,8 @@ public class OrderDTO {
 	 
 	 private LocalDateTime createdAt; //주문 시간을 출력?
 	
+	 
+	 private List<OrderDTO> orderDTOList;
+	 private List<BookDTO> books;
+	 private List<Data> bookinfo;
 }
