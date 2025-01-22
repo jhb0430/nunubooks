@@ -57,7 +57,8 @@ public class BookController {
 	}
 	
 	
-	@GetMapping("/bestSeller")
+	// 신간,베스트셀러, 화제의 도서 전체를 다룸 
+	@GetMapping("/books")
 	public String bestSellerList(
 					@RequestParam(value="queryType" , defaultValue = "Bestseller") String queryType
 					,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults

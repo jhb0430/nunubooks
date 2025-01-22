@@ -1,5 +1,7 @@
 package com.jhb0430.nunubooks.order;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,14 +62,21 @@ public class OrderController {
 		return "order/order-page";
 	}
 	
-	@GetMapping("/order-complete")
+	@GetMapping("/order/complete")
 	public String completeOrder() {
 		return "order/order-complete";
 	}
 	
 	
+	// 주문 내역 페이지
+	@GetMapping("/orderHistory")
+	public String OrderHistory() {
+		return "order/order-list";
+	}
 	
-	@GetMapping("/order-list")
+	
+	//주문 상세정보
+	@GetMapping("/orderInfo")
 	public String UserorderList(
 			@RequestParam("orderId") int orderId
 			,HttpSession session
@@ -76,12 +85,12 @@ public class OrderController {
 		int userId = (Integer)session.getAttribute("userId");
 		
 		
-		OrderDTO orderedList = orderService.getOrderedBookList(orderId);
+		List<OrderDTO> orderedList = orderService.getOrderedBookList(orderId, userId);
 		
 		
 		model.addAttribute("orderedList",orderedList);
 		
-		return "order/order-list";
+		return "order/order-info";
 	}
 	
 	
