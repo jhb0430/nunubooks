@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.jhb0430.nunubooks.books.domain.Data;
 import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
+import com.jhb0430.nunubooks.cart.domain.Cart;
 import com.jhb0430.nunubooks.cart.dto.CartDTO;
 import com.jhb0430.nunubooks.cart.dto.TotalDTO;
 import com.jhb0430.nunubooks.cart.service.CartService;
@@ -242,6 +243,27 @@ public class OrderService {
 		return orderRepository.findByUserId(userId);
 		
 	};
+	
+	
+	
+	// 주문 삭제
+public boolean deleteOrder(int id, int userId) {
+		
+		Optional<Order> optionalOrder = orderRepository.findById(id);
+		
+		if(optionalOrder.isPresent()) {
+			Order order = optionalOrder.get();
+			
+			if(order.getUserId()== userId) {
+				orderRepository.delete(order);
+			}
+			
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	
 	

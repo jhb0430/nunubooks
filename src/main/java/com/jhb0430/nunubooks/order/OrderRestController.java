@@ -3,6 +3,7 @@ package com.jhb0430.nunubooks.order;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,6 +56,30 @@ public class OrderRestController {
 		
 	}
 	
+	
+	
+	@DeleteMapping("/delete")
+	public Map<String,String> deleteOrder(
+			@RequestParam("id") int id
+			,HttpSession session){
+				
+		int userId = (Integer)session.getAttribute("userId");
+		
+Map<String,String> resultMap = new HashMap<>();
+		
+		if(userId == 0) {
+			resultMap.put("result", "fail");
+		}
+		
+		
+		if(orderService.deleteOrder(id, userId)) {
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("result", "fail");
+			
+		}
+		return resultMap;
+	}
 	
 	
 	

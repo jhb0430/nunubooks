@@ -51,7 +51,7 @@
 							<tr>
 								<th  colspan="3" th:text="${#temporals.format(order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
 								<th class="text-success" ><a th:href="@{/nunubooks/order/orderInfo(orderId=${order.id})}" th:text="${order.id}">주문번호</a></th>
-								<th><a href="#" class="text-dark">삭제</a></th>
+								<th><a th:href="@{/order/delete(id=${order.id})}" class="text-dark">삭제</a></th>
 							</tr>
 						</thead>
 						
