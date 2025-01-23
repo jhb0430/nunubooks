@@ -221,7 +221,10 @@ public class OrderService {
 	
 	
 	// 주문자의 정보 출력
+
 	public Order getOrderUserInfo(int orderId ,int userId) {
+	public Order OrderUserInfo(int orderId) {
+
 		Optional<Order> optionalOrderInfo = orderRepository.findById(orderId);
 		
 		return optionalOrderInfo.orElse(null);
