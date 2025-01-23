@@ -1,5 +1,8 @@
 package com.jhb0430.nunubooks.order;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,7 +72,28 @@ public class OrderController {
 	
 	// 주문 내역 페이지
 	@GetMapping("/orderHistory")
-	public String OrderHistory() {
+	public String OrderHistory(
+			HttpSession session
+			, Model model
+			) {
+		int userId = (Integer)session.getAttribute("userId");
+		
+		// 주문일 // 주문번호 -> orderDTO의 orderId, Order의 createdAt
+		// 책 정보 상위 1개 // 총 주문객 주문상태 item[0].title 외- 권
+		List<Order> order = orderService.findOrderId(userId);
+		
+		int orderId= order.get(0).getId();
+		List<OrderDTO> orderInfoList = new ArrayList<>(); // dto 정보 가져와야함
+		
+		for(Order orderInfo : order) {
+			OrderDTO orderList =orderService.getOrderedBookList(orderId, userId);
+			orderInfoList.add(orderList);
+		}
+		
+		model.addAttribute("orderInfo",orderInfoList); //그대로 쓰니까 orderId를 tbody에서는 못받아오네... list 돌려야만
+		
+		model.addAttribute("order",order);
+		
 		return "order/order-history";
 	}
 	
@@ -87,10 +111,12 @@ public class OrderController {
 		
 		OrderDTO orderInfo = orderService.getOrderedBookList(orderId, userId);
 		
-		Order orderUserInfo = orderService.getOrderUserInfo(orderId,userId);
+//		Order orderUserInfo = orderService.getOrderUserInfo(orderId,userId);
+		
+		
 		
 		model.addAttribute("orderInfo",orderInfo);
-		model.addAttribute("orderUser",orderUserInfo);
+		model.addAttribute("orderUser",orderInfo.getOrder());
 		
 		return "order/order-info";
 	}

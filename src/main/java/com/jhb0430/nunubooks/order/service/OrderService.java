@@ -172,7 +172,13 @@ public class OrderService {
 		// orderId마다 정보 가져오기 
 		List<OrderedBookList> orderedList = orderedBookListRepositoy.findAllByOrderId(orderId);
 		List<Data> orderedbookInfo = new ArrayList<>(); // 주문된 책 정보 담기
-	
+		
+		Order order = null;
+		Optional<Order> optionalOrderInfo = orderRepository.findById(orderId);
+		if(optionalOrderInfo.isPresent()) {
+			order = optionalOrderInfo.get();
+		}	
+		
 		int quantity = 0;
 		
 		for(OrderedBookList orderedBook : orderedList) {
@@ -212,6 +218,7 @@ public class OrderService {
 				.userId(userId)
 //				.itemId(itemId)
 				.item(orderedbookInfo)
+				.order(order)
 				.orderedBooks(orderedList)
 				.quantity(quantity)
 				.build();
@@ -228,6 +235,13 @@ public class OrderService {
 		
 		return optionalOrderInfo.orElse(null);
 	}
+	
+	// UserId 넣으면 주문 번호(OrderId)를 가져옴
+	//SELECT `id` FROM `order` WHERE `userId`="#";
+	public List<Order> findOrderId(int userId){
+		return orderRepository.findByUserId(userId);
+		
+	};
 	
 	
 	
