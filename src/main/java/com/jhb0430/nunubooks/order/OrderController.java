@@ -82,11 +82,11 @@ public class OrderController {
 		// 책 정보 상위 1개 // 총 주문객 주문상태 item[0].title 외- 권
 		List<Order> order = orderService.findOrderId(userId);
 		
-		int orderId= order.get(0).getId();
+//		int orderId= order.get(0).getId();
 		List<OrderDTO> orderInfoList = new ArrayList<>(); // dto 정보 가져와야함
 		
 		for(Order orderInfo : order) {
-			OrderDTO orderList =orderService.getOrderedBookList(orderId, userId);
+			OrderDTO orderList =orderService.getOrderedBookList(orderInfo.getId(), userId);
 			orderInfoList.add(orderList);
 		}
 		
