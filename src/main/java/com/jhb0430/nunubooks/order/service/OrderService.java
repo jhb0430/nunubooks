@@ -264,10 +264,10 @@ public class OrderService {
 	        }
 			
 			// orderedBookList도 같이 삭제 
-			OrderedBookList orderBookList = orderedBookListRepositoy.findByOrderId(order.getId());
+			List<OrderedBookList> orderBookList = orderedBookListRepositoy.findByOrderId(order.getId());
 			
 			  if (orderBookList != null) {
-		            orderedBookListRepositoy.delete(orderBookList);
+		            orderedBookListRepositoy.deleteAll(orderBookList);
 		        }
 			
 			orderRepository.delete(order);
