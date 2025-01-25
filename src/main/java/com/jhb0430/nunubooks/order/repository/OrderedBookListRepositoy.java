@@ -11,4 +11,6 @@ public interface OrderedBookListRepositoy extends JpaRepository<OrderedBookList,
 
 	// orderId를 입력하면 orderId가 들어있는 전체 쿼리를 보여준다
 public List<OrderedBookList> findAllByOrderId(int orderId);
+
+public OrderedBookList findByOrderId(int orderId);
 }

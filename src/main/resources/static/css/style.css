@@ -250,6 +250,9 @@ color: #7CC491;
 	width:890px;
 	height:160px;
 }
+.order-date{
+	width:696px;
+}
 .order-book-img{
 	width:100px;
 	object-fit: contain;

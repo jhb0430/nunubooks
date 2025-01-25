@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.jhb0430.nunubooks.books.domain.Data;
@@ -247,21 +248,31 @@ public class OrderService {
 	
 	
 	// 주문 삭제
-public boolean deleteOrder(int id, int userId) {
+	@Transactional
+	public boolean deleteOrder(int id, int userId) {
 		
 		Optional<Order> optionalOrder = orderRepository.findById(id);
 		
-		if(optionalOrder.isPresent()) {
-			Order order = optionalOrder.get();
+		if(optionalOrder.isEmpty()) {
+			return false;
+		}	
+		
+		Order order = optionalOrder.get();
+		
+			if (order.getUserId() != userId) {
+	            return false;
+	        }
 			
-			if(order.getUserId()== userId) {
-				orderRepository.delete(order);
-			}
+			// orderedBookList도 같이 삭제 
+			OrderedBookList orderBookList = orderedBookListRepositoy.findByOrderId(order.getId());
+			
+			  if (orderBookList != null) {
+		            orderedBookListRepositoy.delete(orderBookList);
+		        }
+			
+			orderRepository.delete(order);
 			
 			return true;
-		} else {
-			return false;
-		}
 	}
 	
 	

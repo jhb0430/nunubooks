@@ -49,12 +49,18 @@
 					<table class="table" th:each="order:${order}">
 						<thead>
 							<tr>
-								<th  colspan="3" th:text="${#temporals.format(order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
-								<th class="text-success" ><a th:href="@{/nunubooks/order/orderInfo(orderId=${order.id})}" th:text="${order.id}">주문번호</a></th>
+								<th  class="order-date align-middle" colspan="3" th:text="${#temporals.format(order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
+								<th class="order-book-amount align-middle" ><a th:href="@{/nunubooks/order/orderInfo(orderId=${order.id})}" th:text="${order.id}" class="text-success">주문번호</a></th>
+								<!-- 
 								<th><a th:href="@{/order/delete(id=${order.id})}" class="text-dark">삭제</a></th>
+								 -->
+								<th class="align-middle">
+									<div class="d-flex justify-content-end">
+									<button type="button" class="btn btn-outline-secondary deleteBtn" th:data-delete-order="${order.id}">삭제</button>
+									</div>
+								</th>
 							</tr>
 						</thead>
-						
 						<!-- 
 						<tbody>
 							<tr class="order-bookInfo" >
@@ -90,6 +96,38 @@
 
 
 	<script layout:fragment="script">
+	
+	$(document).ready(function(){
+
+		
+		$(".deleteBtn").on("click",function(){
+
+			let id = $(this).data("delete-order");
+//		alert(id);
+		
+		$.ajax({
+			type:"delete"
+			,url:"/order/delete"
+			,data:{"id":id}
+			,success:function(response){
+				if(response.result == "success"){
+					location.reload();
+				} else {
+					alert("삭제 실패")
+				}
+			}
+			,error:function(){
+				alert("삭제 오류!! ");
+			}
+			});
+		
+		
+		});
+	
+	
+	});
+	
+	
 	</script>
 
 </html>
