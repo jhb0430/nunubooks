@@ -14,6 +14,7 @@ public class Subinfo {
 	private String subTitle;
 	private String originalTitle;
 	private String subbarcode;
+	private int itemPage;
 	private boolean taxFree;
 	private String bestSellerRank;
 	private Packing packing;

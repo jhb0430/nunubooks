@@ -12,7 +12,7 @@
 				<div class="my-4" th:with="item =${book.item[0]}">
 					<div class="border-bottom">
 						<h3 class="font-weight-bold" th:text="${item.title}">책 제목</h3>
-						<span th:text="${item.author}">김솨솨(지은이)</span>
+						<span th:text="${item.author}" class="font-weight-bold">김솨솨(지은이)</span>
 						<span th:text="${item.publisher}">어쩌구출판</span>
 						<span th:text="${item.pubDate}">2025-01-01</span>
 						
@@ -37,11 +37,8 @@
 							<tr>
 								<th>배송안내</th>
 								<td>
-									<div>
-										<h6>도서 포함 15,000원 이상 무료배송</h6>
-										<h6>지금 주문하면 내일 도착</h6>
-										<h6>(대한민국 어쩌구 배달안될지동 기준) 지역변경</h6>
-									</div>
+									<h6>도서 포함 15,000원 이상 무료배송</h6>
+									<h6>지금 주문하면 내일 도착</h6>
 								</td>
 							</tr>
 							<tr>
@@ -56,26 +53,27 @@
 					
 					
 					
-					<div class="border my-4"> <!--  책정보 -->
-					
-						<div>
-							작가 소개
+					<div class="my-4"> <!--  책정보 -->
+						<div class=" ml-3">
+							<div>
+								작가 소개
+							</div>
+							<div>
+								출판사 소개
+							</div>
+							<div>
+								목차
+							</div>
+							<div>
+								어쩌구저쩌구 
+							</div>
 						</div>
-						<div>
-							출판사 소개
-						</div>
-						<div>
-							목차
-						</div>
-						<div>
-							어쩌구저쩌구 
-						</div>
-						<div class="my-4">
-						 	<h4>기본 정보</h4>
+						<div class="my-4 ml-3">
+						 	<h4 class="mb-3 ">기본 정보</h4>
 							<table class="table">
 								<tr>
 									<th> 
-										isbn
+										ISBN
 									</th>
 									<td th:text="${item.isbn13}"> 
 										1234145
@@ -85,7 +83,7 @@
 									<th>
 								 		쪽수
 									</th>
-									<td> 
+									<td th:text="|${item.subInfo.itemPage} page|"> 
 										104쪽
 									</td>
 								</tr>
@@ -94,7 +92,13 @@
 								 		크기	
 									</th>
 									<td> 
-										기타 규격
+										<span th:text="${item.subInfo.packing.sizeWidth}">가로</span>
+											<span class="mx-1 align-middle"> * </span>
+										<span th:text="${item.subInfo.packing.sizeHeight}">세로</span>
+											<span class="mx-1 align-middle"> * </span>
+										<span th:text="|${item.subInfo.packing.sizeDepth} mm|">두께</span>
+											<span class="mx-1 align-middle"> / </span>
+										<span th:text="|${item.subInfo.packing.weight} g|">무게</span>
 									</td>
 								</tr>
 								<tr>
@@ -102,7 +106,7 @@
 								 		제품구성		
 									</th>
 									<td> 
-										단행본
+										<span th:text="${item.subInfo.packing.styleDesc}">단행본</span>
 									</td>
 								</tr>
 							</table>

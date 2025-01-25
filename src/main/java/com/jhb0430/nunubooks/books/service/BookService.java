@@ -52,6 +52,7 @@ public class BookService {
 	}
 	
 	
+	// 책 상세정보
 	public BookDTO bookProduct(int itemId) {
 		
 		WebClient webClient = webClientBuilder.build();
@@ -68,7 +69,7 @@ public class BookService {
 						.queryParam("Cover","Big")
 						.queryParam("output","js")
 						.queryParam("Version","20131101")
-//OptResult=ebookList,usedList,reviewList
+						.queryParam("OptResult","packing")
 						.build()
 						)
 				.retrieve()

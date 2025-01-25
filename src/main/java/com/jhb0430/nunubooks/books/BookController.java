@@ -3,7 +3,6 @@ package com.jhb0430.nunubooks.books;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jhb0430.nunubooks.books.domain.Packing;
 import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
 
@@ -114,6 +114,7 @@ public class BookController {
 		 
 		
 		 BookDTO bookDTO = bookService.bookProduct(itemId);
+		 
 		 model.addAttribute("book",bookDTO);
 		
 		return "books/product";
