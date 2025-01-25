@@ -90,17 +90,39 @@
 									
 			</div>
 		
-		<!--  페이지 넘버 -->
-			<div class="d-flex align-items-center justify-content-center number-wrapper ">
-				<div class="chevron" id="allPrevBtn"><i class="bi bi-chevron-double-left"></i></div><!--  이전 -->
-				<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div><!--  이전 단수-->
+		<!--  페이지네이션 -->
+			<!--  
+			<div class="d-flex align-items-center justify-content-center">
+				<ul class="pagination pagination-sm">
+				    <li class="page-item" id="allPrevBtn"><a class="page-link" href="#"><i class="bi bi-chevron-double-left"></i></a></li>
+				    <li class="page-item" id="prevBtn"><a class="page-link" href="#"><i class="bi bi-chevron-compact-left"></i></a></li>
+				    <li class="page-item" id="nextBtn"><a class="page-link" href="#"><i class="bi bi-chevron-compact-right"></i></a></li>
+				    <li class="page-item" id="allNextBtn"><a class="page-link" href="#"><i class="bi bi-chevron-double-right"></i></a></li>
+			  	</ul>
+			</div>
+			-->
+			<!--  
+				<div class="chevron" id="allPrevBtn"><i class="bi bi-chevron-double-left"></i></div> <!--  이전 -->
+			<!--  
+				<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div> <!--  이전 단수-->
+			<!--
 					<div class="pageNum-now ">1</div>
-					<!-- 
 					<div><i class="bi bi-three-dots text-secondary"></i></div>
 					<div class="pageNum">10</div>
 					 -->
+			<!--		 
 				<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div><!--  이후 단수 -->
+			<!-- 	
 				<div class="chevron" id="allNextBtn"><i class="bi bi-chevron-double-right"></i></div><!--  이후 -->
+			<!--  -->
+			
+			<div class="d-flex align-items-center justify-content-center">
+				<ul class="numberWrapper list-inline d-flex">
+				    <li class="pageNum" id="allPrevBtn"><a href="#"><i class="bi bi-chevron-double-left"></i></a></li>
+				    <li class="pageNum" id="prevBtn"><a href="#"><i class="bi bi-chevron-compact-left"></i></a></li>
+				    <li class="pageNum" id="nextBtn"><a href="#"><i class="bi bi-chevron-compact-right"></i></a></li>
+				    <li class="pageNum" id="allNextBtn"><a href="#"><i class="bi bi-chevron-double-right"></i></a></li>
+			  	</ul>
 			</div>
 		</div>
 		
@@ -120,21 +142,17 @@
 		
 		let currentPage = 1; // 현재 페이지 초기값
 		
-		const getTotalPageCount = () =>  // 총 페이지 수 
-			 Math.ceil(totalResults / maxResults);
-			
+		function getTotalPageCount(){  // 총 페이지 수 
+			return Math.ceil(totalResults / maxResults);
+		}
 		
 		const totalPageCount = getTotalPageCount();
 			
-		
-		//https://pagination.js.org/docs/index.html  
-		//https://github.com/jhsung23/vanillajs-web-project/blob/master/pagination/script.js
-		//https://getbootstrap.com/docs/4.6/components/pagination/
-		// https://pabeba.tistory.com/177 아오... 
 		//화면에 보여질 페이지 그룹 = Math.ceil(현재 페이지/ 한 화면에 나타낼 페이지 수);
 		
-		const setPageButtons = () => {
-			const $numberWrapper = $('.number-wrapper'); // jQuery 객체일 때는 $를 붙여서 사용하래... 
+		function setPageButtons(){
+
+			const $numberWrapper = $('.numberWrapper'); // jQuery 객체일 때는 $를 붙여서 사용하래... 
 			$numberWrapper.empty(); // 페이지 번호 wrapper 내부를 비워줌
 			
 			
@@ -143,29 +161,26 @@
 			 
 //			 let last = pageGroup * 10;
 			    let first = (pageGroup - 1) * 7 + 1;          // 현재 그룹의 첫 번째 페이지
-    			let last = first + 7 - 1;                     // 현재 그룹의 마지막 페이지
-			    
-    			if (last > totalPageCount) last = totalPageCount;
-			    
+    			let last = first + 7 - 1;
+    			if (last > totalPageCount) last = totalPageCount; // totalPageCount를 초과하지 않도록 설정
+
+    			
 			    // 그룹 내 첫 번째 페이지 번호
 		//	    let first = last - (7- 1) <= 0 ? 1 : last - (7 - 1);
 //			    let first = (last - (7 - 1)) <= 0 ? 1 : (last - (7 - 1));
+//			    let next = last + 1; // 다음그룹 첫페이지
+//			    let prev = first - 1; // 이전 그룹 마지막 페이지 
 
-
-			    
-			    
-			    let next = last + 1; // 다음그룹 첫페이지
-			    let prev = first - 1; // 이전 그룹 마지막 페이지 
-
-			    if (totalPageCount > 1 && first > 0) {
-			        const $allPrev = $('<div class="chevron" id="allPrevBtn"><i class="bi bi-chevron-double-left"></i></div>');
-			        const $prev = $('<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div>');
-			        $numberWrapper.append($allPrev, $prev);
+			     if (totalPageCount > 1 && first > 0) {
+			        const $allPrevBtn = $('<li class="pageNum" id="allPrevBtn"><a href="#"><i class="bi bi-chevron-double-left"></i></a></li>');
+			        const $prevBtn = $('<li class="pageNum" id="prevBtn"><a href="#"><i class="bi bi-chevron-compact-left"></i></a></li>');
+			        $numberWrapper.append($allPrevBtn, $prevBtn);
 			    }
 
 			    // 페이지 번호들 (1,2,3,4,5,6,7...마지막페이지)
 			    for (let i = first; i <= last; i++) {
-			        const $pageButton = $(`<div class="pageNum">${i}</div>`);
+			        const $pageButton = $(`<li class="pageNum"><a href="#">${i}</a></li>`);
+			        
 			        if (i === currentPage) {
 			            $pageButton.addClass("pageNum-now"); // 현재 페이지 강조
 			        }
@@ -174,20 +189,22 @@
 
 			    // '...' 표시 및 마지막 페이지 버튼
 			    if (last < totalPageCount - 1) {
-			        $numberWrapper.append('<div><i class="bi bi-three-dots text-secondary"></i></div>');
-			        const $lastPage = $(`<div class="pageNum">${totalPageCount}</div>`);
+			        $numberWrapper.append('<li class="pageNum"><a href="#"><i class="bi bi-three-dots text-secondary"></i></a></li>');
+//			        const $lastPage = $('<div class="pageNum">${totalPageCount}</div>');
+			        const $lastPage = $(`<li class="pageNum"><a href="#">${totalPageCount}</a></li>`);
 			        $numberWrapper.append($lastPage);
 			    }
 			    
 			    
 			    // 다음 페이지 버튼
 			    if (totalPageCount > 1 && last < totalPageCount) {
-			        const $next = $('<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div>');
-			        const $allNext = $('<div class="chevron" id="allNextBtn"><i class="bi bi-chevron-double-right"></i></div>');
-			        $numberWrapper.append($next, $allNext);
+			        const $nextBtn = $('<li class="pageNum" id="nextBtn"><a href="#"><i class="bi bi-chevron-compact-right"></i></a></li>');
+			        const $allNextBtn = $('<li class="pageNum" id="allNextBtn"><a href="#"><i class="bi bi-chevron-double-right"></i></a></li>');
+			        $numberWrapper.append($nextBtn, $allNextBtn);
 			    }
 			 
 			  attachPageButtonEvents(); // 각 버튼에 클릭 이벤트 연결
+			  
 			};
 			  
 			 /* //페이지 번호
@@ -201,18 +218,22 @@
 		*/
 		
 		
+		
 			 // 페이지 버튼 클릭 이벤트 연결
-			const attachPageButtonEvents = () => {
+			function attachPageButtonEvents(){
 
 				
-		        $(".pageNum").on("click", function () {
+		        $(".pageNum").on("click", function (event) {
+		  			  event.preventDefault(); // 링크 기본 동작 방지
 		            const selectedPage = parseInt($(this).text());
 		            
+		  			  
 		            if (selectedPage !== currentPage) {
 		                currentPage = selectedPage;
 		                setPageButtons(); // 페이지 버튼 다시 그리기
 		                updateUrl();
 		            }
+		            console.log("currentPage:", currentPage);
 		        });
 			}
 			
