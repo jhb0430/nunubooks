@@ -9,7 +9,7 @@
 			<div class=" contents">
 				<div>
 					<div  class="d-flex justify-content-between p-2 mt-4">
-						<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|">장바구니(0)</h2>
+						<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|" th:data-cart-count="${cartCount}" id="cartCount">장바구니(0)</h2>
 						
 						<div class="d-flex">
 							<div class="d-flex align-items-center">
@@ -188,6 +188,13 @@
 			
 			$("#orderBtn").on("click",function(){
 
+				let cartCount = $("#cartCount").data("cart-count");
+				
+				if(cartCount == 0){
+					 $(this).prop("disabled", true);  
+					 alert("장바구니가 비어있습니다");
+				        return;
+				}
 				
 				location.href="/nunubooks/order/order";
 			});
