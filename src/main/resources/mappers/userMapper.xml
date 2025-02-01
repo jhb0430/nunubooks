@@ -67,18 +67,31 @@
  	
  	
  	<select id="findUserId" resultType="com.jhb0430.nunubooks.user.domain.User">
- 	SELECT 
-		`loginId`
-	FROM 
-		`user`
-		
-		<!-- 
-	WHERE 
-		`email` = #{email}
+	 	SELECT 
+			`loginId`
+		FROM 
+			`user`
+		WHERE 
+			`name` = #{name}
 		AND 
-		`phoneNumber` = #{phoneNumber};
-		 -->
+			`email` = #{email}
+		OR 
+			`phoneNumber` = #{phoneNumber};
 	</select>
+ 	
+ 	
+ 	
+	 <update id="updatePassword" parameterType="map">
+			UPDATE `user`
+			SET
+				`password` = #{password}
+			WHERE
+				`loginId` = #{loginId}
+				OR 
+				`email` = #{email}; 	
+	 </update>
+ 	
+ 	
  	
  	
  	<select id="selectUserById" parameterType="int" 
@@ -109,5 +122,5 @@
 				`point` = #{point}
 			WHERE
 				`id` = #{id} 	
-	 	</update>
+	 </update>
  </mapper>

@@ -32,10 +32,21 @@ public interface UserRepository {
 			);
 	
 	
+	// 아이디찾기
 	public User findUserId(
-			@Param("email")String email
+			@Param("name")String name
+			,@Param("email")String email
 			,@Param("phoneNumber")String phoneNumber
 			);	
+	
+	//비밀번호 재설정
+	public int updatePassword(
+			@Param("loginId") String loginId
+			,@Param("email") String email
+			,@Param("password") String password
+			);
+	
+	
 	
 	// 사용자의 id값 조회
 	public User selectUserById(@Param("id") int id);

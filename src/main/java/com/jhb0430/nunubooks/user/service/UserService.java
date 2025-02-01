@@ -74,14 +74,28 @@ public class UserService {
 	
 	// 아이디 찿기 
 	public User findUserId(
-			String email
+			String name
+			,String email
 			,String phoneNumber
 			) {
 		
-		User user = userRepository.findUserId(email, phoneNumber);
+		User user = userRepository.findUserId(name,email, phoneNumber);
 		
 		return user;
 	}
+	
+	public int updateUserPassword(
+			String loginId
+			,String email
+			,String password
+			) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		return userRepository.updatePassword(loginId, email, encodingPassword);
+		
+	}
+	
 	
 	// 아이디 값 조회
 	public User getUserById(int id) {

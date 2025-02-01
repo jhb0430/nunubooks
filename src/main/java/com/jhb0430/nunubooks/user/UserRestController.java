@@ -104,13 +104,14 @@ public class UserRestController {
 	// 아이디 찾기
 	@PostMapping("/findId")
 	public Map<String,String> findUserId(
-			@RequestParam("email") String email
+			@RequestParam("name") String name
+			,@RequestParam("email") String email
 			,@RequestParam("phoneNumber") String phoneNumber
 			){
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		User user = userSevice.findUserId(email, phoneNumber);
+		User user = userSevice.findUserId(name, email, phoneNumber);
 		
 		if(user != null) {
 			
@@ -123,6 +124,26 @@ public class UserRestController {
 		return resultMap;
 		
 	}
+	
+	@GetMapping("/update")
+	public Map<String,String> updatePassword(
+			@RequestParam("loginId") String loginId
+			,@RequestParam("email") String email
+			,@RequestParam("password") String password
+			){
+		
+		Map<String,String> resultMap = new HashMap<>();
+		
+		if(userSevice.updateUserPassword(loginId, email, password) > 0) {
+			resultMap.put("result", "success");
+			
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+	}
+	
 	
 	
 }
