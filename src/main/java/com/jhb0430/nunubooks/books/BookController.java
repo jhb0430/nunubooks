@@ -77,7 +77,14 @@ public class BookController {
 		    int nowYear = (Integer)now.getYear();
 		    int nowMonth = (Integer)now.getMonthValue();
 		    
-		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth()) == 0 ? 1 : now.get(WeekFields.ISO.weekOfMonth()) -1;
+//		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth()) == 0 ? 1 : now.get(WeekFields.ISO.weekOfMonth()) -1;
+		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth());
+		    if (nowWeek == 0) {
+		        nowWeek = 1;  // 0주이면 1주로 바꿈.
+		    }  else if (nowWeek > 1) {
+		        nowWeek = nowWeek - 1;  // 1주 이상인 경우 -1을 처리
+		    }
+ 
 		    
 		    if (year == null || month == null || week == null) {
 		    	year = nowYear;
