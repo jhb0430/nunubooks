@@ -105,17 +105,21 @@ public class UserRestController {
 	@PostMapping("/findId")
 	public Map<String,String> findUserId(
 			@RequestParam("name") String name
-			,@RequestParam("email") String email
-			,@RequestParam("phoneNumber") String phoneNumber
+			,@RequestParam("userInfo") String userInfo
+//			,@RequestParam("email") String email
+//			,@RequestParam("phoneNumber") String phoneNumber
 			){
+		
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		User user = userSevice.findUserId(name, email, phoneNumber);
+//		User user = userSevice.findUserId(name, email, phoneNumber);
+		User user = userSevice.findUserId(name, userInfo);
 		
 		if(user != null) {
 			
 			resultMap.put("result", "success");
+			resultMap.put("loginId", user.getLoginId()); 
 			
 		} else {
 			resultMap.put("result", "fail");

@@ -25,7 +25,7 @@
 					</div>
 				
 				<div>
-					<button type="button" class="btn  btn-lgn btn-outline-secondary my-2">회원 정보에 등록된 이메일로 찾기</button>
+					<button type="button" class="btn  btn-lgn btn-outline-secondary my-2" id="findUserbyEmailBtn">회원 정보에 등록된 이메일로 찾기</button>
 						<!--  버튼 누르면 인풋창 show -->
 						<div id="findbyEmail" class="d-none" >
 							<div>
@@ -35,32 +35,41 @@
 								<input type="text" class="form-control my-2 findInfoInput" placeholder="이메일">
 							</div>
 							<div class="d-flext justify-content-end my-2">
-								<button class="btn btn btn-outline-secondary">찾기</button>
+								<button class="btn btn btn-success findBtn">찾기</button>
 							</div>
 						</div>
 				</div>
 					
 					
 				<div>
-					<button type="button" class="btn btn-lgn btn-outline-secondary my-2">회원 정보에 등록된 휴대폰으로 찾기</button>
+					<button type="button" class="btn btn-lgn btn-outline-secondary my-2" id="findUserbyPhoneBtn">회원 정보에 등록된 휴대폰으로 찾기</button>
 						<!--  버튼 누르면 인풋창 show -->
 						<div id="findbyPhone" class="d-none">
 							<div>
 								<input type="text" class="form-control my-2 userNameInput" placeholder="이름">
 							</div>
 							<div>
-								<input type="text" class="form-control my-2 findInfoInput" placeholder="휴대폰 번호" >
+								<input type="text" class="form-control my-2 findInfoInput" placeholder="휴대폰 번호 (하이픈'-'을 포함시켜 입력해주세요)" >
 							</div>
 							<div class="d-flext justify-content-end my-2">
-								<button class="btn btn btn-outline-secondary findBtn" >찾기</button>
+								<button class="btn btn btn-success findBtn" >찾기</button>
 							</div>
 						</div>
 				</div>
 	
 				<div>
-					<button type="button" class="btn btn-lgn btn-outline-secondary my-2">비밀번호 재설정</button>
+					<button type="button" class="btn btn-lgn btn-outline-secondary my-2" id="newSetPwBtn">비밀번호 재설정</button>
 						<div id="updatePw" class="d-none">
 							<h5 class="font-weight-bold mt-4">새로운 비밀번호를 설정해주세요</h5>
+							<div>
+								<input type="text" class="form-control my-2" placeholder="이름">
+							</div>
+							<div>
+								<input type="text" class="form-control my-2" placeholder="아이디">
+							</div>
+							<div>
+								<input type="text" class="form-control my-2" placeholder="휴대폰 번호">
+							</div>
 							<div>
 								<input type="password" placeholder="비밀번호" id="newPwInput" class="form-control my-2">
 							</div>
@@ -68,7 +77,7 @@
 								<input type="password" placeholder="비밀번호 확인" id="newPwConfirmInput" class="form-control my-2">
 							</div>
 							<div>
-								<button type="button" class="btn btn-success mb-4">설정완료</button>
+								<button type="button" class="btn btn-success mb-4" id="setPwBtn">설정</button>
 							</div>
 						</div>
 				</div>
@@ -76,16 +85,38 @@
 				</div>
 			</div>
 				
-				
-				
-				<div class="col-4 border">
+				<!-- Modal --> <!-- data-toggle="modal" data-target="#moreModal" -->
+		<div class="modal fade" id="moreModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      
+		     <div class="modal-body text-center">
 					<div class="my-4">
 						<span>고객님의 아이디는 </span>
-						<span class="text-success font-weight-bold">00000</span>
+						<span class="text-success font-weight-bold getloginId">00000</span>
 						<span>입니다</span>
 					</div>
 					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
 				</div>
+		      
+		    </div>
+		  </div>
+		</div>
+				
+		<div class="modal fade" id="moreModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      
+		     <div class="modal-body text-center">
+					<div class="my-3">새로운 비밀번호 설정이 완료되었습니다.</div>
+					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
+				</div>
+		      
+		    </div>
+		  </div>
+		</div>
+				
+				
 				<!-- 
 				<div class="col-4 border">
 					<div class="my-4">
@@ -98,11 +129,6 @@
 				 -->
 				
 				
-			<!-- ↓ -->	
-				<div class="col-4 border">
-					<div class="my-3">새로운 비밀번호 설정이 완료되었습니다.</div>
-					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
-				</div>
 				
 				
 				
@@ -117,29 +143,77 @@
 		
 		$(document).ready(function(){
 
-			let name =$(".userNameInput").val();
-			// 뭐지...?? 
-			let userInfo = $(".findInfoInput").val();
-			
 			// 비밀번호 찾기 -> 버튼을 누르면 비밀번호 새로 설정할 수 있게 해야함...냅다 비번 알려주면 x 
 			
+			const email_regex = /^[^\s@]+@[^\s@]+.[^\s@]+$/; // 맞으면 true로 받음 
+			const phone_regex = /^[0-9]{10,11}$/;
+			
+			
+			 // 이메일 ,휴대폰 유효성 검사
+		    function validateId(userInfo) {
+		        if (email_regex.test(userInfo) || phone_regex.test(userInfo)) { // 이메일이나 전화번호 형식이면
+		            return true; // 트루
+		        }
+		        return false;	// 둘 다 만족 안하면 false
+		    }
+			
+			
+			
+			$("#findUserbyEmailBtn").on("click",function(){
+				$("#findbyEmail").removeClass("d-none").find("input").prop("disabled", false);
+				$("#findbyPhone").addClass("d-none").find("input").prop("disabled", true);
+			});
+			
+			$("#findUserbyPhoneBtn").on("click",function(){
+				$("#findbyPhone").removeClass("d-none").find("input").prop("disabled", false);
+				$("#findbyEmail").addClass("d-none").find("input").prop("disabled", true);
+
+			});
+			$("#newSetPwBtn").on("click",function(){
+				$("#updatePw").removeClass("d-none");
+				$("#findbyEmail").addClass("d-none");
+				$("#findbyPhone").addClass("d-none");
+
+			});
+			 
+			 
 			
 			$(".findBtn").on("click",function(){
 
+				let name =$(".userNameInput").val();
+				let userInfo = $(".findInfoInput").val();
+				
+				
+				if(name == ""){
+					alert("이름을 입력해주세요");
+					return;
+				}
+				if(!validateId(userInfo)){
+					alert("유효하지 않은 양식입니다");
+					return;
+				}
+				
+				console.log("name:", name);
+				console.log("userInfo:", userInfo);
+				
 				$.ajax({
-
 					type:"post"
 					,url:"/user/findId"
 					,data:{"name":name,"userInfo":userInfo}
 					,success:function(response){
 
 						if(response.result=="success"){
-
-						} else{
-
-						}
+							$("#moreModal1").modal("show");
+							$("#moreModal1 .getloginId").text(response.loginId);
+					    } else {
+					        alert("회원 정보가 없습니다. 다시 시도해주세요.");
+					    }
+							
 					}
-					,error:function(){}
+					,error:function(){
+
+						alert("처리 오류");
+					}
 				});
 			
 				

@@ -75,9 +75,22 @@ public class UserService {
 	// 아이디 찿기 
 	public User findUserId(
 			String name
-			,String email
-			,String phoneNumber
+			,String userInfo
+//			,String email
+//			,String phoneNumber
 			) {
+		
+		String email;
+		String phoneNumber;
+		
+		if (userInfo.contains("@")) {
+			email = userInfo;
+			phoneNumber = null;
+		} else {
+			phoneNumber = userInfo;
+			email = null;
+		}
+		
 		
 		User user = userRepository.findUserId(name,email, phoneNumber);
 		
