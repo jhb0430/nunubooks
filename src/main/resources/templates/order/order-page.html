@@ -228,6 +228,50 @@
 
 		<script layout:fragment="script">
 		
+		function mypayment(){
+		IMP.init("imp51147044"); // 예: 'imp00000000'
+		//IMP.agency("imp51147044", "티어코드"); // 예: 'imp00000000', '123'
+		
+		IMP.request_pay(
+				  {
+				    channelKey: "{channel-key-4e7faff3-818f-4aa7-9381-c36dae1471ac}",
+				    pay_method: "card",
+				    merchant_uid: `payment-${crypto.randomUUID()}`, // 주문 고유 번호
+				    name: "노르웨이 회전 의자", // 이걸 어케 처리하지? 
+				    amount: 64900, // totalprice
+				    buyer_email: "gildong@gmail.com", // email
+				    buyer_name: "홍길동", //name
+				    buyer_tel: "010-4242-4242", //phoneNumber
+				    buyer_addr: "서울특별시 강남구 신사동", //address
+				    buyer_postcode: "01181", //postcode
+				  },
+				  	async (response) => {
+				    // 결제 종료 시 호출되는 콜백 함수
+				    // response.imp_uid 값으로 결제 단건조회 API를 호출하여 결제 결과를 확인하고,
+				    // 결제 결과를 처리하는 로직을 작성합니다.
+					    if (response.error_code != null) {
+					      return alert(`결제에 실패하였습니다. 에러 내용: ${response.error_msg}`);
+					    }
+					
+					    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+					    // (다음 목차에서 설명합니다)
+					    const notified = await fetch(`${SERVER_BASE_URL}/payment/complete`, {
+					      method: "POST",
+					      headers: { "Content-Type": "application/json" },
+					      // imp_uid와 merchant_uid, 주문 정보를 서버에 전달합니다
+					      body: JSON.stringify({
+					        imp_uid: response.imp_uid,
+					        merchant_uid: response.merchant_uid,
+					        // 주문 정보...
+					      }),
+					    });
+					    
+				  },
+				);
+}
+		
+		
+		
 		$(document).ready(function(){
 
 
