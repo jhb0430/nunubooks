@@ -92,6 +92,7 @@ public class OrderService {
 			,int shippingFee
 			,String payments
 			,int point
+			,int savePoint
 			) {
 		
 		Order order = Order.builder()
@@ -103,7 +104,7 @@ public class OrderService {
 				.totalPrice(totalPrice)
 				.shippingFee(shippingFee)
 				.payments(payments)
-				.point(point)
+				.point(savePoint)
 				.build();
 		
 		if(totalPrice >= 15000 ){
@@ -127,7 +128,7 @@ public class OrderService {
 						 .itemId(cartDTO.getItemId())
 						 .quantity(cartDTO.getQuantity())
 //						 .price(totalPrice)
-						 .price(cartDTO.getBookInfo().getItem().get(0).getPriceSales())
+						 .price((cartDTO.getBookInfo().getItem().get(0).getPriceSales())*(cartDTO.getQuantity()))
 						 .build();
 				 
 				 orderedBookListRepositoy.save(orderedBookList);
