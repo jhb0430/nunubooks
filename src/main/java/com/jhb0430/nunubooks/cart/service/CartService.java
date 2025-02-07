@@ -35,6 +35,36 @@ public class CartService {
 	}
 	
 	
+	
+	
+	
+	
+	
+	public boolean insertCart(int itemId, int quantity, int userId) {
+		
+		quantity = 1;
+		
+		Cart cart = cartRepository.findByItemId(itemId);
+		try {
+			
+		if(cart != null) {
+		cart = cart.toBuilder().quantity(quantity).build();
+		cart = cartRepository.save(cart);
+		} else {
+			 cart =Cart.builder()
+			.itemId(itemId)
+			.userId(userId)
+			.quantity(quantity)
+			.build();
+		}
+		return true;
+	} catch(Exception e) {
+		return false;
+	}
+		
+	}
+	
+	
 	public boolean addCart(int itemId, int quantity, int userId) {
 		
 		quantity = 1;
@@ -45,14 +75,28 @@ public class CartService {
 				.quantity(quantity)
 				.build();
 		
+		
+		
 		try {
-			
+	
+//			if(itemId == cart.getItemId()) {
+//				cart = cart.toBuilder().quantity(quantity).build();
+//				cart = cartRepository.save(cart);
+//			} else {
 			cartRepository.save(cart);
+//			}
 				
 			return true;
 		} catch(Exception e) {
 			return false;
 		}
+		
+		// itemId가 같으면 기존 항목의 quantity++;
+//		if(itemId == cart.getItemId()) {
+//			quantity++;
+//		}
+		
+		
 	}
 	
 	
