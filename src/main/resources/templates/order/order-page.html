@@ -245,7 +245,8 @@
 				    buyer_addr: "서울특별시 강남구 신사동", //address
 				    buyer_postcode: "01181", //postcode
 				  },
-				  	async (response) => {
+				  //	async (response) => {
+				  	async function(response){
 				    // 결제 종료 시 호출되는 콜백 함수
 				    // response.imp_uid 값으로 결제 단건조회 API를 호출하여 결제 결과를 확인하고,
 				    // 결제 결과를 처리하는 로직을 작성합니다.
@@ -362,7 +363,8 @@
 					,"totalPrice :"+finalPrice
 					,"payments :"+payments
 					,"shippingFee : "+shippingFee
-					,"point : "+point
+					,"point : "+ point
+					,"savePoint : "+savePoint
 					);
 			
 			if(!name){
@@ -388,7 +390,8 @@
 					,"totalPrice":finalPrice
 					,"shippingFee":shippingFee
 					,"payments":payments
-					,"point":point
+					,"point":point // 적립예정포인트
+					,"savePoint":savePoint // 적립예정포인트
 					}
 				,success:function(response){
 
