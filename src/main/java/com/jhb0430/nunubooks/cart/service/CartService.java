@@ -42,23 +42,27 @@ public class CartService {
 	
 	public boolean insertCart(int itemId, int quantity, int userId) {
 		
-		quantity = 1;
-		
-		Cart cart = cartRepository.findByItemId(itemId);
+//		quantity = 1;
+//		Cart cart = cartRepository.findByItemId(itemId,userId);
 		try {
+			Cart cart = cartRepository.findByItemId(itemId,userId);
 			
-		if(cart != null) {
-		cart = cart.toBuilder().quantity(quantity).build();
-		cart = cartRepository.save(cart);
+		if(cart != null) { // 장바구니에 이미 아이템이 존재한다면
+		cart = cart.toBuilder().quantity(cart.getQuantity()+ quantity).build();
+		// 수량을 ++한다
+//		cart = cartRepository.save(cart);
 		} else {
+			// 장바구니에 존재하지 않으면 새로 저장한다
 			 cart =Cart.builder()
 			.itemId(itemId)
 			.userId(userId)
 			.quantity(quantity)
 			.build();
 		}
+		cart = cartRepository.save(cart);
 		return true;
 	} catch(Exception e) {
+		 e.printStackTrace();
 		return false;
 	}
 		
