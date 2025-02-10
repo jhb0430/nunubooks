@@ -45,7 +45,7 @@ public class CartService {
 //		quantity = 1;
 //		Cart cart = cartRepository.findByItemId(itemId,userId);
 		try {
-			Cart cart = cartRepository.findByItemId(itemId,userId);
+			Cart cart = cartRepository.findByItemIdAndUserId(itemId,userId);
 			
 		if(cart != null) { // 장바구니에 이미 아이템이 존재한다면
 		cart = cart.toBuilder().quantity(cart.getQuantity()+ quantity).build();
@@ -68,7 +68,7 @@ public class CartService {
 		
 	}
 	
-	
+/*	
 	public boolean addCart(int itemId, int quantity, int userId) {
 		
 		quantity = 1;
@@ -103,6 +103,7 @@ public class CartService {
 		
 	}
 	
+	*/
 	
 	
 	// 장바구니 리스트 출력
