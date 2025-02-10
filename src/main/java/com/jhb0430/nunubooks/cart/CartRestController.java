@@ -46,9 +46,10 @@ public class CartRestController {
 		
 		if(userId == 0) { //로그인 정보가 없으면
 			resultMap.put("result", "fail");
-		}s
+		}
 		
-		if(cartService.addCart(itemId, quantity, userId)) {
+//		if(cartService.addCart(itemId, quantity, userId)) {
+		if(cartService.insertCart(itemId, quantity, userId)) {
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");
