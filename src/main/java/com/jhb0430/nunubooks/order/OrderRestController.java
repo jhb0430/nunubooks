@@ -59,6 +59,71 @@ public class OrderRestController {
 	
 	
 	
+
+    /*
+     * 포트원(아임포트) 결제 완료 후 서버 검증 및 주문 저장
+
+    @PostMapping("/payment/complete")
+    public Map<String, String> verifyAndCompleteOrder(
+            @RequestParam("imp_uid") String impUid,
+            @RequestParam("merchant_uid") String merchantUid,
+            @RequestParam("amount") int amount,
+            HttpSession session
+    ) {
+        Map<String, String> resultMap = new HashMap<>();
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        if (userId == null || userId == 0) {
+            resultMap.put("result", "fail");
+            resultMap.put("message", "로그인 정보가 없습니다.");
+            return resultMap;
+        }
+
+        try {
+            // 포트원(아임포트) Access Token 발급
+            String accessToken = orderService.getPortoneAccessToken();
+
+            // 결제 정보 검증
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + accessToken);
+
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    "https://api.iamport.kr/payments/" + impUid,
+                    HttpMethod.GET,
+                    entity,
+                    Map.class
+            );
+
+            Map<String, Object> responseBody = (Map<String, Object>) response.getBody().get("response");
+            int paidAmount = (int) responseBody.get("amount");
+
+            // 결제 금액 검증
+            if (amount != paidAmount) {
+                resultMap.put("result", "fail");
+                resultMap.put("message", "결제 금액이 일치하지 않습니다.");
+                return resultMap;
+            }
+
+            // 결제 검증 성공 후 주문 저장
+            if (orderService.addOrderAfterPayment(userId, merchantUid, paidAmount)) {
+                resultMap.put("result", "success");
+            } else {
+                resultMap.put("result", "fail");
+                resultMap.put("message", "주문 저장 실패");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("result", "fail");
+            resultMap.put("message", "서버 오류 발생");
+        }
+
+        return resultMap;
+    }
+     */
+	
 	@DeleteMapping("/delete")
 	public Map<String,String> deleteOrder(
 			@RequestParam("id") int id
