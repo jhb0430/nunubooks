@@ -232,6 +232,32 @@
 		IMP.init("imp51147044"); // 예: 'imp00000000'
 		//IMP.agency("imp51147044", "티어코드"); // 예: 'imp00000000', '123'
 		
+		// 주문 정보 가져오기
+		  let totalPrice = parseInt($("#bookTotalPrice").data("total-price"));  // 총 결제 금액
+		  let usePoint = parseInt($("#usePointInput").val()) || 0;             // 사용 포인트
+		  let finalAmount = totalPrice - usePoint;                            // 최종 결제 금액
+		
+		  let buyerName = $("#nameInput").val();                              // 수령인 이름
+		  let buyerTel = $("#phoneInput").val();                              // 전화번호
+		  let buyerAddr = $("#addr").val() + " " + $("#detailAddr").val();    // 주소
+		  let buyerPostcode = $("#postcode").val();                           // 우편번호
+		  let buyerEmail = "test@example.com";  // 이메일은 동적으로 설정하거나 사용자 계정 정보로 대체 가능
+
+		  // 주문 상품 정보
+		    let orderItems = [];
+		    $(".order-bookInfo").each(function () {
+		        let title = $(this).find(".order-book-title").text().trim();
+		        let quantity = $(this).find(".order-book-amount").text().replace("개", "").trim();
+		        orderItems.push(`${title} x${quantity}`);
+		    });
+
+		    let orderName = orderItems.join(", "); // 여러 상품일 경우 상품명 합치기
+
+		
+		
+		
+		
+		
 		IMP.request_pay(
 				  {
 				    channelKey: "{channel-key-4e7faff3-818f-4aa7-9381-c36dae1471ac}",
@@ -250,6 +276,7 @@
 				    // 결제 종료 시 호출되는 콜백 함수
 				    // response.imp_uid 값으로 결제 단건조회 API를 호출하여 결제 결과를 확인하고,
 				    // 결제 결과를 처리하는 로직을 작성합니다.
+				    /*
 					    if (response.error_code != null) {
 					      return alert(`결제에 실패하였습니다. 에러 내용: ${response.error_msg}`);
 					    }
@@ -267,10 +294,42 @@
 					      }),
 					    });
 					    
+					    const result = await notified.json();
+
+			            if (result.success) {
+			                alert("결제가 완료되었습니다!");
+			                window.location.href = "/order/complete";  // 결제 완료 페이지로 이동
+			            } else {
+			                alert("결제 검증 실패: " + result.message);
+			            }
+					*/
+					 if (rsp.success) {
+				           // 결제 성공 시 서버로 결제 검증 요청
+		                const verifyResponse = await fetch("/payment/complete", {
+		                    method: "POST",
+		                    headers: { "Content-Type": "application/json" },
+		                    body: JSON.stringify({
+		                        imp_uid: rsp.imp_uid,
+		                        merchant_uid: rsp.merchant_uid,
+		                        amount: finalAmount
+		                    })
+		                });
+
+		                const result = await verifyResponse.json();
+
+		                if (result.success) {
+		                    alert("결제가 성공적으로 완료되었습니다!");
+		                    window.location.href = "/order/complete";  // 결제 완료 페이지로 이동
+		                } else {
+		                    alert("결제 검증 실패: " + result.message);
+		                }
+		            } else {
+		                alert("결제에 실패하였습니다: " + rsp.error_msg);
+		            }
 				  },
 				);
 }
-		
+		// Restcontroller에서 결제 검증 해야함
 		
 		
 		$(document).ready(function(){
@@ -377,7 +436,8 @@
 			alert("주소를 선택해주세요");
 			}
 			
-			
+			 mypayment();
+			 
 			$.ajax({
 
 				type:"post"
@@ -408,6 +468,9 @@
 			
 			});
 		
+			
+			
+			
 		});
 		
 		
