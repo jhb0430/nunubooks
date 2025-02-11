@@ -324,6 +324,9 @@
 
 			
 			
+		      
+		      
+		      
 			console.log("name"+name
 					,"phoneNumber :"+phone
 					,"postcode :"+postcode
@@ -345,7 +348,70 @@
 			alert("주소를 선택해주세요");
 			}
 			
-			 
+			
+			  IMP.init("imp51147044"); // 예: 'imp00000000'
+			  //IMP.agency("imp51147044", "티어코드"); // 예: 'imp00000000', '123'
+			
+			  IMP.request_pay({
+//			    pg : 'inicis_v2', 
+				//등록된 PG사가 하나일 경우에는 미 설정시 기본 PG사가 자동으로 적용됩니다. 등록된 PG사가 여러개인 경우에는 html5_inicis 또는 inicis(ActiveX 방식일 경우)로 지정합니다.
+				channelKey: "channel-key-213771af-73f5-4e72-a8f6-690198da0bd3"    
+				,pay_method : "card"
+				    ,merchant_uid: 11 // 상점에서 관리하는 주문 번호를 전달
+				    ,name : orderName
+				    ,amount : finalPrice + shippingFee
+				    ,buyer_email : 'iamport@siot.do'
+				    ,buyer_name : name
+				    ,buyer_tel : phone
+				    ,buyer_addr : address
+				    ,buyer_postcode : postcode
+				    //m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
+				}, function(rsp) {
+				    if ( rsp.success ) {
+				    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+//				    	jQuery.ajax({
+				    	$.ajax({
+				    		url: "order/payments/complete" //cross-domain error가 발생하지 않도록 주의해주세요
+				    		,type: 'POST'
+				    		,dataType: 'json'
+				    		,data: {
+					    		imp_uid : rsp.imp_uid
+					    		//기타 필요한 데이터가 있으면 추가 전달
+				    		}
+				    	}).done(function(data) {
+				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+				    		if ( everythings_fine ) {
+				    			var msg = '결제가 완료되었습니다.';
+				    			msg += '\n고유ID : ' + rsp.imp_uid;
+				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+				    			msg += '\결제 금액 : ' + rsp.paid_amount;
+				    			msg += '카드 승인번호 : ' + rsp.apply_num;
+				    			
+				    			alert(msg);
+				    		} else {
+				    			//[3] 아직 제대로 결제가 되지 않았습니다.
+				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+				    		}
+				    	});
+				    } else {
+				        var msg = '결제에 실패하였습니다.';
+				        msg += '에러내용 : ' + rsp.error_msg;
+				        
+				        alert(msg);
+				    }
+				    
+			
+				    
+				});
+
+
+	//https://developers.portone.io/opi/ko/integration/start/v1/auth?v=v1
+			
+				
+			
+			
+			
+			/* 
 			$.ajax({
 
 				type:"post"
@@ -375,82 +441,9 @@
 				}
 			
 			});
-		
+	*/	
 			// 주문번호 생성 -> 생성된 번호를 db에 저장해주는 흐름으로 변경하기 
-			
-			
-		  IMP.init("imp51147044"); // 예: 'imp00000000'
-		  //IMP.agency("imp51147044", "티어코드"); // 예: 'imp00000000', '123'
-		
-		  IMP.request_pay({
-//			    pg : 'html5_inicis', 
-			//등록된 PG사가 하나일 경우에는 미 설정시 기본 PG사가 자동으로 적용됩니다. 등록된 PG사가 여러개인 경우에는 html5_inicis 또는 inicis(ActiveX 방식일 경우)로 지정합니다.
-			    pay_method : "card"
-			    ,merchant_uid: `payment-${crypto.randomUUID()}` // 상점에서 관리하는 주문 번호를 전달
-			    ,name : orderName
-			    ,amount : finalPrice + shippingFee
-			    ,buyer_email : 'iamport@siot.do'
-			    ,buyer_name : name
-			    ,buyer_tel : phone
-			    ,buyer_addr : address
-			    ,buyer_postcode : postcode
-			    //m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
-			}, function(rsp) {
-			    if ( rsp.success ) {
-			    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-//			    	jQuery.ajax({
-			    	$.ajax({
-			    		url: "order/payments/complete" //cross-domain error가 발생하지 않도록 주의해주세요
-			    		,type: 'POST'
-			    		,dataType: 'json'
-			    		,data: {
-				    		imp_uid : rsp.imp_uid
-				    		//기타 필요한 데이터가 있으면 추가 전달
-			    		}
-			    	}).done(function(data) {
-			    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-			    		if ( everythings_fine ) {
-			    			var msg = '결제가 완료되었습니다.';
-			    			msg += '\n고유ID : ' + rsp.imp_uid;
-			    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-			    			msg += '\결제 금액 : ' + rsp.paid_amount;
-			    			msg += '카드 승인번호 : ' + rsp.apply_num;
-			    			
-			    			alert(msg);
-			    		} else {
-			    			//[3] 아직 제대로 결제가 되지 않았습니다.
-			    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-			    		}
-			    	});
-			    } else {
-			        var msg = '결제에 실패하였습니다.';
-			        msg += '에러내용 : ' + rsp.error_msg;
-			        
-			        alert(msg);
-			    }
-			    
-			    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-			    // (다음 목차에서 설명합니다)
-			    const notified =
-			      $.ajax({
 
-			    	  url:`${SERVER_BASE_URL}/payment/complete`,
-			    	method: "POST",
-			      headers: { "Content-Type": "application/json" },
-			      // imp_uid와 merchant_uid, 주문 정보를 서버에 전달합니다
-			      body: JSON.stringify({
-			        imp_uid: response.imp_uid,
-			        merchant_uid: response.merchant_uid,
-			        // 주문 정보...
-			      
-			      }),
-			    });
-			    
-			});
-
-
-//https://developers.portone.io/opi/ko/integration/start/v1/auth?v=v1
-		
 			
 			
 			
