@@ -61,6 +61,26 @@ public class OrderRestController {
 	
 
     /*
+if (userId == 0) {
+        resultMap.put("result", "fail");
+        resultMap.put("message", "로그인 정보가 없습니다.");
+        return resultMap;
+    }
+ // 주문 생성 및 주문 번호 반환
+    Integer orderId = orderService.createOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments, point, savePoint);
+
+    if (orderId != null) {
+        resultMap.put("result", "success");
+        resultMap.put("merchant_uid", orderId);  // 주문 번호 반환
+    } else {
+        resultMap.put("result", "fail");
+        resultMap.put("message", "주문 생성 실패");
+    }
+
+    return resultMap;
+}
+
+
      * 포트원(아임포트) 결제 완료 후 서버 검증 및 주문 저장
 
     @PostMapping("/payment/complete")
