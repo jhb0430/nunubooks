@@ -168,5 +168,21 @@ Map<String,String> resultMap = new HashMap<>();
 	}
 	
 	
+	/*
+	 @PostMapping("/payments/complete")
+	public Map<String,String> completeOrder(
+			@RequestParam("name") String name
+			,@RequestParam("phoneNumber") String phoneNumber
+			,@RequestParam("postcode") String postcode
+			,@RequestParam("address") String address
+			,@RequestParam("totalPrice") int totalPrice
+			,@RequestParam("shippingFee") int shippingFee
+			,@RequestParam("payments") String payments
+			,@RequestParam("point") int point
+			,@RequestParam("savePoint") int savePoint
+			,HttpSession session
+			){
+	s
+	 */
 	
 }
