@@ -36,6 +36,9 @@ public class OrderRestController {
 			,@RequestParam("payments") String payments
 			,@RequestParam("point") int point
 			,@RequestParam("savePoint") int savePoint
+			,@RequestParam("orderItemName") String orderItemName
+			,@RequestParam("impUid") String impUid
+			,@RequestParam("merchantUid") String merchantUid
 			,HttpSession session
 			){
 	
@@ -47,7 +50,7 @@ public class OrderRestController {
 			resultMap.put("result", "fail");
 		}
 		
-		if(orderService.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments, point, savePoint)) {
+		if(orderService.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments, point, savePoint, orderItemName, impUid, merchantUid)) {
 			resultMap.put("result", "success");
 		} else{
 			resultMap.put("result", "fail");
