@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,7 +13,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.jhb0430.nunubooks.books.domain.Data;
 import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
-import com.jhb0430.nunubooks.cart.domain.Cart;
 import com.jhb0430.nunubooks.cart.dto.CartDTO;
 import com.jhb0430.nunubooks.cart.dto.TotalDTO;
 import com.jhb0430.nunubooks.cart.service.CartService;
@@ -32,6 +32,9 @@ public class OrderService {
 	
 	@Autowired
 	WebClient.Builder webClientBuilder;
+	
+	 @Value("${aladin.api.ttbkey}")
+	    private String ttbKey;
 	
 	private OrderRepository orderRepository;
 	private OrderedBookListRepositoy orderedBookListRepositoy;
@@ -93,6 +96,9 @@ public class OrderService {
 			,String payments
 			,int point
 			,int savePoint
+			,String orderItemName
+			,String impUid
+			,String merchantUid
 			) {
 		
 		Order order = Order.builder()
@@ -105,6 +111,9 @@ public class OrderService {
 				.shippingFee(shippingFee)
 				.payments(payments)
 				.point(savePoint)
+				.orderItemName(orderItemName)
+				.impUid(impUid)
+				.merchantUid(merchantUid)
 				.build();
 		
 		if(totalPrice >= 15000 ){
@@ -196,7 +205,7 @@ public class OrderService {
 								.scheme("https")
 								.host("www.aladin.co.kr")
 								.path("/ttb/api/ItemLookUp.aspx")
-								.queryParam("ttbkey","ttbleky22241703001")
+								.queryParam("ttbkey",ttbKey)
 								.queryParam("itemIdType","itemId")
 								.queryParam("itemId",itemId)
 								.queryParam("Cover","Mid")
