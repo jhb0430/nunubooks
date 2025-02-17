@@ -16,7 +16,7 @@ public class EmailService {
 	public void sendSimpleMailMessage() {
 		//https://baby9235.tistory.com/131
 		//https://velog.io/@tjddus0302/Spring-Boot-%EB%A9%94%EC%9D%BC-%EB%B0%9C%EC%86%A1-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-Gmail
-		//https://blogan99.tistory.com/101
+		//https://blogan99.tistory.com/101 << 얘로간다 
 		// 소리지르고싶다
 	}
 }
