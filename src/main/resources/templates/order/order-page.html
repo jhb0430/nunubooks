@@ -419,9 +419,9 @@
 
 						if(response.result == "success"){
 
-							alert("결제 성공")
+//							alert("결제 성공")
 
-//							location.href="/nunubooks/order/order/complete";
+							location.href="/nunubooks/order/order/complete?merchantUid=" +rsp.merchant_uid;
 						} else {
 							alert("주문 실패" + rsp.error_msg)
 						}
@@ -439,25 +439,6 @@
 			
 				 /*   	
 				
-				 오더 테이블 수정하기...
-				 
-				 CREATE TABLE `order`(
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `userId` INT NOT NULL,
-    `orderItemName` VARCHAR(128) NOT NULL,
-    `name` VARCHAR(64) NOT NULL,
-    `phoneNumber` VARCHAR(64) NOT NULL,
-    `postcode` VARCHAR(64) NOT NULL,
-    `address` VARCHAR(128) NOT NULL,
-    `totalPrice` INT NOT NULL,
-    `shippingFee` INT NOT NULL,
-    `payments` VARCHAR(64) NOT NULL,
-    `point` INT,
-    `impUid` VARCHAR(64) NOT NULL, -- 포트원 결제 고유 id
-    `merchantUid` VARCHAR(64) NOT NULL, -- 주문번호
-    `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-				 
 				 
 				 
 			  IMP.init("imp51147044"); // 예: 'imp00000000'
