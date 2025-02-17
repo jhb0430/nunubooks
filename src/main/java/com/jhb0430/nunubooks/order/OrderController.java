@@ -66,12 +66,15 @@ public class OrderController {
 	
 	@GetMapping("/order/complete")
 	public String completeOrder(
-//			HttpSession session
-//			, Model model
+			@RequestParam("merchantUid") String merchantUid
+//			,HttpSession session
+			, Model model
 			) {
 //		int userId = (Integer)session.getAttribute("userId");
 //		List<Order> order = orderService.findOrderId(userId);
+		
 //		model.addAttribute("order",order);
+		model.addAttribute("merchantUid", merchantUid);
 		
 		return "order/order-complete";
 	}
