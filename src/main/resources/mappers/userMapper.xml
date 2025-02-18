@@ -91,6 +91,14 @@
 				`email` = #{email}; 	
 	 </update>
  	
+	 <update id="updateTmpPassWord" parameterType="map">
+			UPDATE `user`
+			SET
+				`password` = #{password}
+			WHERE
+				`email` = #{email}; 	
+	 </update>
+ 	
  	
  	
  	

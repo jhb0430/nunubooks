@@ -45,6 +45,11 @@ public interface UserRepository {
 			,@Param("email") String email
 			,@Param("password") String password
 			);
+	//임시 비밀번호로 변경됨 
+	public int updateTmpPassWord(
+			@Param("email") String email
+			,@Param("password") String password
+			);
 	
 	
 	
