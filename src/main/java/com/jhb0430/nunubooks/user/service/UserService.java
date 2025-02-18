@@ -109,6 +109,17 @@ public class UserService {
 		
 	}
 	
+	public int updateTmpPassWord(
+			String email
+			,String password
+			) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		return userRepository.updateTmpPassWord(email, encodingPassword);
+		
+	}
+	
 	
 	// 아이디 값 조회
 	public User getUserById(int id) {
