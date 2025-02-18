@@ -141,7 +141,7 @@
 		const totalResults = parseInt($("#totalResults").text()) || 0;
 		let maxResults = parseInt($("#maxResultSel").val())|| 10;
 		
-		let currentPage = 1; // 현재 페이지 초기값
+		let start = 1; // 현재 페이지 초기값
 		
 		function getTotalPageCount(){  // 총 페이지 수 
 			return Math.ceil(totalResults / maxResults);
@@ -157,7 +157,7 @@
 			$numberWrapper.empty(); // 페이지 번호 wrapper 내부를 비워줌
 			
 			
-			const pageGroup = Math.ceil(currentPage / 7);
+			const pageGroup = Math.ceil(start / 7);
 			 //화면에 보여질 페이지 그룹 = Math.ceil(현재 페이지/ 한 화면에 나타낼 페이지 수);
 			 
 //			 let last = pageGroup * 10;
@@ -182,7 +182,7 @@
 			    for (let i = first; i <= last; i++) {
 			        const $pageButton = $(`<li class="pageNum"><a href="#">${i}</a></li>`);
 			        
-			        if (i === currentPage) {
+			        if (i === start) {
 			            $pageButton.addClass("pageNum-now"); // 현재 페이지 강조
 			        }
 			        $numberWrapper.append($pageButton);
@@ -229,8 +229,8 @@
 		            const selectedPage = parseInt($(this).text());
 		            
 		  			  
-		            if (selectedPage !== currentPage) {
-		                currentPage = selectedPage;
+		            if (selectedPage !== start) {
+		            	start = selectedPage;
 		                setPageButtons(); // 페이지 버튼 다시 그리기
 		                updateUrl();
 		            }
@@ -241,7 +241,7 @@
 			function updateUrl(){
 		     	 let query = $("input[name='query']").val() || ""; // 검색어 가져오기
 		     	 let maxResults = $("#maxResultSel").val() || 10;
-				 let start = (currentPage - 1) * maxResults + 1; 
+				 let start = (start - 1) * maxResults + 1; 
 				 let outofStock = $("#outofStockSel").val() ||0; 
 				 let baseUrl = "/nunubooks/searchList";
 				 
@@ -257,16 +257,16 @@
 
 		    // 이전/다음 버튼 동작
 		    $("#prevBtn").on("click", function () {
-		        if (currentPage > 1) {
-		            currentPage--;
+		        if (start > 1) {
+		        	start--;
 		            setPageButtons();
 		            updateUrl();
 		        }
 		    });
 
 		    $("#nextBtn").on("click", function () {
-		        if (currentPage < getTotalPageCount()) {// 마지막 페이지일 때는 작동하지 않음
-		            currentPage++;
+		        if (start < getTotalPageCount()) {// 마지막 페이지일 때는 작동하지 않음
+		        	start++;
 		            setPageButtons();
 		            updateUrl();
 		        }
@@ -274,16 +274,16 @@
 			
 
 			$("#allPrevBtn").on("click", function() {
-			    if (currentPage > 1) {
-			    	 currentPage = Math.max(1, currentPage - 10);
+			    if (start > 1) {
+			    	start = Math.max(1, start - 10);
 			        setPageButtons();
 			        updateUrl();
 			    }
 			});
 			
 			$("#allNextBtn").on("click", function() {
-				if (currentPage < getTotalPageCount()){
-			        currentPage = Math.min(getTotalPageCount(), currentPage + 10); // 현재 페이지를 10 증가, 최대 페이지를 넘지 않음
+				if (start < getTotalPageCount()){
+					start = Math.min(getTotalPageCount(), start + 10); // 현재 페이지를 10 증가, 최대 페이지를 넘지 않음
 			        setPageButtons();
 			        updateUrl();
 			    }
