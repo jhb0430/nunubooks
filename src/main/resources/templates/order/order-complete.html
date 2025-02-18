@@ -30,11 +30,9 @@
 					 	 <tr>
 					 	 	<td>
 						 	 	<span class="mr-1" >주문번호 : </span>
+						 	 	<a th:href="@{/nunubooks/order/orderInfo(merchantUid=${merchantUid})}" class="font-weight-bold text-success">
 						 	 	<span th:text="${merchantUid}">0000-0000-0000 </span>
-<!-- 
-						 	 	<a href="/nunubooks/order/orderInfo?">
 						 	 	</a>
- -->
 					 	 	</td>
 					 	 </tr>
 				 	</tbody>

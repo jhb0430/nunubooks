@@ -9,6 +9,7 @@ import com.jhb0430.nunubooks.cart.dto.TotalDTO;
 import com.jhb0430.nunubooks.order.domain.Order;
 import com.jhb0430.nunubooks.order.domain.OrderedBookList;
 
+import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -25,6 +26,13 @@ public class OrderDTO {
 	private int quantity;
 	private int price;
 	private int totalPrice;
+	
+	private String orderItemName;
+	
+	private String impUid;
+	
+    private String merchantUid;
+	
 	
 	private LocalDateTime createdAt; //주문 시간을 출력?
 	

@@ -251,7 +251,7 @@ color: #7CC491;
 	height:160px;
 }
 .order-date{
-	width:700px;
+	width:500px;
 }
 .order-book-img{
 	width:100px;
@@ -263,7 +263,7 @@ color: #7CC491;
     white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
 }
 .order-book-amount{
-	width:100px;
+	width:200px;
 }
 .order-book-price{
 	width:145px;
