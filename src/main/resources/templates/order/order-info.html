@@ -36,7 +36,7 @@
 					</div>
 			
 				<div class="border p-2 my-4 order-box">
-					<table class="table">
+					<table class="table text-center">
 						<tr>
 							<th>주문일자</th>
 							<th>주문번호</th>
@@ -45,7 +45,7 @@
 						</tr>
 						<tr>
 							<td th:text="${#temporals.format(orderUser.createdAt,'yyyy/MM/dd')}">2025/00/00</td>
-							<td th:text="${orderInfo.orderId}">11111</td>
+							<td th:text="${merchantUid}">11111</td>
 							<td>
 							<div th:text="|${#numbers.formatInteger(orderUser.totalPrice, 3, 'COMMA')} 원|">12124원</div>
 							<div th:text="|(${#numbers.formatInteger(orderUser.point, 3, 'COMMA')} point 적립)|">(000point 적립)</div>

@@ -13,5 +13,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer>{
 //	public findAllByUserIdOrderByIdDesc(int userId);
 	//SELECT `id` FROM `order` WHERE `userId`="#";
 	public List<Order> findByUserId(int userId);
+	
+	public Order findByMerchantUid(String merchantUid);
 
 }

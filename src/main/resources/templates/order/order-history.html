@@ -10,7 +10,8 @@
 			<nav class="nav flex-column category border-right mr-4">
 			<div class="mt-4 mypage mr-1 border-bottom">
 				<h4 class="font-weight-bold mt-3">마이 페이지</h4>
-				<h6 class="text-right mr-2 mt-2">김뫄뫄님</h6>
+				<span class="mr-2 mt-2" th:text="|${session.userName} 님 |">김뫄뫄님</span>
+				<span class="mr-2 mt-1" th:text="|(${user.point} point)|">포인트</span>
 			</div>
 				<div class="mr-1 text-center  mt-4">
 					<h6 class="font-weight-bold mb-2">쇼핑 내역</h6>
@@ -49,8 +50,8 @@
 					<table class="table" th:each="order:${order}">
 						<thead>
 							<tr>
-								<th  class="order-date align-middle" colspan="3" th:text="${#temporals.format(order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
-								<th class="order-book-amount align-middle" ><a th:href="@{/nunubooks/order/orderInfo(orderId=${order.id})}" th:text="${order.id}" class="text-success">주문번호</a></th>
+								<th class="order-date align-middle" colspan="3" th:text="${#temporals.format(order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
+								<th class="order-book-amount align-middle" ><a th:href="@{/nunubooks/order/orderInfo(merchantUid=${order.merchantUid})}" th:text="${order.merchantUid}" class="text-success">주문번호</a></th>
 								<!-- 
 								<th><a th:href="@{/order/delete(id=${order.id})}" class="text-dark">삭제</a></th>
 								 -->

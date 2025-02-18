@@ -287,6 +287,10 @@ public class OrderService {
 	
 	
 	
+	public Order findByMerchantUid(String merchantUid) {
+		
+		return orderRepository.findByMerchantUid(merchantUid);
+	}
 	
 	// 주문 번호를 출력해주는 페이지의 필요성.
 }
