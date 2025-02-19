@@ -142,6 +142,10 @@
 		let maxResults = parseInt($("#maxResultSel").val())|| 10;
 		
 		let start = 1; // 현재 페이지 초기값
+//		let offset = (start - 1) * maxResults + 1; // 검색 결과에서 시작하는 항목 번호
+
+
+
 		
 		function getTotalPageCount(){  // 총 페이지 수 
 			return Math.ceil(totalResults / maxResults);
@@ -229,19 +233,21 @@
 		            const selectedPage = parseInt($(this).text());
 		            
 		  			  
-		            if (selectedPage !== start) {
+//		            if (selectedPage !== start) {
+            	  	if (!isNaN(selectedPage) && selectedPage !== start) {
 		            	start = selectedPage;
 		                setPageButtons(); // 페이지 버튼 다시 그리기
 		                updateUrl();
 		            }
-		            console.log("currentPage:", currentPage);
+//		            console.log("currentPage:", currentPage);
 		        });
 			}
 			
 			function updateUrl(){
 		     	 let query = $("input[name='query']").val() || ""; // 검색어 가져오기
 		     	 let maxResults = $("#maxResultSel").val() || 10;
-				 let start = (start - 1) * maxResults + 1; 
+//				 let start = (start - 1) * maxResults + 1; 
+//				 let startOffset = (start - 1) * maxResults + 1;
 				 let outofStock = $("#outofStockSel").val() ||0; 
 				 let baseUrl = "/nunubooks/searchList";
 				 
@@ -256,6 +262,14 @@
 			});
 
 		    // 이전/다음 버튼 동작
+			$("#allPrevBtn").on("click", function() {
+			    if (start > 1) {
+			    	start = Math.max(1, start - 10);
+			        setPageButtons();
+			        updateUrl();
+			    }
+			});
+			
 		    $("#prevBtn").on("click", function () {
 		        if (start > 1) {
 		        	start--;
@@ -264,6 +278,13 @@
 		        }
 		    });
 
+			$("#allNextBtn").on("click", function() {
+				if (start < getTotalPageCount()){
+					start = Math.min(getTotalPageCount(), start + 10); // 현재 페이지를 10 증가, 최대 페이지를 넘지 않음
+			        setPageButtons();
+			        updateUrl();
+			    }
+			});
 		    $("#nextBtn").on("click", function () {
 		        if (start < getTotalPageCount()) {// 마지막 페이지일 때는 작동하지 않음
 		        	start++;
@@ -273,21 +294,6 @@
 		    });
 			
 
-			$("#allPrevBtn").on("click", function() {
-			    if (start > 1) {
-			    	start = Math.max(1, start - 10);
-			        setPageButtons();
-			        updateUrl();
-			    }
-			});
-			
-			$("#allNextBtn").on("click", function() {
-				if (start < getTotalPageCount()){
-					start = Math.min(getTotalPageCount(), start + 10); // 현재 페이지를 10 증가, 최대 페이지를 넘지 않음
-			        setPageButtons();
-			        updateUrl();
-			    }
-			});
 			
    		 setPageButtons();
 			

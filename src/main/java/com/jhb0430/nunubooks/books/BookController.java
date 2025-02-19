@@ -137,6 +137,7 @@ public class BookController {
 			,@RequestParam(value = "start", defaultValue = "1") int start
 			,@RequestParam(value="outofStockfilter" , defaultValue = "0") int outofStockfilter
 			,Model model) {
+		
 		 WebClient webClient = webClientBuilder.build();
 		 
 		 // maxResult가 필수값이 아니게 설정해주기 
@@ -144,9 +145,12 @@ public class BookController {
 //		 if((Integer)maxResults == null) {
 			 
 //		 }
-		 int page = (start - 1) / maxResults + 1; 
+//		 int page = (start - 1) / maxResults + 1; 
+		 int page = start; // start가 페이지 번호이므로 그대로 사용
+//		 int offset = (page - 1) * maxResults; // 검색 결과에서 시작하는 인덱스 계산
+
 		 
-		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page,outofStockfilter);
+		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page + 1,outofStockfilter);
 		 model.addAttribute("books",bookDTO);
 		 model.addAttribute("query",query);
 		 model.addAttribute("maxResults",maxResults);
