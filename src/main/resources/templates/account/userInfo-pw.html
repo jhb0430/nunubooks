@@ -48,7 +48,7 @@
 				</tr>
 			</table>
 			<div class="d-flex justify-content-center">
-				<button type="button" class="btn btn-success">확인</button>
+				<button type="button" class="btn btn-success" id="enterInfoBtn">확인</button>
 			</div>
 			
 			
@@ -62,6 +62,59 @@
 	
 	$(document).ready(function(){
 
+		$("#enterInfoBtn").on("click",function(){
+
+//			alert("클릭");
+
+			var password = $("#passwordInput").val();
+			// 아이디 중복여부 같이 ... 
+			// 비밀번호가 user 정보와 다르면 $("#difPwAlt").removeClass("d-none");
+//			if(password){}
+
+/*
+			$.ajax({
+				type:"get"
+				,url:"/user/same-pw"
+				,data:{"password":password}
+				,success:function(response){
+					
+					if(response.isSame) { // 중복이면
+						$("#difPwAlt").addClass("d-none");
+					}else{
+						$("#difPwAlt").removeClass("d-none");
+					}
+			}
+			, error:function(){
+				alert("비밀번호 일치 오류! ");
+			}	
+				
+			});
+
+*/
+
+			$.ajax({
+
+			type:"post"
+			,url:"/user/enter-info"
+			,data:{"password":password}
+			,success:function(response){
+
+				if(response.result == "success"){
+						$("#difPwAlt").addClass("d-none");
+					location.href="/nunubooks/account/userInfo/user";
+				} else {
+	
+						$("#difPwAlt").removeClass("d-none");
+//					alert("접근 오류")
+				}
+			}
+			,error:function(){
+
+			alert("에러 발생");
+			}
+			});
+
+		});
 	
 	});
 	

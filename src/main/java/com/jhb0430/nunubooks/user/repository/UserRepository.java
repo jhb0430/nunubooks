@@ -58,6 +58,9 @@ public interface UserRepository {
 	
 	
 	
+	public int updateUserInfo(@Param("id") int id
+			,@Param("password") String password
+			);
 	
 	
 	// 사용자의 id값 조회

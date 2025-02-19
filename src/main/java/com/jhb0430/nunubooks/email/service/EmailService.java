@@ -134,7 +134,7 @@ public class EmailService {
             mimeMessageHelper.setText(content1 + rpw + content2, true);
 
             javaMailSender.send(mimeMessage);
-            userService.updateTmpPassWord(email, rpw);
+            userService.updateTmpPassWord(email, rpw); // 작동 확인 완료 
 
             log.info("메일 발송 성공!");
         } catch (Exception e) {

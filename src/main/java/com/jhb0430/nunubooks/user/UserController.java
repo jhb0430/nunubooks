@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jhb0430.nunubooks.user.domain.User;
 import com.jhb0430.nunubooks.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class UserController {
 		session.removeAttribute("userId");
 		session.removeAttribute("userLoginId");
 		
-		return "redirect:/nunubooks/account/main";
+		return "redirect:/nunubooks/main";
 	}
 	
 	
@@ -60,6 +61,17 @@ public class UserController {
 		
 		
 		return "account/userInfo-pw";
+	}
+	@GetMapping("/userInfo/user")
+	public String EditInfo(HttpSession session , Model model) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		
+		User user = userService.getUserById(userId);
+		
+		model.addAttribute("user",user);
+
+		return "account/userInfo-edit";
 	}
 	
 	

@@ -33,112 +33,130 @@
 						<h3 class="font-weight-bold" >회원정보 수정</h3>
 						
 					</div>
-			<div class="d-flex border-top">
-					<div class="border-right col-3 d-flex align-items-center justify-content-center">
-						<div class="font-weight-bold">
+			<div>
+						<h4 class="font-weight-bold my-3">
 					 		기본 정보 입력 
-						<div>
-					 		<span class="text-primary">*</span> 필수항목
-						</div>
-						</div>
-					</div>
-					<div class="col-9 p-3">
-					<table class="table table-borderless w-75">
-						<tr>
-							 <th>
-							 이름
-							 <span class="text-primary">*</span>
-							 </th>
-							<td>
-								<input type="text" class="form-control w-50" id="nameInput">
-							</td>
-						</tr>
-						<tr>
-							 <th>
-							 아이디
-							 <span class="text-primary">*</span>
-							 </th>
-							<td>
-								<div class="d-flex">
-									<input type="text" class="form-control" id="idInput">
-									<button type="button" class="btn btn-outline-secondary w-50 ml-2" id="dupBtn">중복 확인</button>
-								</div>
-								<div class="small text-danger d-none" id="dupText">중복된 아이디입니다</div>
-								<div class="small text-success d-none" id="availableText">사용가능한 아이디 입니다</div>
-							</td>
-						</tr>
-						<tr>
-							 <th>
-							 이메일
-							 <span class="text-primary">*</span>
-							 </th>
-							<td class="d-flex align-items-center">
-								<input type="text" class="form-control" id="emailInput">
-								<span>@</span>
-								<input type="text" class="form-control d-none" id="fillEmail">
-								<select class="form-control text-center" id="domainSel">
-	                                <option selected value="1">이메일 선택</option>
-	                                <option value="naver.com">naver.com</option>
-	                                <option value="gmail.com">gmail.com</option>
-	                                <option value="nate.com">nate.com</option>
-	                                <option value="hanmail.net">hanmail.net</option>
-	                                <option value="daum.net">daum.net</option>
-									<option value="self-domain">직접입력</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							 <th>
-							 비밀번호
-							 <span class="text-primary">*</span>
-							 </th>
-							<td>
-								<input type="password" class="form-control" id="passwordInput">
-							</td>
-						</tr>
-						<tr>
-							 <th>
-							 비밀번호 재입력
-							 <span class="text-primary">*</span>
-							 </th>
-							<td>
-								<input type="password" class="form-control" id="passwordConfirmInput">
-								<div class="small text-danger d-none" id="notsamePw">비밀번호가 일치하지 않습니다</div>
-							</td>
-						</tr>
-						<tr>
-							 <th>
-							 주소
-							 <span class="text-primary">*</span>
-							 </th>
-							<td>
-								<div class="d-flex">
-								<input type="text" class="form-control w-25" id="postcode"> <!-- 다음 주소 api 활용 -->
-								<button type="button" class="btn btn-outline-secondary w-25 ml-2" id="postCodeBtn">우편번호 찾기</button>
-								</div>
-								<input type="text" class="form-control mt-2 w-75" placeholder="주소" id="addr"> 
-								<input type="text" class="form-control mt-2 w-75" placeholder="상세 주소 입력" id="detailAddr"> 
-							</td>
-						</tr>
-						<tr>
-							 <th>
-							 휴대전화
-							 <span class="text-primary">*</span>
-							 </th>
-							<td class="d-flex align-items-center justfiy-content-between">
-								<input type="text" class="form-control" id="phoneInput1">
-								<span> - </span>
-								<input type="text" class="form-control" id="phoneInput2">
-								<span> - </span>
-								<input type="text" class="form-control" id="phoneInput3">
-							</td>
-						</tr>
-					</table>
+						</h4>
+					<div class="col-10 p-3">
+						<table class="table table-borderless">
+							<tr>
+								 <th>
+								 이름
+								 </th>
+								<td>
+									<span th:text="${user.name}">김뫄뫄</span>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 아이디
+								 </th>
+								<td>
+									<span th:text="${user.loginId}">admin123</span>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 이메일
+								 </th>
+								 <td>
+									 <div>
+										  <span th:text="${user.email}">abc@aaa.com </span>
+									 </div>
+								 </td>
+									<td class="d-none">
+									<div class="d-flex align-items-center">
+										<input type="text" class="form-control" id="emailInput">
+										<span>@</span>
+										<input type="text" class="form-control d-none" id="fillEmail">
+										<select class="form-control text-center" id="domainSel">
+			                                <option selected value="1">이메일 선택</option>
+			                                <option value="naver.com">naver.com</option>
+			                                <option value="gmail.com">gmail.com</option>
+			                                <option value="nate.com">nate.com</option>
+			                                <option value="hanmail.net">hanmail.net</option>
+			                                <option value="daum.net">daum.net</option>
+											<option value="self-domain">직접입력</option>
+										</select>
+									</div>
+									</td>
+									<td>
+									<div>
+										<button type="button" class="btn btn-outline-secondary ml-4">변경</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 새 비밀번호
+								 </th>
+								<td>
+									<input type="password" class="form-control" id="passwordInput">
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 새 비밀번호 확인
+								 </th>
+								<td>
+									<input type="password" class="form-control" id="passwordConfirmInput">
+									<div class="small text-danger d-none" id="notsamePw">비밀번호가 일치하지 않습니다</div>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 주소
+								 </th>
+								<td>
+									<div>
+										<div th:text="|(${user.postcode})|">00000</div>
+										<div th:text="${user.address}">뫄뫄시 롸롸동 솨솨아파트</div>
+									</div>
+								</td>
+								<td class="d-none">
+									<div class="d-flex">
+									<input type="text" class="form-control w-25" id="postcode"> <!-- 다음 주소 api 활용 -->
+									<button type="button" class="btn btn-outline-secondary w-25 ml-2" id="postCodeBtn">우편번호 찾기</button>
+									</div>
+									<input type="text" class="form-control mt-2 w-75" placeholder="주소" id="addr"> 
+									<input type="text" class="form-control mt-2 w-75" placeholder="상세 주소 입력" id="detailAddr"> 
+								</td>
+								 <td>
+									<div>
+										<button type="button" class="btn btn-outline-secondary ml-4">변경</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 휴대전화
+								 </th>
+								 <td>
+									<div>
+										<span th:text="${user.phoneNumber}">010-1111-1111</span>
+									</div>
+								</td>
+								<td class="d-none">
+									<div class="d-flex align-items-center justfiy-content-between">
+										<input type="text" class="form-control" id="phoneInput1">
+										<span> - </span>
+										<input type="text" class="form-control" id="phoneInput2">
+										<span> - </span>
+										<input type="text" class="form-control" id="phoneInput3">
+									</div>
+								</td>
+								 <td>
+									<div>
+										<button type="button" class="btn btn-outline-secondary ml-4">변경</button>
+									</div>
+								</td>
+							</tr>
+						</table>
 					
 					</div>
 				</div>
-			<div class="d-flex justify-content-center">
-				<button type="button" class="btn btn-success">확인</button>
+			<div class="d-flex justify-content-center my-4">
+				<button type="button" class="btn btn-success" id="editBtn">확인</button>
 			</div>
 			
 			
@@ -149,6 +167,49 @@
 
 
 	<script layout:fragment="script">
+	
+	$(document).ready(function(){
+
+		// 비밀번호 변경
+		// 비밀번호를 변경하는게 우선된 로직
+		$("#editBtn").on("click",function(){
+			let password = $("#passwordInput").val();
+			let passwordConfirm = $("#passwordConfirmInput").val();
+		
+			if(password ==""){
+				alert("패스워드를 입력해주세요");
+				return;
+			}
+				
+			if(passwordConfirm != password){
+				$("#notsamePw").removeClass("d-none");
+				return;
+			}
+			// 비밀번호가 변경안되는 경우도 있다... 
+			
+			$.ajax({
+
+				type:"put"
+				,url:"/user/update/user"
+				,data:{"password":password}
+				,success:function(response){
+		
+					if(response.result == "success"){
+						alert("변경 완료");
+					} else{
+						alert("양식을 다시 확인해 주세요")
+					}
+				}
+				,error:function(){
+					alert("회원정보 수정 오류!!")
+					}
+				
+				});
+				
+		// 비밀번호를 변경하지 않는 경우. 변경 버튼을 눌러서 나머지를 수정하는 경우. 생각하기 
+		
+		});
+	});
 	
 	</script>
 

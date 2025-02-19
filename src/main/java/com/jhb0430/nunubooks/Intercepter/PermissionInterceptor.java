@@ -41,15 +41,15 @@ public class PermissionInterceptor implements HandlerInterceptor{
 				} 
 				
 //				로그인이 되어있는 경우는 막을 게 없지 않나...? d아~~
-				else {
-					// 로그인이 되어 있는 경우 사용자와 관련된 페이지 접근을 막는다
-					// 메모 리스트 페이지로 이동
-					// /user 로 시작하는 url path 확인
-					if(uri.startsWith("/nunubooks/account")) {
-						response.sendRedirect("/nunubooks/main");
-						return false;
-					}
-				}
+//				else {
+//					// 로그인이 되어 있는 경우 사용자와 관련된 페이지 접근을 막는다
+//					// 메모 리스트 페이지로 이동
+//					// /user 로 시작하는 url path 확인
+//					if(uri.startsWith("/nunubooks/account")) {
+//						response.sendRedirect("/nunubooks/main");
+//						return false;
+//					}
+//				}
 				
 				return true;
 		
