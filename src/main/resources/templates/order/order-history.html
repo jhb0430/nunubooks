@@ -10,14 +10,18 @@
 			<nav class="nav flex-column category border-right mr-4">
 			<div class="mt-4 mypage mr-1 border-bottom">
 				<h4 class="font-weight-bold mt-3">마이 페이지</h4>
-				<span class="mr-2 mt-2" th:text="|${session.userName} 님 |">김뫄뫄님</span>
-				<span class="mr-2 mt-1" th:text="|(${user.point} point)|">포인트</span>
+				<div class="mr-2 mt-2">
+					<div  th:text="|${session.userName} 님 |">김뫄뫄님</div>
+					<div class="small logo-color font-weight-bold" th:text="|(${#numbers.formatInteger(session.userPoint, 3, 'COMMA')} point)|">포인트</div>
+				</div>
 			</div>
 				<div class="mr-1 text-center  mt-4">
 					<h6 class="font-weight-bold mb-2">쇼핑 내역</h6>
 					  <a class="nav-link text-dark" href="/nunubooks/order/orderHistory">주문 내역</a>
+					<h6 class="font-weight-bold mb-2">회원정보</h6>
+					  <a class="nav-link text-dark" href="/nunubooks/account/userInfo">회원정보 수정</a>
 					  <!-- 
-					  <a class="nav-link text-dark" href="#">카테고리2</a>
+					  <a class="nav-link text-dark" href="/nunubooks/account/userInfo">회원정보 수정</a>
 					  <a class="nav-link text-dark" href="#">카테고리3</a>
 					  <a class="nav-link text-dark" href="#">카테고리4</a>
 					   -->

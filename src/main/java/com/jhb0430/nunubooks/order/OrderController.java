@@ -88,7 +88,7 @@ public class OrderController {
 			) {
 		int userId = (Integer)session.getAttribute("userId");
 		
-		User user = userService.getUserById(userId);
+//		User user = userService.getUserById(userId);
 		// 주문일 // 주문번호 -> orderDTO의 orderId, Order의 createdAt
 		// 책 정보 상위 1개 // 총 주문객 주문상태 item[0].title 외- 권
 		List<Order> order = orderService.findOrderId(userId);
@@ -103,7 +103,7 @@ public class OrderController {
 		
 		model.addAttribute("orderInfo",orderInfoList); //그대로 쓰니까 orderId를 tbody에서는 못받아오네... list 돌려야만
 		model.addAttribute("order",order);
-		model.addAttribute("user",user);
+//		model.addAttribute("user",user);
 		
 		return "order/order-history";
 	}

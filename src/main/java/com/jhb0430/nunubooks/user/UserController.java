@@ -55,6 +55,13 @@ public class UserController {
 		return "account/findUser";
 	}
 	
+	@GetMapping("/userInfo")
+	public String UserInfo() {
+		
+		
+		return "account/userInfo-pw";
+	}
+	
 	
 
 }
