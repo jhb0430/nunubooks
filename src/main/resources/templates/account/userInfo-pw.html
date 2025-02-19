@@ -33,21 +33,22 @@
 						<h3 class="font-weight-bold" >회원정보 수정</h3>
 						
 					</div>
-			<div>
-				<h4>비밀번호 확인</h4>
+			<div class="my-4">
+				<h4 class="font-weight-bold">비밀번호 확인</h4>
 				<h6>안전한 개인정보보호를 위해 비밀번호를 입력해 주세요.</h6>
 			</div>
 			
-			<table>
+			<table class="table table-borderless col-6">
 				<tr>
 					<th>비밀번호</th>
 					<td>
 						<input type="password" class="form-control" id="passwordInput">
+						<div class="text-danger small d-none" id="difPwAlt">비밀번호를 확인해주세요</div>
 					</td>
 				</tr>
 			</table>
 			<div class="d-flex justify-content-center">
-				<button type="button" class="btn logo-color">확인</button>
+				<button type="button" class="btn btn-success">확인</button>
 			</div>
 			
 			
@@ -58,6 +59,11 @@
 
 
 	<script layout:fragment="script">
+	
+	$(document).ready(function(){
+
+	
+	});
 	
 	</script>
 

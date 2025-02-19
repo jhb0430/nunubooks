@@ -120,6 +120,20 @@ public class UserService {
 		
 	}
 	
+	//회원정보 수정 들어가는 페이지.. boolean으로 줘야하나 ?? 일치하는 정보가 있으면->?? 
+	public User enterUserInfo(
+			int id
+			,String password
+			) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		User user = userRepository.enterUserInfo(id, encodingPassword);
+		
+		return user;
+	}
+	
+	
 	
 	// 아이디 값 조회
 	public User getUserById(int id) {

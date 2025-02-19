@@ -51,6 +51,13 @@ public interface UserRepository {
 			,@Param("password") String password
 			);
 	
+	public User enterUserInfo(
+			@Param("id") int id
+			,@Param("password")String password
+			);
+	
+	
+	
 	
 	
 	// 사용자의 id값 조회
