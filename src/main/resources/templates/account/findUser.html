@@ -63,13 +63,13 @@
 						<div id="updatePw" class="d-none">
 							<h5 class="font-weight-bold my-4">임시 비밀번호 발급을 위한 정보를 입력해주세요</h5>
 							<div>
-								<input type="text" class="form-control my-2" placeholder="이름">
+								<input type="text" class="form-control my-2" placeholder="이름" id="nameInput">
 							</div>
 							<div>
-								<input type="text" class="form-control my-2" placeholder="아이디">
+								<input type="text" class="form-control my-2" placeholder="아이디" id="idInput">
 							</div>
 							<div>
-								<input type="text" class="form-control my-2" placeholder="이메일주소">
+								<input type="text" class="form-control my-2" placeholder="이메일주소" id="emailInput">
 							</div>
 							<div>
 								<button type="button" class="btn btn-success mb-4" id="setPwBtn">확인</button>
@@ -103,7 +103,13 @@
 		    <div class="modal-content">
 		      
 		     <div class="modal-body text-center">
-					<div class="my-3">새로운 비밀번호 설정이 완료되었습니다.</div>
+					<div class="my-3">
+					<h5 class="font-weight-bold ">임시 비밀번호 발급이 완료되었습니다</h5>
+					<div class="border">
+						<h6>aaaa@bbb.com 으로 메일이 발송되었습니다</h6>
+					</div>
+					
+					</div>
 					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
 				</div>
 		      
@@ -200,6 +206,50 @@
 						if(response.result=="success"){
 							$("#moreModal1").modal("show");
 							$("#moreModal1 .getloginId").text(response.loginId);
+					    } else {
+					        alert("회원 정보가 없습니다. 다시 시도해주세요.");
+					    }
+							
+					}
+					,error:function(){
+
+						alert("처리 오류");
+					}
+				});
+			
+				
+				
+			});
+			
+			
+			$("#setPwBtn").on("click",function(){
+
+				let name =$("#nameInput").val();
+				let loginId = $("#idInput").val();
+				let email = $("#emailInput").val();
+				
+				
+				if(name == ""){
+					alert("이름을 입력해주세요");
+					return;
+				}
+				if(loginId == ""){
+					alert("아이디를 입력해주세요");
+					return;
+				}
+				if(email == ""){
+					alert("이메일을 입력해주세요");
+					return;
+				}
+				
+				$.ajax({
+					type:"post"
+					,url:"/send-email"
+					,data:{"name":name,"loginId":loginId,"email":email}
+					,success:function(response){
+
+						if(response.result=="true"){
+							$("#moreModal2").modal("show");
 					    } else {
 					        alert("회원 정보가 없습니다. 다시 시도해주세요.");
 					    }
