@@ -117,6 +117,7 @@ public class UserService {
 		String encodingPassword = SHA256HashingEncoder.encode(password);
 		
 		return userRepository.updateTmpPassWord(email, encodingPassword);
+//		return userRepository.updateTmpPassWord(email, password);
 		
 	}
 	
@@ -133,6 +134,12 @@ public class UserService {
 		return user;
 	}
 	
+	
+	
+	public int updateUserInfo(int id, String password) {
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		return userRepository.updateUserInfo(id, encodingPassword);
+	}
 	
 	
 	// 아이디 값 조회
