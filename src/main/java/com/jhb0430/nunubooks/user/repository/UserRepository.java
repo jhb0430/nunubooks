@@ -38,13 +38,20 @@ public interface UserRepository {
 			,@Param("email")String email
 			,@Param("phoneNumber")String phoneNumber
 			);	
-	
+	// 아이디찾기
+	public int findUserforSetPw(
+			@Param("name")String name
+			,@Param("loginId")String loginId
+			,@Param("email")String email
+			);	
+/*	
 	//비밀번호 재설정
 	public int updatePassword(
 			@Param("loginId") String loginId
 			,@Param("email") String email
 			,@Param("password") String password
 			);
+*/			
 	//임시 비밀번호로 변경됨 
 	public int updateTmpPassWord(
 			@Param("email") String email

@@ -96,7 +96,22 @@ public class UserService {
 		
 		return user;
 	}
-	
+	// 임시비밀번호 발급을 위한 정보 
+	public boolean findUserforSetPw(
+			String name
+			,String loginId
+			,String email
+			) {
+		
+		int count = userRepository.findUserforSetPw(name, loginId, email);
+		if(count > 0){
+			return true;
+		 } else {
+			return false;
+		 }
+		
+	}
+	/*
 	public int updateUserPassword(
 			String loginId
 			,String email
@@ -108,6 +123,7 @@ public class UserService {
 		return userRepository.updatePassword(loginId, email, encodingPassword);
 		
 	}
+	*/
 	
 	public int updateTmpPassWord(
 			String email
