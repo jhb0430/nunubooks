@@ -104,13 +104,15 @@
 		      
 		     <div class="modal-body text-center">
 					<div class="my-3">
-					<h5 class="font-weight-bold ">임시 비밀번호 발급이 완료되었습니다</h5>
-					<div class="border">
-						<h6>aaaa@bbb.com 으로 메일이 발송되었습니다</h6>
+						<h5 class="font-weight-bold mb-4">임시 비밀번호 발급이 완료되었습니다</h5>
+						<div class="border pwAlert d-flex justify-content-center align-items-center">
+							<div>
+								<span class="text-success font-weight-bold getEmail">aaaa@bbb.com</span>
+								<span> 으로 메일이 발송되었습니다</h6>
+							</div>
+						</div>
 					</div>
-					
-					</div>
-					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
+					<a href="/nunubooks/account/login" class="btn btn-outline-secondary my-3">로그인</a>
 				</div>
 		      
 		    </div>
@@ -248,8 +250,9 @@
 					,data:{"name":name,"loginId":loginId,"email":email}
 					,success:function(response){
 
-						if(response.result=="true"){
+						if(response.result){
 							$("#moreModal2").modal("show");
+							$("#moreModal2 .getEmail").text(email);
 					    } else {
 					        alert("회원 정보가 없습니다. 다시 시도해주세요.");
 					    }
