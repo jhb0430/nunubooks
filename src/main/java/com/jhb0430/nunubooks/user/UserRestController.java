@@ -156,16 +156,20 @@ public class UserRestController {
 	}
 /*	
  * 회원정보 전체 수정용으로 서야하는ㄷ수마ㅜㅎ;ㅁ
+ * 얘를 써야겠는데???? 
 	@GetMapping("/update")
 	public Map<String,String> updatePassword(
-			@RequestParam("loginId") String loginId
-			,@RequestParam("email") String email
+			@RequestParam("email") String email
+			,@RequestParam("postcode") String postcode
+			,@RequestParam("address") String address
+			,@RequestParam("phoneNumber") String phoneNumber
 			,@RequestParam("password") String password
 			){
+			// 조건 걸어서 입력 안받으면 변경 안되도록...? 
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if(userSevice.updateUserPassword(loginId, email, password) > 0) {
+		if((userSevice.updateUserInfo(id, email ,postcode ,address ,phoneNumber ,password ) > 0) {
 			resultMap.put("result", "success");
 			
 		} else {
