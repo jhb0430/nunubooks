@@ -152,6 +152,16 @@ public class UserService {
 	
 	
 	
+//	public int updateUserInfo(int id
+//	, String password
+//	, String email
+//	, Sting postcode
+//	, String adderss
+//	, String phoneNumber) {
+//		String encodingPassword = SHA256HashingEncoder.encode(password);
+//		return userRepository.updateUserInfo(id, encodingPassword , email, postcode, address, phoneNumber);
+//	}
+//	
 	public int updateUserInfo(int id, String password) {
 		String encodingPassword = SHA256HashingEncoder.encode(password);
 		return userRepository.updateUserInfo(id, encodingPassword);
