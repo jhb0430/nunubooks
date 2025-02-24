@@ -184,24 +184,17 @@
 	        }
 	    });	
 		
+		// 이메일 변경 버튼을 누르면
 		$("#emailBtn").on("click",function(){
 
+			// 기존 유저 email (span) 사라지고
 			$("#userEmail").addClass("d-none");
+			// 이메일 입력 창 생김
 			$("#changeEmail").removeClass("d-none")
+			
 		});
 		
-		$("#addressBtn").on("click",function(){
-
-			$("#userAdr").addClass("d-none");
-			$("#changeAdr").removeClass("d-none")
-		});
-		
-		$("#phoneBtn").on("click",function(){
-
-			$("#userPhone").addClass("d-none");
-			$("#changePhone").removeClass("d-none")
-		});
-		
+		// 이메일 도메인 sel 
 		 $("#domainSel").on("change",function(){
              // alert();
             let select = $(this).val();
@@ -214,9 +207,20 @@
 
              
          });
+		
+		
+		// 주소 변경 버튼을 누르면
+		$("#addressBtn").on("click",function(){
 
-		 
-		 
+			// 회원 주소 글자 사라지고
+			$("#userAdr").addClass("d-none");
+			// 주소 api 창 뜸
+			$("#changeAdr").removeClass("d-none")
+		});
+		
+		
+		
+// 우편번호 버튼 누르면 다음 api 		
 		 $("#postCodeBtn").on("click",function(){
 
 				
@@ -276,6 +280,21 @@
 		 
 		 
 		
+		 
+		// 휴대폰 변경 버튼 누르면
+		$("#phoneBtn").on("click",function(){
+
+			// 회원 휴대폰 대신
+			$("#userPhone").addClass("d-none");
+			// 휴대폰 입력창
+			$("#changePhone").removeClass("d-none")
+		});
+		
+		
+
+		 
+		 
+		
 		// 비밀번호 변경
 		// 비밀번호를 변경하는게 우선된 로직
 		$("#editBtn").on("click",function(){
@@ -330,6 +349,7 @@
 		
 					if(response.result == "success"){
 						alert("변경 완료");
+						location.reload();
 					} else{
 						alert("양식을 다시 확인해 주세요")
 					}

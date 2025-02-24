@@ -65,6 +65,13 @@ public interface UserRepository {
 	
 	
 	
+//	public int updateUserInfo(@Param("id") int id
+//			,@Param("password") String password
+//			,@Param("password") String email
+//			,@Param("password") String postcode
+//			,@Param("password") String address
+//			,@Param("password") String phoneNumber
+//			);
 	public int updateUserInfo(@Param("id") int id
 			,@Param("password") String password
 			);
