@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -157,19 +156,23 @@ public class UserRestController {
 /*	
  * 회원정보 전체 수정용으로 서야하는ㄷ수마ㅜㅎ;ㅁ
  * 얘를 써야겠는데???? 
-	@GetMapping("/update")
-	public Map<String,String> updatePassword(
-			@RequestParam("email") String email
+ */
+	
+	@GetMapping("/update/user")
+	public Map<String,String> updateUserInfo(
+			@RequestParam("password") String password
+			,@RequestParam("email") String email
 			,@RequestParam("postcode") String postcode
 			,@RequestParam("address") String address
 			,@RequestParam("phoneNumber") String phoneNumber
-			,@RequestParam("password") String password
+			,HttpSession session
 			){
 			// 조건 걸어서 입력 안받으면 변경 안되도록...? 
+		int id = (Integer)session.getAttribute("userId");
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if((userSevice.updateUserInfo(id, email ,postcode ,address ,phoneNumber ,password ) > 0) {
+		if((userSevice.updateUserInfo(id, password, email, postcode, address, phoneNumber) > 0)) {
 			resultMap.put("result", "success");
 			
 		} else {
@@ -178,8 +181,8 @@ public class UserRestController {
 		
 		return resultMap;
 	}
-*/	
 	
+/*
 	@PutMapping("/update/user")
 	public Map<String,String> updatePassword(
 			@RequestParam("password") String password
@@ -200,6 +203,7 @@ public class UserRestController {
 		return resultMap;
 	}
 	
+ */	
 	
 	
 }
