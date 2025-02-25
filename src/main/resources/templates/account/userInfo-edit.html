@@ -201,7 +201,7 @@
            
              if(select == "self-domain") {
                  $("#fillEmail").removeClass("d-none");      
-                 $("#domainSel").addClass("d-none");
+                 $(this).addClass("d-none");
                  select = $("#fillEmail").val();
              }
 
@@ -344,7 +344,13 @@
 
 				type:"put"
 				,url:"/user/update/user"
-				,data:{"password":password}
+				,data:{
+					"password":password
+					,"email":email
+					,"postcode":postcode
+					,"address":address
+					,"phoneNumber":phoneNumber
+				}
 				,success:function(response){
 		
 					if(response.result == "success"){
@@ -361,7 +367,8 @@
 				});
 				
 		// 비밀번호를 변경하지 않는 경우. 변경 버튼을 눌러서 나머지를 수정하는 경우. 생각하기 
-		
+		// 변경 버튼을 눌러서 input 창을 띄웠어도 변경 안해도 저장 가능하도록
+		// 아무것도 변경하지 않아도 저장 버튼을 눌러서 페이지 새로고침을 시킬 수 있어야한다 
 	
 		
 		});

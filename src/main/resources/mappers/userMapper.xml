@@ -173,7 +173,19 @@
 				`id` = #{id} 	
 	 </update>
 	 
+	 <update id="updateUserInfo" parameterType="map">
+			UPDATE `user`
+			SET
+				`email` = #{email}
+				,`postcode` = #{postcode}
+				,`address` = #{address}
+				,`phoneNumber` = #{phoneNumber}
+				,`password` = #{password}
+			WHERE
+				`id` = #{id}
+	 </update>
 	 
+	 <!-- 
 	 <update id="updateUserInfo" parameterType="map">
 			UPDATE `user`
 			SET
@@ -181,4 +193,5 @@
 			WHERE
 				`id` = #{id}
 	 </update>
+	  -->
  </mapper>
