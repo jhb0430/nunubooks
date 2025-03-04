@@ -193,5 +193,19 @@
 			WHERE
 				`id` = #{id}
 	 </update>
+	 
+	 <update id="updateUserInfo" parameterType="map">
+    			UPDATE `user`
+	    <set>
+	        <if test="email != null"> `email` = #{email}, </if>
+	        <if test="postcode != null"> `postcode` = #{postcode}, </if>
+	        <if test="address != null"> `address` = #{address}, </if>
+	        <if test="phoneNumber != null"> `phoneNumber` = #{phoneNumber}, </if>
+	        <if test="password != null and password != ''"> `password` = #{password}, </if>
+	    </set>
+    			WHERE `id` = #{id}
+		</update>
+	 
+	 
 	  -->
  </mapper>
