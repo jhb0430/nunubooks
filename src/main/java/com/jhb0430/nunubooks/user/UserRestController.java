@@ -160,11 +160,16 @@ public class UserRestController {
 	
 	@GetMapping("/update/user")
 	public Map<String,String> updateUserInfo(
-			@RequestParam("password") String password
-			,@RequestParam("email") String email
-			,@RequestParam("postcode") String postcode
-			,@RequestParam("address") String address
-			,@RequestParam("phoneNumber") String phoneNumber
+//			@RequestParam("password") String password
+//			,@RequestParam("email") String email
+//			,@RequestParam("postcode") String postcode
+//			,@RequestParam("address") String address
+//			,@RequestParam("phoneNumber") String phoneNumber
+			@RequestParam(value = "password", required = false) String password
+			,@RequestParam(value = "email", required = false) String email
+	        ,@RequestParam(value = "postcode", required = false) String postcode
+	        ,@RequestParam(value = "address", required = false) String address
+	        ,@RequestParam(value = "phoneNumber", required = false) String phoneNumber
 			,HttpSession session
 			){
 			// 조건 걸어서 입력 안받으면 변경 안되도록...? 
