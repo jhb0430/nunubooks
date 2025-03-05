@@ -158,7 +158,11 @@ public class UserService {
 	, String postcode
 	, String address
 	, String phoneNumber) {
-		String encodingPassword = SHA256HashingEncoder.encode(password);
+		// 비밀번호 값이 존재할 때만 암호화 한다
+		String encodingPassword =  null;
+				   if (password != null && !password.isEmpty()) {
+				        encodingPassword = SHA256HashingEncoder.encode(password);
+				    }
 		return userRepository.updateUserInfo(id, encodingPassword , email, postcode, address, phoneNumber);
 	}
 	

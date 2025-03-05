@@ -202,7 +202,7 @@
              if(select == "self-domain") {
                  $("#fillEmail").removeClass("d-none");      
                  $(this).addClass("d-none");
-                 select = $("#fillEmail").val();
+//                 select = $("#fillEmail").val();
              }
 
              
@@ -311,6 +311,72 @@
 			let phoneNumber2 = $("#phoneInput2").val();
 			let phoneNumber3 = $("#phoneInput3").val();
 			
+			
+			let domain;
+			if ($("#domainSel").val() === "self-domain") {
+			    domain = $("#fillEmail").val();
+			    if (domain.trim() === "") {
+			        alert("이메일을 직접 입력해 주세요.");
+			        return;
+			    }
+			} else {
+			    domain = $("#domainSel").val();
+			}
+			
+			let email;
+			if (emailId && domain) {
+			    email = emailId + "@" + domain;
+			} else {
+			    email = $("#userEmail span").text().trim();
+			}
+
+			// 휴대폰 번호 입력 확인
+			let phoneNumber;
+			if (phoneNumber1 && phoneNumber2 && phoneNumber3) {
+			    phoneNumber = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
+			} else {
+			    phoneNumber = $("#userPhone span").text().trim();
+			}
+			
+			// 주소 입력 확인
+			let address;
+			if (addr && detailAddr) {
+			    address = addr + " " + detailAddr;
+			} else {
+			    address = $("#userAdr").text().trim();
+			}
+			/*
+			 // 이메일 입력 확인
+        let domain = $("#domainSel").val() === "self-domain" ? $("#fillEmail").val() : $("#domainSel").val();
+        if ($("#domainSel").val() === "self-domain" && domain.trim() === "") {
+            alert("이메일을 직접 입력해 주세요.");
+            return;
+        }
+        let email = (emailId && domain) ? emailId + "@" + domain : $("#userEmail span").text().trim();
+
+        // 휴대폰 번호 입력 확인
+        let phoneNumber = (phoneNumber1 && phoneNumber2 && phoneNumber3) 
+            ? phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3 
+            : $("#userPhone span").text().trim();
+
+        // 주소 입력 확인
+        let address;
+			if (addr && detailAddr) {
+			    address = addr + " " + detailAddr;
+			} else {
+			    address = $("#userAdr").text().trim();
+			}
+			//$("#userAdr div:nth-child(2)").text().trim() → #userAdr 안에서 두 번째 <div> 만 가져옴.
+
+			
+        // 비밀번호 유효성 검사
+        if (password !== "" && password !== passwordConfirm) {
+            $("#notsamePw").removeClass("d-none");
+            return;
+        }
+        */
+        
+        /*
 			let domain = "@" + $("#domainSel").val();
 			if ($("#domainSel").val() === "self-domain") {
 				let selfFill = $("#fillEmail").val();
@@ -326,15 +392,15 @@
 
 			let phoneNumber = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
 			let address = addr+ " " + detailAddr;
+			*/
 			
-			
-			
-			if(password ==""){
+			// 비밀번호 유효성 검사
+			if(password === ""){
 				alert("패스워드를 입력해주세요");
 				return;
 			}
 				
-			if(passwordConfirm != password){
+			if(passwordConfirm !== password){
 				$("#notsamePw").removeClass("d-none");
 				return;
 			}
@@ -345,11 +411,11 @@
 				type:"put"
 				,url:"/user/update/user"
 				,data:{
-					"password":password
-					,"email":email
-					,"postcode":postcode
-					,"address":address
-					,"phoneNumber":phoneNumber
+					 	"password": password || null // 비밀번호가 비어있으면 null 전달
+		                , "email": email
+		                , "postcode": postcode || $("#userAdr div:first-child").text().trim() // 기존 값 유지
+		                , "address": address
+		                , "phoneNumber": phoneNumber
 				}
 				,success:function(response){
 		
