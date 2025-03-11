@@ -158,6 +158,8 @@ public class UserService {
 	, String postcode
 	, String address
 	, String phoneNumber) {
+		 // 변경할 값이 하나라도 있는지 확인
+		if ((password != null && !password.isEmpty()) || email != null || postcode != null || address != null || phoneNumber != null) {
 		// 비밀번호 값이 존재할 때만 암호화 한다
 		String encodingPassword =  null;
 				   if (password != null && !password.isEmpty()) {
@@ -165,12 +167,16 @@ public class UserService {
 				    }
 		return userRepository.updateUserInfo(id, encodingPassword , email, postcode, address, phoneNumber);
 	}
-	
-//	public int updateUserInfo(int id, String password) {
-//		String encodingPassword = SHA256HashingEncoder.encode(password);
-//		return userRepository.updateUserInfo(id, encodingPassword);
-//	}
-	
+		 // 변경할 값이 없으면 업데이트 x  0 반환
+		return 0;
+	}
+
+	/*
+	public int updateUserInfo(int id, String password) {
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		return userRepository.updateUserInfo(id, encodingPassword);
+	}
+*/	
 	
 	// 아이디 값 조회
 	public User getUserById(int id) {

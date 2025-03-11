@@ -61,7 +61,7 @@
 								 </th>
 								 <td id="userEmail">
 									 <div>
-										  <span th:text="${user.email}">abc@aaa.com </span>
+										  <span th:text="${user.email}" id="userEmailtext">abc@aaa.com </span>
 									 </div>
 								 </td>
 									<td class="d-none" id="changeEmail">
@@ -109,8 +109,8 @@
 								 </th>
 								<td id="userAdr">
 									<div>
-										<div th:text="|(${user.postcode})|">00000</div>
-										<div th:text="${user.address}">뫄뫄시 롸롸동 솨솨아파트</div>
+										<div th:text="|(${user.postcode})|" id="userPostcode">00000</div>
+										<div th:text="${user.address}" id="userAddress">뫄뫄시 롸롸동 솨솨아파트</div>
 									</div>
 								</td>
 								<td class="d-none" id="changeAdr">
@@ -133,7 +133,7 @@
 								 </th>
 								 <td id="userPhone">
 									<div>
-										<span th:text="${user.phoneNumber}">010-1111-1111</span>
+										<span th:text="${user.phoneNumber}" id="userPhonetext">010-1111-1111</span>
 									</div>
 								</td>
 								<td class="d-none" id="changePhone">
@@ -306,6 +306,7 @@
 			let postcode = $("#postcode").val();
 			let addr = $("#addr").val();
 			let detailAddr = $("#detailAddr").val();
+			let address = addr + " " + detailAddr;
 			
 			let phoneNumber1 = $("#phoneInput1").val();
 			let phoneNumber2 = $("#phoneInput2").val();
@@ -323,11 +324,12 @@
 			    domain = $("#domainSel").val();
 			}
 			
+			// 이메일 입력 확인
 			let email;
 			if (emailId && domain) {
 			    email = emailId + "@" + domain;
 			} else {
-			    email = $("#userEmail span").text().trim();
+			    email = $("#userEmailtext").text().trim();
 			}
 
 			// 휴대폰 번호 입력 확인
@@ -335,78 +337,15 @@
 			if (phoneNumber1 && phoneNumber2 && phoneNumber3) {
 			    phoneNumber = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
 			} else {
-			    phoneNumber = $("#userPhone span").text().trim();
+			    phoneNumber = $("#userPhonetext").text().trim();
 			}
 			
 			// 주소 입력 확인
-			let address;
-			if (addr && detailAddr) {
-			    address = addr + " " + detailAddr;
-			} else {
-			    address = $("#userAdr").text().trim();
+			if (!postcode || !address) {
+			    postcode = $("#userPostcode").text().trim();  // 기존 우편번호
+			    address = $("#userAddress").text().trim();  // 기존 주소
 			}
-			/*
-			 // 이메일 입력 확인
-        let domain = $("#domainSel").val() === "self-domain" ? $("#fillEmail").val() : $("#domainSel").val();
-        if ($("#domainSel").val() === "self-domain" && domain.trim() === "") {
-            alert("이메일을 직접 입력해 주세요.");
-            return;
-        }
-        let email = (emailId && domain) ? emailId + "@" + domain : $("#userEmail span").text().trim();
-
-        // 휴대폰 번호 입력 확인
-        let phoneNumber = (phoneNumber1 && phoneNumber2 && phoneNumber3) 
-            ? phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3 
-            : $("#userPhone span").text().trim();
-
-        // 주소 입력 확인
-        let address;
-			if (addr && detailAddr) {
-			    address = addr + " " + detailAddr;
-			} else {
-			    address = $("#userAdr").text().trim();
-			}
-			//$("#userAdr div:nth-child(2)").text().trim() → #userAdr 안에서 두 번째 <div> 만 가져옴.
-
-			
-        // 비밀번호 유효성 검사
-        if (password !== "" && password !== passwordConfirm) {
-            $("#notsamePw").removeClass("d-none");
-            return;
-        }
-        */
-        
-        /*
-			let domain = "@" + $("#domainSel").val();
-			if ($("#domainSel").val() === "self-domain") {
-				let selfFill = $("#fillEmail").val();
-				if(selfFill.trim() === ""){
-					 alert("이메일을 직접 입력해 주세요.");
-					 return;
-				}
-				
-			    domain = "@" +selfFill;
-			}
-			
-			let email = emailId + domain;
-
-			let phoneNumber = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
-			let address = addr+ " " + detailAddr;
-			*/
-			
-			// 비밀번호 유효성 검사
-			/*
-			if(password === ""){
-				alert("패스워드를 입력해주세요");
-				return;
-			}
-				
-			if(passwordConfirm !== password){
-				$("#notsamePw").removeClass("d-none");
-				return;
-			}
-			// 비밀번호가 변경안되는 경우도 있다... 
-			*/
+		
 			
 			// 패스워드 입력 여부 확인
 			if (password && password !== passwordConfirm) {
@@ -424,13 +363,13 @@
 				,data:{
 					 	"password": password || null // 비밀번호가 비어있으면 null 전달
 		                , "email": email
-		                , "postcode": postcode || $("#userAdr div:first-child").text().trim() // 기존 값 유지
-		                , "address": address
+		                , "postcode": postcode || $("#userPostcode").text().trim() // 기존 값 유지
+		                , "address": address || $("#userAddress").text().trim()
 		                , "phoneNumber": phoneNumber
 				}
 				,success:function(response){
 		
-					if(response.result == "success"){
+					if (response.result === "success" || response.result === "no_changes") {
 						alert("변경 완료");
 						location.reload();
 					} else{

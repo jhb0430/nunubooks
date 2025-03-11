@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -158,7 +159,7 @@ public class UserRestController {
  * 얘를 써야겠는데???? 
  */
 	
-	@GetMapping("/update/user")
+	@PutMapping("/update/user")
 	public Map<String,String> updateUserInfo(
 //			@RequestParam("password") String password
 //			,@RequestParam("email") String email
@@ -177,12 +178,18 @@ public class UserRestController {
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		if((userSevice.updateUserInfo(id, password, email, postcode, address, phoneNumber) > 0)) {
-			resultMap.put("result", "success");
-			
-		} else {
-			resultMap.put("result", "fail");
-		}
+		 
+	    try {
+	        int updateCount = userSevice.updateUserInfo(id, password, email, postcode, address, phoneNumber);
+	        
+	        if (updateCount > 0) {
+	            resultMap.put("result", "success"); // 변경 성공
+	        } else {
+	            resultMap.put("result", "no_changes"); // 변경된 사항이 없는 경우
+	        }
+	    } catch (Exception e) {
+	        resultMap.put("result", "fail"); // DB 오류 같은 진짜 실패
+	    }
 		
 		return resultMap;
 	}
