@@ -109,7 +109,7 @@
 								 </th>
 								<td id="userAdr">
 									<div>
-										<div th:text="|(${user.postcode})|" id="userPostcode">00000</div>
+										<div th:text="${user.postcode}" id="userPostcode">00000</div>
 										<div th:text="${user.address}" id="userAddress">뫄뫄시 롸롸동 솨솨아파트</div>
 									</div>
 								</td>
@@ -304,6 +304,7 @@
 			let emailId = $("#emailInput").val();
 			
 			let postcode = $("#postcode").val();
+			
 			let addr = $("#addr").val();
 			let detailAddr = $("#detailAddr").val();
 			let address = addr + " " + detailAddr;
@@ -363,7 +364,7 @@
 				,data:{
 					 	"password": password || null // 비밀번호가 비어있으면 null 전달
 		                , "email": email
-		                , "postcode": postcode || $("#userPostcode").text().trim() // 기존 값 유지
+		                , "postcode": postcode || $("#userPostcode").val() // 기존 값 유지
 		                , "address": address || $("#userAddress").text().trim()
 		                , "phoneNumber": phoneNumber
 				}
