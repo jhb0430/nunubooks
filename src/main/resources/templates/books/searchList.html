@@ -229,11 +229,12 @@
 			 // 페이지 버튼 클릭 이벤트 연결
 			function attachPageButtonEvents(){
 
-				
+/*				
 		        $(".pageNum").on("click", function (event) {
 		  			  event.preventDefault(); // 링크 기본 동작 방지
 		            const selectedPage = parseInt($(this).text());
-		            
+
+
 		  			  
 //		            if (selectedPage !== start) {
             	  	if (!isNaN(selectedPage) && selectedPage !== start) {
@@ -243,6 +244,21 @@
 		            }
 //		            console.log("currentPage:", currentPage);
 		        });
+*/
+
+		$(".numberWrapper").on("click", ".pageNum", function(event) {
+		    event.preventDefault(); // 기본 링크 동작 방지
+		    const selectedPage = parseInt($(this).text());
+		    
+		    if (!isNaN(selectedPage) && selectedPage !== start) {
+		        start = selectedPage;
+		        setPageButtons();  // 페이지 버튼 다시 그리기
+		        updateUrl();       // URL 업데이트
+		    }
+		});
+
+
+
 			}
 			
 			function updateUrl(){
@@ -253,7 +269,23 @@
 				 let outofStock = $("#outofStockSel").val() ||0; 
 				 let baseUrl = "/nunubooks/searchList";
 				 
-		     	 location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start +"&outofStockfilter=" + outofStock;
+				 const newUrl = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start +"&outofStockfilter=" + outofStock;
+		   //  	 location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start +"&outofStockfilter=" + outofStock;
+		     	
+				 console.log("Redirecting to:", newUrl); 
+				   		
+				 location.href = newUrl;
+				 
+				 window.history.pushState({}, "", newUrl);
+				 //history.pushState(state, title, url);
+				 
+				    $.get(newUrl, function(data) {
+				        // 페이지 내용을 새로운 데이터로 업데이트 (예: 페이지 콘텐츠)
+				        $("#content").html($(data).find("#content").html());
+
+				        // 페이지 버튼 다시 그리기
+				        setPageButtons();
+				    });
 			}
 			
 			
@@ -296,7 +328,9 @@
 		        }
 		    });
 */
-			$(".numberWrapper").on("click", "#prevBtn", function () {
+			$(".numberWrapper").on("click", "#prevBtn", function (e) {
+
+				e.preventDefault();
 			    if (start > 1) {
 			        start--;
 			        setPageButtons();
@@ -304,7 +338,8 @@
 			    }
 			});
 			
-			$(".numberWrapper").on("click", "#nextBtn", function () {
+			$(".numberWrapper").on("click", "#nextBtn", function (e) {
+				e.preventDefault();
 			    if (start < getTotalPageCount()) {
 			        start++;
 			        setPageButtons();
@@ -312,7 +347,8 @@
 			    }
 			});
 			
-			$(".numberWrapper").on("click", "#allPrevBtn", function () {
+			$(".numberWrapper").on("click", "#allPrevBtn", function (e) {
+				e.preventDefault();
 			    if (start > 1) {
 			        start = Math.max(1, start - 10);
 			        setPageButtons();
@@ -320,7 +356,8 @@
 			    }
 			});
 			
-			$(".numberWrapper").on("click", "#allNextBtn", function () {
+			$(".numberWrapper").on("click", "#allNextBtn", function (e) {
+				e.preventDefault();
 			    if (start < getTotalPageCount()) {
 			        start = Math.min(getTotalPageCount(), start + 10);
 			        setPageButtons();
