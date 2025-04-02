@@ -33,7 +33,7 @@
 				<!-- 
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2" id="allSelectBtn">전체선택</button>
 				 -->
-				<button type="button" class="btn btn-light btn-outline-secondary mx-2 cartBtn"><i class="bi bi-cart"></i></button>
+				<button type="button" class="btn btn-light btn-outline-secondary mx-2 cartBtn" id="multiCartBtn"><i class="bi bi-cart"></i></button>
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2"><i class="bi bi-heart"></i></button>
 				<select class="form-control" id="outofStockSel">
 					<option value="0" th:selected="${outofStock == 0}">품절/절판 포함</option>
@@ -91,30 +91,7 @@
 			</div>
 		
 		<!--  페이지네이션 -->
-			<!--  
-			<div class="d-flex align-items-center justify-content-center">
-				<ul class="pagination pagination-sm">
-				    <li class="page-item" id="allPrevBtn"><a class="page-link" href="#"><i class="bi bi-chevron-double-left"></i></a></li>
-				    <li class="page-item" id="prevBtn"><a class="page-link" href="#"><i class="bi bi-chevron-compact-left"></i></a></li>
-				    <li class="page-item" id="nextBtn"><a class="page-link" href="#"><i class="bi bi-chevron-compact-right"></i></a></li>
-				    <li class="page-item" id="allNextBtn"><a class="page-link" href="#"><i class="bi bi-chevron-double-right"></i></a></li>
-			  	</ul>
-			</div>
-			-->
-			<!--  
-				<div class="chevron" id="allPrevBtn"><i class="bi bi-chevron-double-left"></i></div> <!--  이전 -->
-			<!--  
-				<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div> <!--  이전 단수-->
-			<!--
-					<div class="pageNum-now ">1</div>
-					<div><i class="bi bi-three-dots text-secondary"></i></div>
-					<div class="pageNum">10</div>
-					 -->
-			<!--		 
-				<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div><!--  이후 단수 -->
-			<!-- 	
-				<div class="chevron" id="allNextBtn"><i class="bi bi-chevron-double-right"></i></div><!--  이후 -->
-			<!--  -->
+			
 			
 			<div class="d-flex align-items-center justify-content-center">
 				<ul class="numberWrapper list-inline d-flex">
@@ -382,6 +359,52 @@
            
            
            
+		<!-- 장바구니 한번에 담기 -->
+           $("#multiCartBtn").on("click",function(){
+
+        	   let selectedBooks = [];
+        	   
+        	   $(".item-checkbox:checked").each(function () {
+        	        selectedBooks.push($(this).data("item-id"));
+        	    });
+        	   
+       	        if (selectedBooks.length === 0) {
+       	            alert("추가할 책을 선택하세요.");
+       	            return;
+       	        }
+       	        
+       	        let successCount = 0;
+       	        let failCount = 0;
+        	        
+       	     	selectedBooks.each(function (index) {
+
+       	            $.ajax({
+       	                type: "POST",
+       	                url: "/cart/add",
+       	                data: { itemId: itemId, quantity: 1 }, // 기존 API 사용
+       	                success: function (response) {
+       	                    if (response.result === "success") {
+       	                        successCount++;
+       	                    } else {
+       	                        failCount++;
+       	                    }
+
+       	                    // 모든 요청 완료 후 메시지 표시
+       	                    if (index === selectedBooks.length - 1) {
+       	                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+       	                    }
+       	                },
+       	                error: function () {
+       	                    failCount++;
+       	                    if (index === selectedBooks.length - 1) {
+       	                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+       	                    }
+       	                }
+       	            });
+       	        });
+           });
+           
+		
            
 		
 		$(".cartBtn").on("click",function(){
