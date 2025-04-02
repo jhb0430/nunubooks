@@ -362,26 +362,25 @@
 		<!-- 장바구니 한번에 담기 -->
            $("#multiCartBtn").on("click",function(){
 
-        	   let selectedBooks = [];
-        	   
-        	   $(".item-checkbox:checked").each(function () {
-        	        selectedBooks.push($(this).data("item-id"));
-        	    });
+        	   let selectedBooks = $(".item-checkbox:checked");
         	   
        	        if (selectedBooks.length === 0) {
-       	            alert("추가할 책을 선택하세요.");
+       	            alert("선택된 책이 없습니다");
        	            return;
        	        }
        	        
        	        let successCount = 0;
        	        let failCount = 0;
-        	        
+       	     	let totalCount = selectedBooks.length;
+       	     
        	     	selectedBooks.each(function (index) {
 
+       	     	let itemId = $(this).data("item-id");
+       	     	
        	            $.ajax({
        	                type: "POST",
        	                url: "/cart/add",
-       	                data: { itemId: itemId, quantity: 1 }, // 기존 API 사용
+       	                data: { itemId: itemId, quantity: 1 }, // 기존 API 사용하는 방향으로 (새로 안만들고)
        	                success: function (response) {
        	                    if (response.result === "success") {
        	                        successCount++;
@@ -389,7 +388,7 @@
        	                        failCount++;
        	                    }
 
-       	                    // 모든 요청 완료 후 메시지 표시
+       	                    // 유효성 검사 -> 나중에 수정
        	                    if (index === selectedBooks.length - 1) {
        	                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
        	                    }
