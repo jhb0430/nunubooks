@@ -33,7 +33,7 @@
 				<!-- 
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2" id="allSelectBtn">전체선택</button>
 				 -->
-				<button type="button" class="btn btn-light btn-outline-secondary mx-2 cartBtn" id="multiCartBtn"><i class="bi bi-cart"></i></button>
+				<button type="button" class="btn btn-light btn-outline-secondary mx-2" id="multiCartBtn"><i class="bi bi-cart"></i></button>
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2"><i class="bi bi-heart"></i></button>
 				<select class="form-control" id="outofStockSel">
 					<option value="0" th:selected="${outofStock == 0}">품절/절판 포함</option>
@@ -362,7 +362,7 @@
 		<!-- 장바구니 한번에 담기 -->
            $("#multiCartBtn").on("click",function(){
 
-        	   let selectedBooks = $(".item-checkbox:checked");
+        	   let selectedBooks = $(".item-checkbox:checked"); //체크박스에서 체크된 아이템
         	   
        	        if (selectedBooks.length === 0) {
        	            alert("선택된 책이 없습니다");
@@ -373,7 +373,7 @@
        	        let failCount = 0;
        	     	let totalCount = selectedBooks.length;
        	     
-       	     	selectedBooks.each(function (index) {
+       	     	selectedBooks.each(function (index) { // each -> 리스트 반복!! & (index) 0부터 반복
 
        	     	let itemId = $(this).data("item-id");
        	     	
