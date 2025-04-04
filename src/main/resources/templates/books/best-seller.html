@@ -60,7 +60,7 @@
 							<option th:selected="${maxResults == 50}" value="50">50개씩 보기</option>
 						</select>
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-cart"></i></button>
+						<button type="button" class="btn btn-light btn-outline-secondary mr-1 cartBtn"><i class="bi bi-cart"></i></button>
 						<!-- 
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn" value="0">품절/절판 제외</button>
 						 -->
@@ -201,7 +201,21 @@ $(document).ready(function(){
 	
 	
 	// 장바구니 추가
+	// 여러개 추가로 기능 변경함
 	$(".cartBtn").on("click",function(){
+		let selectedBooks = $(".item-checkbox:checked"); //체크박스에서 체크된 아이템
+ 	   
+	        if (selectedBooks.length === 0) {
+	            alert("선택된 책이 없습니다");
+	            return;
+	        }
+	        
+	        let successCount = 0;
+	        let failCount = 0;
+	     	let totalCount = selectedBooks.length;
+	     
+	     	selectedBooks.each(function (index) { // each -> 리스트 반복!! & (index) 0부터 반복
+
 		const itemId = $(this).data("item-id");
 		const quantity = 1;
 // 로그인 안해도 장바구니에 저장될 수 있도록         
@@ -211,7 +225,24 @@ $(document).ready(function(){
 			,url:"/cart/add"
 			,data:{"itemId":itemId,"quantity":quantity}
 			,success:function(response){
+				 if (response.result === "success") {
+                        successCount++;
+                    } else {
+                        failCount++;
+                    }
 
+                    // 유효성 검사 -> 나중에 수정
+                    if (index === selectedBooks.length - 1) {
+                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+                    }
+                },
+                error: function () {
+                    failCount++;
+                    if (index === selectedBooks.length - 1) {
+                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+                    }
+                }
+/*
 				if(response.result =="success"){
 					alert("담기 성공!");
 				} else {
@@ -221,8 +252,9 @@ $(document).ready(function(){
 			,error:function(){
 				alert("오류!!")
 			}
-		});
-		
+*/			
+			});
+   		});
 	});
 	
 	
