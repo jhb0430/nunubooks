@@ -38,7 +38,7 @@
 						</div>
 						<div class="d-flex mr-4">
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-							<button type="button" class="btn btn-light btn-outline-secondary mr-1 deleteBtn"><i class="bi bi-trash"></i></button>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="multiDeleteBtn"><i class="bi bi-trash"></i></button>
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1">품절/절판 삭제</button>
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1">구매 이력 확인</button>
 						</div>
@@ -68,7 +68,7 @@
 							
 								<div class="d-flex align-items-center">
 									<div class="cart-check mr-4">
-										<input type="checkbox" class="mx-3" th:data-cart-id="${cart.id}">
+										<input type="checkbox" class="mx-3 item-checkbox" th:data-cart-id="${cart.id}">
 									</div>
 									<div>
 									<img th:src="${item.cover}" class="cart-book-img mx-2">
@@ -288,7 +288,53 @@
 			
 			
 			
+			$("#multiDeleteBtn").off("click").on("click", function () {
+			    let selectedBooks = $(".item-checkbox:checked");
+
+			    if (selectedBooks.length === 0) {
+			        alert("선택된 책이 없습니다");
+			        return;
+			    }
+
+			    let successCount = 0;
+			    let failCount = 0;
+			    let totalCount = selectedBooks.length;
+			    let completedCount = 0;
+
+			    selectedBooks.each(function () {
+			        let cartId = $(this).data("cart-id");
+
+			        $.ajax({
+			            type: "delete",
+			            url: "/cart/delete",
+			            data: { id: cartId },
+			            success: function (response) {
+			                if (response.result === "success") {
+			                    successCount++;
+			                } else {
+			                    failCount++;
+			                }
+			                checkAllCompleted();
+			            },
+			            error: function () {
+			                failCount++;
+			                checkAllCompleted();
+			            }
+			        });
+			    });
+
+			    function checkAllCompleted() {
+			        completedCount++;
+			        if (completedCount === totalCount) {
+			            alert("선택하신 물품이 삭제되었습니다");
+			            console.log(`${successCount}건 삭제 성공, ${failCount}건 삭제 실패`);
+			            location.reload();
+			        }
+			    }
+			});
+
 			
+       	     	
 			$(".deleteBtn").on("click",function(){
 
 				let cartId = $(this).data("cart-id");

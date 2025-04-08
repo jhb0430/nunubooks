@@ -390,13 +390,18 @@
 
        	                    // 유효성 검사 -> 나중에 수정
        	                    if (index === selectedBooks.length - 1) {
-       	                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+
+       	                    	selectedBooks.prop("checked", false);
+       	                        alert("장바구니 추가 완료");
+       	                        console.log(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
        	                    }
        	                },
        	                error: function () {
        	                    failCount++;
        	                    if (index === selectedBooks.length - 1) {
-       	                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+       	                    	selectedBooks.prop("checked", false);
+       	                        alert("장바구니 추가 실패");
+       	                        console.log(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
        	                    }
        	                }
        	            });

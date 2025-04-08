@@ -60,7 +60,7 @@
 							<option th:selected="${maxResults == 50}" value="50">50개씩 보기</option>
 						</select>
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1 cartBtn"><i class="bi bi-cart"></i></button>
+						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="multiCartBtn"><i class="bi bi-cart"></i></button>
 						<!-- 
 						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn" value="0">품절/절판 제외</button>
 						 -->
@@ -202,7 +202,7 @@ $(document).ready(function(){
 	
 	// 장바구니 추가
 	// 여러개 추가로 기능 변경함
-	$(".cartBtn").on("click",function(){
+	$("#multiCartBtn").on("click",function(){
 		let selectedBooks = $(".item-checkbox:checked"); //체크박스에서 체크된 아이템
  	   
 	        if (selectedBooks.length === 0) {
@@ -233,13 +233,18 @@ $(document).ready(function(){
 
                     // 유효성 검사 -> 나중에 수정
                     if (index === selectedBooks.length - 1) {
-                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+
+                    	selectedBooks.prop("checked", false);
+                        alert("장바구니 추가 완료");
+                        console.log(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
                     }
                 },
                 error: function () {
                     failCount++;
                     if (index === selectedBooks.length - 1) {
-                        alert(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+                    	selectedBooks.prop("checked", false);
+                        alert("장바구니 추가 실패");
+                    	console.log(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
                     }
                 }
 /*
@@ -256,6 +261,35 @@ $(document).ready(function(){
 			});
    		});
 	});
+	
+	$(".cartBtn").on("click",function(){
+		let itemId = $(this).data("item-id");
+		// let userId = null; client를 구분하기 위한 값은 서버에서 처리한다고 생각해주기.
+        let quantity = 1;
+
+//	alert(itemId);
+// 로그인 안해도 장바구니에 저장될 수 있도록         
+        
+			$.ajax({
+	
+				type:"post"
+				,url:"/cart/add"
+				,data:{"itemId":itemId,"quantity":quantity}
+				,success:function(response){
+	
+					if(response.result =="success"){
+						alert("담기 성공!");
+					} else {
+						alert("담기 실패")
+					}
+				}
+				,error:function(){
+					alert("오류!!")
+				}
+			});
+		
+	
+		});
 	
 	
 	$("#outofStockSel").on("change",function(){
