@@ -74,14 +74,109 @@ public class UserService {
 	
 	// 아이디 찿기 
 	public User findUserId(
-			String email
-			,String phoneNumber
+			String name
+			,String userInfo
+//			,String email
+//			,String phoneNumber
 			) {
 		
-		User user = userRepository.findUserId(email, phoneNumber);
+		String email;
+		String phoneNumber;
+		
+		if (userInfo.contains("@")) {
+			email = userInfo;
+			phoneNumber = null;
+		} else {
+			phoneNumber = userInfo;
+			email = null;
+		}
+		
+		
+		User user = userRepository.findUserId(name,email, phoneNumber);
 		
 		return user;
 	}
+	// 임시비밀번호 발급을 위한 정보 
+	public boolean findUserforSetPw(
+			String name
+			,String loginId
+			,String email
+			) {
+		
+		int count = userRepository.findUserforSetPw(name, loginId, email);
+		if(count > 0){
+			return true;
+		 } else {
+			return false;
+		 }
+		
+	}
+	/*
+	public int updateUserPassword(
+			String loginId
+			,String email
+			,String password
+			) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		return userRepository.updatePassword(loginId, email, encodingPassword);
+		
+	}
+	*/
+	
+	public int updateTmpPassWord(
+			String email
+			,String password
+			) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		return userRepository.updateTmpPassWord(email, encodingPassword);
+//		return userRepository.updateTmpPassWord(email, password);
+		
+	}
+	
+	//회원정보 수정 들어가는 페이지.. boolean으로 줘야하나 ?? 일치하는 정보가 있으면->?? 
+	public User enterUserInfo(
+			int id
+			,String password
+			) {
+		
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		
+		User user = userRepository.enterUserInfo(id, encodingPassword);
+		
+		return user;
+	}
+	
+	
+	
+	public int updateUserInfo(int id
+	, String password
+	, String email
+	, String postcode
+	, String address
+	, String phoneNumber) {
+		 // 변경할 값이 하나라도 있는지 확인
+		if ((password != null && !password.isEmpty()) || email != null || postcode != null || address != null || phoneNumber != null) {
+		// 비밀번호 값이 존재할 때만 암호화 한다
+		String encodingPassword =  null;
+				   if (password != null && !password.isEmpty()) {
+				        encodingPassword = SHA256HashingEncoder.encode(password);
+				    }
+		return userRepository.updateUserInfo(id, encodingPassword , email, postcode, address, phoneNumber);
+	}
+		 // 변경할 값이 없으면 업데이트 x  0 반환
+		return 0;
+	}
+
+	/*
+	public int updateUserInfo(int id, String password) {
+		String encodingPassword = SHA256HashingEncoder.encode(password);
+		return userRepository.updateUserInfo(id, encodingPassword);
+	}
+*/	
 	
 	// 아이디 값 조회
 	public User getUserById(int id) {

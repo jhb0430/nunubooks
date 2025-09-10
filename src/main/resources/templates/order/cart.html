@@ -9,7 +9,7 @@
 			<div class=" contents">
 				<div>
 					<div  class="d-flex justify-content-between p-2 mt-4">
-						<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|">장바구니(0)</h2>
+						<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|" th:data-cart-count="${cartCount}" id="cartCount">장바구니(0)</h2>
 						
 						<div class="d-flex">
 							<div class="d-flex align-items-center">
@@ -38,7 +38,7 @@
 						</div>
 						<div class="d-flex mr-4">
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-							<button type="button" class="btn btn-light btn-outline-secondary mr-1 deleteBtn"><i class="bi bi-trash"></i></button>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="multiDeleteBtn"><i class="bi bi-trash"></i></button>
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1">품절/절판 삭제</button>
 							<button type="button" class="btn btn-light btn-outline-secondary mr-1">구매 이력 확인</button>
 						</div>
@@ -47,7 +47,8 @@
 			
 			
 			<div class="d-flex"><!--  장바구니 정보- 배송정보 전체 묶는 div-->
-					<div class="order-info-none d-flex align-items-center justify-content-center" ><!--주문내역확인 페이지 없는 경우-->
+			
+					<div class="order-info-none d-flex align-items-center justify-content-center" th:if="${cartCount == 0}"><!--주문내역확인 페이지 없는 경우-->
 						<div class="text-center">
 							<i class="h1 bi bi-exclamation-circle-fill font-weight-bold text-secondary"></i>
 							<div class="mt-3">
@@ -57,7 +58,7 @@
 					</div>
 
 
-				<div>
+				<div th:if="${cartCount > 0}">
 					<div th:each="cart:${cartList.cartDTOList}">
 						<div class="cart-box d-flex align-items-center p-1 border"> <!-- 책 정보부분 (++++ ) -->
 							<div th:each="item : ${cart.bookInfo.item}"> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
@@ -67,7 +68,7 @@
 							
 								<div class="d-flex align-items-center">
 									<div class="cart-check mr-4">
-										<input type="checkbox" class="mx-3" th:data-cart-id="${cart.id}">
+										<input type="checkbox" class="mx-3 item-checkbox" th:data-cart-id="${cart.id}">
 									</div>
 									<div>
 									<img th:src="${item.cover}" class="cart-book-img mx-2">
@@ -83,7 +84,7 @@
 									</div>
 									<div class="d-flex align-items-center justify-content-center cart-price">
 										<div>
-											<h6 class="font-weight-bold  text-center my-4" id="price" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">18,000 원</h6>
+											<h6 class="font-weight-bold  text-center my-4 priceUpdate" id="price" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|" th:data-price="${#numbers.formatInteger(item.priceSales, 3, 'COMMA')}">18,000 원</h6>
 											<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
 												<button type="button" class="btn btn-0 subBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">-</button>
 												<div class="mx-1 qty" th:text="${cart.quantity}">1</div>
@@ -113,28 +114,55 @@
 					</div>
 				</div>
 						
-				<div class="col-3 border p-2 cart-total-price ml-1">
+				<div class="col-3 border p-2 cart-total-price ml-1" th:if="${cartCount > 0}">
 					<table class="table table-borderless">
 						<tr>
 							<th>상품 금액</th>
-							<td th:text="|${#numbers.formatInteger(cartList.totalPrice, 3, 'COMMA')} 원|"> >0000원</td>
+							<td th:text="|${#numbers.formatInteger(cartList.totalPrice, 3, 'COMMA')} 원|" class="text-right"> >0000원</td>
 						</tr>
 						<tr>
 							<th>배송비</th>
-							<td th:if= "${cartList.shippingFee > 0}" th:text="|${#numbers.formatInteger(cartList.shippingFee, 3, 'COMMA')} 원|">0000원</td>
-							<td th:if= "${cartList.shippingFee == 0}" class="text-success font-weight-bold">무료 배송</td>
+							<td th:if= "${cartList.shippingFee > 0}" th:text="|${#numbers.formatInteger(cartList.shippingFee, 3, 'COMMA')} 원|" class="text-right">0000원</td>
+							<td th:if= "${cartList.shippingFee == 0}" class="text-success font-weight-bold text-right">무료 배송</td>
 						</tr>
 						<tr>
 							<th>상품 할인</th>
-							<td th:text="|${#numbers.formatInteger(cartList.totalDiscount, 3, 'COMMA')} 원|">0000원</td>
+							<td th:text="|${#numbers.formatInteger(cartList.totalDiscount, 3, 'COMMA')} 원|" class="text-right">0000원</td>
 						</tr>
 						<tr class=" border-top">
 							<th>결제 예정 금액</th>
-							<td th:text="|${#numbers.formatInteger(cartList.finalPrice, 3, 'COMMA')} 원|">0000원</td>
+							<td th:text="|${#numbers.formatInteger(cartList.finalPrice, 3, 'COMMA')} 원|" class="text-right">0000원</td>
 						</tr>
 						<tr>
 							<th>적립 예정 포인트</th>
-							<td th:text="|${#numbers.formatInteger(cartList.totalPoints, 3, 'COMMA')} point|">000 point</td>
+							<td th:text="|${#numbers.formatInteger(cartList.totalPoints, 3, 'COMMA')} point|" class="text-right">000 point</td>
+						</tr>
+					</table>
+						<button type="button" class="btn btn-primary my-3 w-100 " id="orderBtn">구매하기</button>
+						<button type="button" class="btn btn-primary my-3 w-100">방문 수령</button>
+				</div>
+				
+				<div class="col-3 border p-2 cart-total-price ml-1" th:if="${cartCount == 0}">
+					<table class="table table-borderless">
+						<tr>
+							<th>상품 금액</th>
+							<td class="text-right">원 </td>
+						</tr>
+						<tr>
+							<th>배송비</th>
+							<td class="text-right">원</td>
+						</tr>
+						<tr>
+							<th>상품 할인</th>
+							<td class="text-right">원</td>
+						</tr>
+						<tr class=" border-top">
+							<th>결제 예정 금액</th>
+							<td class="text-right">원</td>
+						</tr>
+						<tr>
+							<th>적립 예정 포인트</th>
+							<td class="text-right">point</td>
 						</tr>
 					</table>
 						<button type="button" class="btn btn-primary my-3 w-100 " id="orderBtn">구매하기</button>
@@ -144,7 +172,7 @@
 				
 			</div>
 					
-		<button type="button" class="btn btn-info col-8 mt-4">더 고르러 가기</button>
+		<a href="/nunubooks/main" class="btn btn-info col-8 mt-4">더 고르러 가기</a>
 			
 			
 			
@@ -160,6 +188,13 @@
 			
 			$("#orderBtn").on("click",function(){
 
+				let cartCount = $("#cartCount").data("cart-count");
+				
+				if(cartCount == 0){
+					 $(this).prop("disabled", true);  
+					 alert("장바구니가 비어있습니다");
+				        return;
+				}
 				
 				location.href="/nunubooks/order/order";
 			});
@@ -176,6 +211,7 @@
 					quantity--;
 			        $(this).data("quantity-id", quantity); // data-quantity-id 업데이트
 			        $(this).siblings(".qty").text(quantity); // 화면에 수량 업데이트
+			        
 
 			        // 서버에 수량 업데이트 요청
 			        $.ajax({
@@ -230,7 +266,6 @@
 				
 				$(this).data("quantity-id", quantity); // 업데이트된 수량 저장
 			    $(this).siblings(".qty").text(quantity); // 화면에 수량 반영
-				
 			    
 		        $.ajax({
 		            type: "put",
@@ -253,7 +288,53 @@
 			
 			
 			
+			$("#multiDeleteBtn").off("click").on("click", function () {
+			    let selectedBooks = $(".item-checkbox:checked");
+
+			    if (selectedBooks.length === 0) {
+			        alert("선택된 책이 없습니다");
+			        return;
+			    }
+
+			    let successCount = 0;
+			    let failCount = 0;
+			    let totalCount = selectedBooks.length;
+			    let completedCount = 0;
+
+			    selectedBooks.each(function () {
+			        let cartId = $(this).data("cart-id");
+
+			        $.ajax({
+			            type: "delete",
+			            url: "/cart/delete",
+			            data: { id: cartId },
+			            success: function (response) {
+			                if (response.result === "success") {
+			                    successCount++;
+			                } else {
+			                    failCount++;
+			                }
+			                checkAllCompleted();
+			            },
+			            error: function () {
+			                failCount++;
+			                checkAllCompleted();
+			            }
+			        });
+			    });
+
+			    function checkAllCompleted() {
+			        completedCount++;
+			        if (completedCount === totalCount) {
+			            alert("선택하신 물품이 삭제되었습니다");
+			            console.log(`${successCount}건 삭제 성공, ${failCount}건 삭제 실패`);
+			            location.reload();
+			        }
+			    }
+			});
+
 			
+       	     	
 			$(".deleteBtn").on("click",function(){
 
 				let cartId = $(this).data("cart-id");

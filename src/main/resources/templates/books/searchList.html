@@ -33,7 +33,7 @@
 				<!-- 
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2" id="allSelectBtn">전체선택</button>
 				 -->
-				<button type="button" class="btn btn-light btn-outline-secondary mx-2 cartBtn"><i class="bi bi-cart"></i></button>
+				<button type="button" class="btn btn-light btn-outline-secondary mx-2" id="multiCartBtn"><i class="bi bi-cart"></i></button>
 				<button type="button" class="btn btn-light btn-outline-secondary mx-2"><i class="bi bi-heart"></i></button>
 				<select class="form-control" id="outofStockSel">
 					<option value="0" th:selected="${outofStock == 0}">품절/절판 포함</option>
@@ -90,17 +90,16 @@
 									
 			</div>
 		
-		<!--  페이지 넘버 -->
-			<div class="d-flex align-items-center justify-content-center number-wrapper ">
-				<div class="chevron" id="allPrevBtn"><i class="bi bi-chevron-double-left"></i></div><!--  이전 -->
-				<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div><!--  이전 단수-->
-					<div class="pageNum-now ">1</div>
-					<!-- 
-					<div><i class="bi bi-three-dots text-secondary"></i></div>
-					<div class="pageNum">10</div>
-					 -->
-				<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div><!--  이후 단수 -->
-				<div class="chevron" id="allNextBtn"><i class="bi bi-chevron-double-right"></i></div><!--  이후 -->
+		<!--  페이지네이션 -->
+			
+			
+			<div class="d-flex align-items-center justify-content-center">
+				<ul class="numberWrapper list-inline d-flex">
+				    <li class="pageNum" id="allPrevBtn"><a href="#"><i class="bi bi-chevron-double-left"></i></a></li>
+				    <li class="pageNum" id="prevBtn"><a href="#"><i class="bi bi-chevron-compact-left"></i></a></li>
+				    <li class="pageNum" id="nextBtn"><a href="#"><i class="bi bi-chevron-compact-right"></i></a></li>
+				    <li class="pageNum" id="allNextBtn"><a href="#"><i class="bi bi-chevron-double-right"></i></a></li>
+			  	</ul>
 			</div>
 		</div>
 		
@@ -114,59 +113,59 @@
 	
 		
 		//페이지네이션
+		// start가 한 페이지에 시작되는 리스트의 갯수 번호가 아니라 페이지 번호임!!!!!!!이걸 수정해서 다시 만들어야함... .ㅠ..ㅠ.ㅠ.ㅠ.ㅠ.ㅠ.ㅠ.ㅠ. 
 		
+		// 위임방식 ★ 
+//			$(부모요소).on("이벤트명", "자식선택자", function(){}); --동작
+
+
 		const totalResults = parseInt($("#totalResults").text()) || 0;
 		let maxResults = parseInt($("#maxResultSel").val())|| 10;
 		
-		let currentPage = 1; // 현재 페이지 초기값
-		
-		const getTotalPageCount = () =>  // 총 페이지 수 
-			 Math.ceil(totalResults / maxResults);
-			
+		let start = 1; // 현재 페이지 초기값
+//		let offset = (start - 1) * maxResults + 1; // 검색 결과에서 시작하는 항목 번호
+
+
+		function getTotalPageCount(){  // 총 페이지 수 
+			return Math.ceil(totalResults / maxResults);
+		}
 		
 		const totalPageCount = getTotalPageCount();
 			
-		
-		//https://pagination.js.org/docs/index.html  
-		//https://github.com/jhsung23/vanillajs-web-project/blob/master/pagination/script.js
-		//https://getbootstrap.com/docs/4.6/components/pagination/
-		// https://pabeba.tistory.com/177 아오... 
 		//화면에 보여질 페이지 그룹 = Math.ceil(현재 페이지/ 한 화면에 나타낼 페이지 수);
 		
-		const setPageButtons = () => {
-			const $numberWrapper = $('.number-wrapper'); // jQuery 객체일 때는 $를 붙여서 사용하래... 
+		function setPageButtons(){
+
+			const $numberWrapper = $('.numberWrapper'); // jQuery 객체일 때는 $를 붙여서 사용하래... 
 			$numberWrapper.empty(); // 페이지 번호 wrapper 내부를 비워줌
 			
 			
-			const pageGroup = Math.ceil(currentPage / 7);
+			const pageGroup = Math.ceil(start / 7);
 			 //화면에 보여질 페이지 그룹 = Math.ceil(현재 페이지/ 한 화면에 나타낼 페이지 수);
 			 
 //			 let last = pageGroup * 10;
 			    let first = (pageGroup - 1) * 7 + 1;          // 현재 그룹의 첫 번째 페이지
-    			let last = first + 7 - 1;                     // 현재 그룹의 마지막 페이지
-			    
-    			if (last > totalPageCount) last = totalPageCount;
-			    
+    			let last = first + 7 - 1;
+    			if (last > totalPageCount) last = totalPageCount; // totalPageCount를 초과하지 않도록 설정
+
+    			
 			    // 그룹 내 첫 번째 페이지 번호
 		//	    let first = last - (7- 1) <= 0 ? 1 : last - (7 - 1);
 //			    let first = (last - (7 - 1)) <= 0 ? 1 : (last - (7 - 1));
+//			    let next = last + 1; // 다음그룹 첫페이지
+//			    let prev = first - 1; // 이전 그룹 마지막 페이지 
 
-
-			    
-			    
-			    let next = last + 1; // 다음그룹 첫페이지
-			    let prev = first - 1; // 이전 그룹 마지막 페이지 
-
-			    if (totalPageCount > 1 && first > 0) {
-			        const $allPrev = $('<div class="chevron" id="allPrevBtn"><i class="bi bi-chevron-double-left"></i></div>');
-			        const $prev = $('<div class="chevron" id="prevBtn"><i class="bi bi-chevron-compact-left"></i></div>');
-			        $numberWrapper.append($allPrev, $prev);
+			     if (totalPageCount > 1 && first > 0) {
+			        const $allPrevBtn = $('<li class="pageNum" id="allPrevBtn"><a href="#"><i class="bi bi-chevron-double-left"></i></a></li>');
+			        const $prevBtn = $('<li class="pageNum" id="prevBtn"><a href="#"><i class="bi bi-chevron-compact-left"></i></a></li>');
+			        $numberWrapper.append($allPrevBtn, $prevBtn);
 			    }
 
 			    // 페이지 번호들 (1,2,3,4,5,6,7...마지막페이지)
 			    for (let i = first; i <= last; i++) {
-			        const $pageButton = $(`<div class="pageNum">${i}</div>`);
-			        if (i === currentPage) {
+			        const $pageButton = $(`<li class="pageNum"><a href="#">${i}</a></li>`);
+			        
+			        if (i === start) {
 			            $pageButton.addClass("pageNum-now"); // 현재 페이지 강조
 			        }
 			        $numberWrapper.append($pageButton);
@@ -174,20 +173,22 @@
 
 			    // '...' 표시 및 마지막 페이지 버튼
 			    if (last < totalPageCount - 1) {
-			        $numberWrapper.append('<div><i class="bi bi-three-dots text-secondary"></i></div>');
-			        const $lastPage = $(`<div class="pageNum">${totalPageCount}</div>`);
+			        $numberWrapper.append('<li class="pageNum"><a href="#"><i class="bi bi-three-dots text-secondary"></i></a></li>');
+//			        const $lastPage = $('<div class="pageNum">${totalPageCount}</div>');
+			        const $lastPage = $(`<li class="pageNum"><a href="#">${totalPageCount}</a></li>`);
 			        $numberWrapper.append($lastPage);
 			    }
 			    
 			    
 			    // 다음 페이지 버튼
 			    if (totalPageCount > 1 && last < totalPageCount) {
-			        const $next = $('<div class="chevron" id="nextBtn"><i class="bi bi-chevron-compact-right"></i></div>');
-			        const $allNext = $('<div class="chevron" id="allNextBtn"><i class="bi bi-chevron-double-right"></i></div>');
-			        $numberWrapper.append($next, $allNext);
+			        const $nextBtn = $('<li class="pageNum" id="nextBtn"><a href="#"><i class="bi bi-chevron-compact-right"></i></a></li>');
+			        const $allNextBtn = $('<li class="pageNum" id="allNextBtn"><a href="#"><i class="bi bi-chevron-double-right"></i></a></li>');
+			        $numberWrapper.append($nextBtn, $allNextBtn);
 			    }
 			 
 			  attachPageButtonEvents(); // 각 버튼에 클릭 이벤트 연결
+			  
 			};
 			  
 			 /* //페이지 번호
@@ -201,29 +202,67 @@
 		*/
 		
 		
+		
 			 // 페이지 버튼 클릭 이벤트 연결
-			const attachPageButtonEvents = () => {
+			function attachPageButtonEvents(){
 
-				
-		        $(".pageNum").on("click", function () {
+/*				
+		        $(".pageNum").on("click", function (event) {
+		  			  event.preventDefault(); // 링크 기본 동작 방지
 		            const selectedPage = parseInt($(this).text());
-		            
-		            if (selectedPage !== currentPage) {
-		                currentPage = selectedPage;
+
+
+		  			  
+//		            if (selectedPage !== start) {
+            	  	if (!isNaN(selectedPage) && selectedPage !== start) {
+		            	start = selectedPage;
 		                setPageButtons(); // 페이지 버튼 다시 그리기
 		                updateUrl();
 		            }
+//		            console.log("currentPage:", currentPage);
 		        });
+*/
+
+		$(".numberWrapper").on("click", ".pageNum", function(event) {
+		    event.preventDefault(); // 기본 링크 동작 방지
+		    const selectedPage = parseInt($(this).text());
+		    
+		    if (!isNaN(selectedPage) && selectedPage !== start) {
+		        start = selectedPage;
+		        setPageButtons();  // 페이지 버튼 다시 그리기
+		        updateUrl();       // URL 업데이트
+		    }
+		});
+
+
+
 			}
 			
 			function updateUrl(){
 		     	 let query = $("input[name='query']").val() || ""; // 검색어 가져오기
 		     	 let maxResults = $("#maxResultSel").val() || 10;
-				 let start = (currentPage - 1) * maxResults + 1; 
+//				 let start = (start - 1) * maxResults + 1; 
+//				 let startOffset = (start - 1) * maxResults + 1;
 				 let outofStock = $("#outofStockSel").val() ||0; 
 				 let baseUrl = "/nunubooks/searchList";
 				 
-		     	 location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start +"&outofStockfilter=" + outofStock;
+				 const newUrl = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start +"&outofStockfilter=" + outofStock;
+		   //  	 location.href = baseUrl + "?query=" + query + "&maxResults=" + maxResults +"&start=" + start +"&outofStockfilter=" + outofStock;
+		     	
+				 console.log("Redirecting to:", newUrl); 
+				   		
+				 location.href = newUrl;
+				 
+				 window.history.pushState({}, "", newUrl);
+				 //history.pushState(state, title, url);
+				 
+				    $.get(newUrl, function(data) {
+				        // 페이지 내용을 새로운 데이터로 업데이트 (예: 페이지 콘텐츠)
+				        $("#content").html($(data).find("#content").html());
+
+				        // 페이지 버튼 다시 그리기
+				        setPageButtons();
+				    });
 			}
 			
 			
@@ -234,38 +273,76 @@
 			});
 
 		    // 이전/다음 버튼 동작
-		    $("#prevBtn").on("click", function () {
-		        if (currentPage > 1) {
-		            currentPage--;
-		            setPageButtons();
-		            updateUrl();
-		        }
-		    });
-
-		    $("#nextBtn").on("click", function () {
-		        if (currentPage < getTotalPageCount()) {// 마지막 페이지일 때는 작동하지 않음
-		            currentPage++;
-		            setPageButtons();
-		            updateUrl();
-		        }
-		    });
-			
-
+/*
 			$("#allPrevBtn").on("click", function() {
-			    if (currentPage > 1) {
-			    	 currentPage = Math.max(1, currentPage - 10);
+			    if (start > 1) {
+			    	start = Math.max(1, start - 10);
 			        setPageButtons();
 			        updateUrl();
 			    }
 			});
 			
+		    $("#prevBtn").on("click", function () {
+		        if (start > 1) {
+		        	start--;
+		            setPageButtons();
+		            updateUrl();
+		        }
+		    });
+
 			$("#allNextBtn").on("click", function() {
-				if (currentPage < getTotalPageCount()){
-			        currentPage = Math.min(getTotalPageCount(), currentPage + 10); // 현재 페이지를 10 증가, 최대 페이지를 넘지 않음
+				if (start < getTotalPageCount()){
+					start = Math.min(getTotalPageCount(), start + 10); // 현재 페이지를 10 증가, 최대 페이지를 넘지 않음
 			        setPageButtons();
 			        updateUrl();
 			    }
 			});
+		    $("#nextBtn").on("click", function () {
+		        if (start < getTotalPageCount()) {// 마지막 페이지일 때는 작동하지 않음
+		        	start++;
+		            setPageButtons();
+		            updateUrl();
+		        }
+		    });
+*/
+			$(".numberWrapper").on("click", "#prevBtn", function (e) {
+
+				e.preventDefault();
+			    if (start > 1) {
+			        start--;
+			        setPageButtons();
+			        updateUrl();
+			    }
+			});
+			
+			$(".numberWrapper").on("click", "#nextBtn", function (e) {
+				e.preventDefault();
+			    if (start < getTotalPageCount()) {
+			        start++;
+			        setPageButtons();
+			        updateUrl();
+			    }
+			});
+			
+			$(".numberWrapper").on("click", "#allPrevBtn", function (e) {
+				e.preventDefault();
+			    if (start > 1) {
+			        start = Math.max(1, start - 10);
+			        setPageButtons();
+			        updateUrl();
+			    }
+			});
+			
+			$(".numberWrapper").on("click", "#allNextBtn", function (e) {
+				e.preventDefault();
+			    if (start < getTotalPageCount()) {
+			        start = Math.min(getTotalPageCount(), start + 10);
+			        setPageButtons();
+			        updateUrl();
+			    }
+			});
+
+
 			
    		 setPageButtons();
 			
@@ -282,6 +359,56 @@
            
            
            
+		<!-- 장바구니 한번에 담기 -->
+           $("#multiCartBtn").on("click",function(){
+
+        	   let selectedBooks = $(".item-checkbox:checked"); //체크박스에서 체크된 아이템
+        	   
+       	        if (selectedBooks.length === 0) {
+       	            alert("선택된 책이 없습니다");
+       	            return;
+       	        }
+       	        
+       	        let successCount = 0;
+       	        let failCount = 0;
+       	     	let totalCount = selectedBooks.length;
+       	     
+       	     	selectedBooks.each(function (index) { // each -> 리스트 반복!! & (index) 0부터 반복
+
+       	     	let itemId = $(this).data("item-id");
+       	     	
+       	            $.ajax({
+       	                type: "POST",
+       	                url: "/cart/add",
+       	                data: { itemId: itemId, quantity: 1 }, // 기존 API 사용하는 방향으로 (새로 안만들고)
+       	                success: function (response) {
+       	                    if (response.result === "success") {
+       	                        successCount++;
+       	                    } else {
+       	                        failCount++;
+       	                    }
+
+       	                    // 유효성 검사 -> 나중에 수정
+       	                    if (index === selectedBooks.length - 1) {
+
+       	                    	selectedBooks.prop("checked", false);
+       	                        alert("장바구니 추가 완료");
+       	                        console.log(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+       	                    }
+       	                },
+       	                error: function () {
+       	                    failCount++;
+       	                    if (index === selectedBooks.length - 1) {
+       	                    	selectedBooks.prop("checked", false);
+       	                        alert("장바구니 추가 실패");
+       	                        console.log(`장바구니 추가 완료: 성공 ${successCount}개, 실패 ${failCount}개`);
+       	                    }
+       	                }
+       	            });
+       	        });
+           });
+           
+		
            
 		
 		$(".cartBtn").on("click",function(){

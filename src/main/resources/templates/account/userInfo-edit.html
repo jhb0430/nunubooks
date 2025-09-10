@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/default}">
+     
+
+		<section layout:fragment="contents">
+		<div class="d-flex container">
+			<nav class="nav flex-column category border-right mr-4">
+			<div class="mt-4 mypage mr-1 border-bottom">
+				<h4 class="font-weight-bold mt-3">마이 페이지</h4>
+				<div class="mr-2 mt-2">
+					<div  th:text="|${session.userName} 님 |">김뫄뫄님</div>
+					<div class="small logo-color font-weight-bold" th:text="|(${#numbers.formatInteger(session.userPoint, 3, 'COMMA')} point)|">포인트</div>
+				</div>
+			</div>
+				<div class="mr-1 text-center  mt-4">
+					<h6 class="font-weight-bold mb-2">쇼핑 내역</h6>
+					  <a class="nav-link text-dark" href="/nunubooks/order/orderHistory">주문 내역</a>
+					<h6 class="font-weight-bold mb-2">회원정보</h6>
+					  <a class="nav-link text-dark" href="/nunubooks/account/userInfo">회원정보 수정</a>
+					  <!-- 
+					  <a class="nav-link text-dark" href="#">카테고리3</a>
+					  <a class="nav-link text-dark" href="#">카테고리4</a>
+					   -->
+				</div>
+			</nav>
+			
+			<div class="contents">
+			
+					<div  class="order-header d-flex justify-content-between align-items-center border-bottom">
+						<h3 class="font-weight-bold" >회원정보 수정</h3>
+						
+					</div>
+			<div>
+						<h4 class="font-weight-bold my-3">
+					 		기본 정보 입력 
+						</h4>
+					<div class="col-10 p-3">
+						<table class="table table-borderless">
+							<tr>
+								 <th>
+								 이름
+								 </th>
+								<td>
+									<span th:text="${user.name}">김뫄뫄</span>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 아이디
+								 </th>
+								<td>
+									<span th:text="${user.loginId}">admin123</span>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 이메일
+								 </th>
+								 <td id="userEmail">
+									 <div>
+										  <span th:text="${user.email}" id="userEmailtext">abc@aaa.com </span>
+									 </div>
+								 </td>
+									<td class="d-none" id="changeEmail">
+									<div class="d-flex align-items-center">
+										<input type="text" class="form-control" id="emailInput">
+										<span>@</span>
+										<input type="text" class="form-control d-none" id="fillEmail">
+										<select class="form-control text-center" id="domainSel">
+			                                <option selected value="1">이메일 선택</option>
+			                                <option value="naver.com">naver.com</option>
+			                                <option value="gmail.com">gmail.com</option>
+			                                <option value="nate.com">nate.com</option>
+			                                <option value="hanmail.net">hanmail.net</option>
+			                                <option value="daum.net">daum.net</option>
+											<option value="self-domain">직접입력</option>
+										</select>
+									</div>
+									</td>
+									<td>
+									<div>
+										<button type="button" class="btn btn-outline-secondary ml-4" id="emailBtn">변경</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 새 비밀번호
+								 </th>
+								<td>
+									<input type="password" class="form-control" id="passwordInput">
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 새 비밀번호 확인
+								 </th>
+								<td>
+									<input type="password" class="form-control" id="passwordConfirmInput">
+									<div class="small text-danger d-none" id="notsamePw">비밀번호가 일치하지 않습니다</div>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 주소
+								 </th>
+								<td id="userAdr">
+									<div>
+										<div th:text="${user.postcode}" id="userPostcode">00000</div>
+										<div th:text="${user.address}" id="userAddress">뫄뫄시 롸롸동 솨솨아파트</div>
+									</div>
+								</td>
+								<td class="d-none" id="changeAdr">
+									<div class="d-flex">
+									<input type="text" class="form-control w-25" id="postcode"> <!-- 다음 주소 api 활용 -->
+									<button type="button" class="btn btn-outline-secondary w-25 ml-2" id="postCodeBtn">우편번호 찾기</button>
+									</div>
+									<input type="text" class="form-control mt-2 w-75" placeholder="주소" id="addr"> 
+									<input type="text" class="form-control mt-2 w-75" placeholder="상세 주소 입력" id="detailAddr"> 
+								</td>
+								 <td>
+									<div>
+										<button type="button" class="btn btn-outline-secondary ml-4" id="addressBtn">변경</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								 <th>
+								 휴대전화
+								 </th>
+								 <td id="userPhone">
+									<div>
+										<span th:text="${user.phoneNumber}" id="userPhonetext">010-1111-1111</span>
+									</div>
+								</td>
+								<td class="d-none" id="changePhone">
+									<div class="d-flex align-items-center justfiy-content-between">
+										<input type="text" class="form-control" id="phoneInput1">
+										<span> - </span>
+										<input type="text" class="form-control" id="phoneInput2">
+										<span> - </span>
+										<input type="text" class="form-control" id="phoneInput3">
+									</div>
+								</td>
+								 <td>
+									<div>
+										<button type="button" class="btn btn-outline-secondary ml-4" id="phoneBtn">변경</button>
+									</div>
+								</td>
+							</tr>
+						</table>
+					
+					</div>
+				</div>
+			<div class="d-flex justify-content-center my-4">
+				<button type="button" class="btn btn-success" id="editBtn">확인</button>
+			</div>
+			
+			
+			</div><!-- contents -->
+		</div><!-- container -->
+		</section>
+
+
+
+	<script layout:fragment="script">
+	
+	$(document).ready(function(){
+
+		
+		
+		
+		// 비밀번호 확인 검사
+	    $("#passwordConfirmInput").on("input", function () {
+	        let password = $("#passwordInput").val();
+	        let confirmPassword = $(this).val();
+	        if (password !== confirmPassword) {
+	            $("#notsamePw").removeClass("d-none");
+	        } else {
+	            $("#notsamePw").addClass("d-none");
+	        }
+	    });	
+		
+		// 이메일 변경 버튼을 누르면
+		$("#emailBtn").on("click",function(){
+
+			// 기존 유저 email (span) 사라지고
+			$("#userEmail").addClass("d-none");
+			// 이메일 입력 창 생김
+			$("#changeEmail").removeClass("d-none")
+			
+		});
+		
+		// 이메일 도메인 sel 
+		 $("#domainSel").on("change",function(){
+             // alert();
+            let select = $(this).val();
+           
+             if(select == "self-domain") {
+                 $("#fillEmail").removeClass("d-none");      
+                 $(this).addClass("d-none");
+//                 select = $("#fillEmail").val();
+             }
+
+             
+         });
+		
+		
+		// 주소 변경 버튼을 누르면
+		$("#addressBtn").on("click",function(){
+
+			// 회원 주소 글자 사라지고
+			$("#userAdr").addClass("d-none");
+			// 주소 api 창 뜸
+			$("#changeAdr").removeClass("d-none")
+		});
+		
+		
+		
+// 우편번호 버튼 누르면 다음 api 		
+		 $("#postCodeBtn").on("click",function(){
+
+				
+				new daum.Postcode({
+
+		            oncomplete: function(data) {
+		                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		                var addr = ''; // 주소 변수
+		                var extraAddr = ''; // 참고항목 변수
+
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                    addr = data.roadAddress;
+		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                    addr = data.jibunAddress;
+		                }
+
+		                
+		                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		                if(data.userSelectedType === 'R'){
+		                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                        extraAddr += data.bname;
+		                    }
+		                    // 건물명이 있고, 공동주택일 경우 추가한다.
+		                    if(data.buildingName !== '' && data.apartment === 'Y'){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		                    if(extraAddr !== ''){
+		                        extraAddr = ' (' + extraAddr + ')';
+		                    } 
+		                } else {
+		                        document.getElementById("address").value = '';
+		                }
+		                    
+		                    
+		                // 우편번호와 주소 정보를 input 박스에 넣는다.
+		                document.getElementById('postcode').value = data.zonecode;
+		                document.getElementById("addr").value = addr;
+		                document.getElementById("addr").value += extraAddr;
+		                // 커서를 상세주소 필드로 이동한다.
+		                document.getElementById("detailAddr").focus();
+		            } 
+				// 자바문법 위랑 통일 시키기 
+		        
+				
+				
+		        }).open();
+				
+			
+			});
+		 
+		 
+		
+		 
+		// 휴대폰 변경 버튼 누르면
+		$("#phoneBtn").on("click",function(){
+
+			// 회원 휴대폰 대신
+			$("#userPhone").addClass("d-none");
+			// 휴대폰 입력창
+			$("#changePhone").removeClass("d-none")
+		});
+		
+		
+
+		 
+		 
+		
+		// 비밀번호 변경
+		// 비밀번호를 변경하는게 우선된 로직
+		$("#editBtn").on("click",function(){
+			let password = $("#passwordInput").val();
+			let passwordConfirm = $("#passwordConfirmInput").val();
+		
+			let emailId = $("#emailInput").val();
+			
+			let postcode = $("#postcode").val();
+			
+			let addr = $("#addr").val();
+			let detailAddr = $("#detailAddr").val();
+			let address = addr + " " + detailAddr;
+			
+			let phoneNumber1 = $("#phoneInput1").val();
+			let phoneNumber2 = $("#phoneInput2").val();
+			let phoneNumber3 = $("#phoneInput3").val();
+			
+			
+			let domain;
+			if ($("#domainSel").val() === "self-domain") {
+			    domain = $("#fillEmail").val();
+			    if (domain.trim() === "") {
+			        alert("이메일을 직접 입력해 주세요.");
+			        return;
+			    }
+			} else {
+			    domain = $("#domainSel").val();
+			}
+			
+			// 이메일 입력 확인
+			let email;
+			if (emailId && domain) {
+			    email = emailId + "@" + domain;
+			} else {
+			    email = $("#userEmailtext").text().trim();
+			}
+
+			// 휴대폰 번호 입력 확인
+			let phoneNumber;
+			if (phoneNumber1 && phoneNumber2 && phoneNumber3) {
+			    phoneNumber = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
+			} else {
+			    phoneNumber = $("#userPhonetext").text().trim();
+			}
+			
+			// 주소 입력 확인
+			if (!postcode || !address) {
+			    postcode = $("#userPostcode").text().trim();  // 기존 우편번호
+			    address = $("#userAddress").text().trim();  // 기존 주소
+			}
+		
+			
+			// 패스워드 입력 여부 확인
+			if (password && password !== passwordConfirm) {
+			    $("#notsamePw").removeClass("d-none");
+			    return;
+			}
+			
+			// 패스워드를 입력하지 않았다면 기존 패스워드를 그대로 사용하도록 처리
+			
+			
+			$.ajax({
+
+				type:"put"
+				,url:"/user/update/user"
+				,data:{
+					 	"password": password || null // 비밀번호가 비어있으면 null 전달
+		                , "email": email
+		                , "postcode": postcode || $("#userPostcode").val() // 기존 값 유지
+		                , "address": address || $("#userAddress").text().trim()
+		                , "phoneNumber": phoneNumber
+				}
+				,success:function(response){
+		
+					if (response.result === "success" || response.result === "no_changes") {
+						alert("변경 완료");
+						location.reload();
+					} else{
+						alert("양식을 다시 확인해 주세요")
+					}
+				}
+				,error:function(){
+					alert("회원정보 수정 오류!!")
+					}
+				
+				});
+				
+		// 비밀번호를 변경하지 않는 경우. 변경 버튼을 눌러서 나머지를 수정하는 경우. 생각하기 
+		// 변경 버튼을 눌러서 input 창을 띄웠어도 변경 안해도 저장 가능하도록
+		// 아무것도 변경하지 않아도 저장 버튼을 눌러서 페이지 새로고침을 시킬 수 있어야한다 
+	
+		
+		});
+	});
+	
+	</script>
+
+</html>

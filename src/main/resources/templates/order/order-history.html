@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/default}">
+     
+
+		<section layout:fragment="contents">
+		<div class="d-flex container">
+			<nav class="nav flex-column category border-right mr-4">
+			<div class="mt-4 mypage mr-1 border-bottom">
+				<h4 class="font-weight-bold mt-3">마이 페이지</h4>
+				<div class="mr-2 mt-2">
+					<div  th:text="|${session.userName} 님 |">김뫄뫄님</div>
+					<div class="small logo-color font-weight-bold" th:text="|(${#numbers.formatInteger(session.userPoint, 3, 'COMMA')} point)|">포인트</div>
+				</div>
+			</div>
+				<div class="mr-1 text-center  mt-4">
+					<h6 class="font-weight-bold mb-2">쇼핑 내역</h6>
+					  <a class="nav-link text-dark" href="/nunubooks/order/orderHistory">주문 내역</a>
+					<h6 class="font-weight-bold mb-2">회원정보</h6>
+					  <a class="nav-link text-dark" href="/nunubooks/account/userInfo">회원정보 수정</a>
+					  <!-- 
+					  <a class="nav-link text-dark" href="/nunubooks/account/userInfo">회원정보 수정</a>
+					  <a class="nav-link text-dark" href="#">카테고리3</a>
+					  <a class="nav-link text-dark" href="#">카테고리4</a>
+					   -->
+				</div>
+			</nav>
+			<div class="contents">
+			
+					<div  class="order-header d-flex justify-content-between align-items-center border-bottom">
+						<h3 class="font-weight-bold" >주문 / 배송 목록</h3>
+						
+						<div class="d-flex">
+							<button type="button" class="btn btn-outline-secondary">
+								<i class="bi bi-calendar4"></i><span class="ml-1">상세 조회</span>
+							</button>
+						</div>
+					</div>
+			
+				<div th:if="${orderInfo == null}"><!--주문내역확인 페이지 없는 경우-->
+					<div class="order-info-none d-flex align-items-center justify-content-center"><!--주문내역확인 페이지 없는 경우-->
+						<div class="text-center">
+							<i class="h1 bi bi-exclamation-circle-fill font-weight-bold text-secondary"></i>
+							<div class="mt-3">
+								<h6>최근 주문된 내역이 없습니다</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="order-box" th:if="${orderInfo != null}"><!--주문내역확인 페이지 리스트-->
+					<table class="table" th:each="order:${order}">
+						<thead>
+							<tr>
+								<th class="order-date align-middle" colspan="3" th:text="${#temporals.format(order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
+								<th class="order-book-amount align-middle" ><a th:href="@{/nunubooks/order/orderInfo(merchantUid=${order.merchantUid})}" th:text="${order.merchantUid}" class="text-success">주문번호</a></th>
+								<!-- 
+								<th><a th:href="@{/order/delete(id=${order.id})}" class="text-dark">삭제</a></th>
+								 -->
+								<th class="align-middle">
+									<div class="d-flex justify-content-end">
+									<button type="button" class="btn btn-outline-secondary deleteBtn" th:data-delete-order="${order.id}">삭제</button>
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<!-- 
+						<tbody>
+							<tr class="order-bookInfo" >
+								<td class="order-book-img bg-info">
+									<img th:src="${orderInfo.item[0].cover}" >
+								</td>
+								<td colspan="2" class="order-book-title align-middle">
+									<div class="font-weight-bold" th:text="${orderInfo.item[0].title}">책 제목 어쩌구저쩌구저쩌구 </div>
+									<div > 외 00개 </div>
+								</td>
+								<td class="order-book-amount align-middle text-center">
+									<div class="font-weight-bold" th:text="|${#numbers.formatInteger(orderInfo.order.totalPrice, 3, 'COMMA')} 원|">총가격</div>
+								</td>
+								<td class="align-middle text-center border-left">
+										<span class="text-info font-weight-bold">주문 상태</span>
+								</td>
+							</tr>
+							
+						</tbody>
+						 -->
+							
+					</table>
+				
+				</div>
+						
+			
+			
+			
+			</div><!-- contents -->
+		</div>
+		</section>
+
+
+
+	<script layout:fragment="script">
+	
+	$(document).ready(function(){
+
+		
+		$(".deleteBtn").on("click",function(){
+
+			let id = $(this).data("delete-order");
+//		alert(id);
+		
+		if(confirm("주문 내역을 삭제하시겠습니까 ? ")){
+		$.ajax({
+			type:"delete"
+			,url:"/order/delete"
+			,data:{"id":id}
+			,success:function(response){
+				if(response.result == "success"){
+					alert("주문내역이 삭제되었습니다.");
+					location.reload();
+				} else {
+					alert("주문 삭제에 실패했습니다")
+				}
+			}
+			,error:function(){
+				alert("오류가 발생했습니다 다시 시도해주세요 ");
+			}
+			});
+		
+		} else {
+			 alert("주문 삭제 요청이 취소되었습니다.");
+		} 
+		
+		});
+	
+	
+	});
+	
+	
+	</script>
+
+</html>

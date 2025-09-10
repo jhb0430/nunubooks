@@ -3,7 +3,6 @@ package com.jhb0430.nunubooks.books;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jhb0430.nunubooks.books.domain.Packing;
 import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
 
@@ -57,7 +57,8 @@ public class BookController {
 	}
 	
 	
-	@GetMapping("/bestSeller")
+	// 신간,베스트셀러, 화제의 도서 전체를 다룸 
+	@GetMapping("/books")
 	public String bestSellerList(
 					@RequestParam(value="queryType" , defaultValue = "Bestseller") String queryType
 					,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
@@ -76,7 +77,14 @@ public class BookController {
 		    int nowYear = (Integer)now.getYear();
 		    int nowMonth = (Integer)now.getMonthValue();
 		    
-		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth()) == 0 ? 1 : now.get(WeekFields.ISO.weekOfMonth()) -1;
+//		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth()) == 0 ? 1 : now.get(WeekFields.ISO.weekOfMonth()) -1;
+		    int nowWeek = now.get(WeekFields.ISO.weekOfMonth());
+		    if (nowWeek == 0) {
+		        nowWeek = 1;  // 0주이면 1주로 바꿈.
+		    }  else if (nowWeek > 1) {
+		        nowWeek = nowWeek - 1;  // 1주 이상인 경우 -1을 처리
+		    }
+ 
 		    
 		    if (year == null || month == null || week == null) {
 		    	year = nowYear;
@@ -113,6 +121,7 @@ public class BookController {
 		 
 		
 		 BookDTO bookDTO = bookService.bookProduct(itemId);
+		 
 		 model.addAttribute("book",bookDTO);
 		
 		return "books/product";
@@ -128,6 +137,7 @@ public class BookController {
 			,@RequestParam(value = "start", defaultValue = "1") int start
 			,@RequestParam(value="outofStockfilter" , defaultValue = "0") int outofStockfilter
 			,Model model) {
+		
 		 WebClient webClient = webClientBuilder.build();
 		 
 		 // maxResult가 필수값이 아니게 설정해주기 
@@ -135,9 +145,12 @@ public class BookController {
 //		 if((Integer)maxResults == null) {
 			 
 //		 }
-		 int page = (start - 1) / maxResults + 1; 
+//		 int page = (start - 1) / maxResults + 1; 
+		 int page = start; // start가 페이지 번호이므로 그대로 사용
+//		 int offset = (page - 1) * maxResults; // 검색 결과에서 시작하는 인덱스 계산
+
 		 
-		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page,outofStockfilter);
+		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page + 1,outofStockfilter);
 		 model.addAttribute("books",bookDTO);
 		 model.addAttribute("query",query);
 		 model.addAttribute("maxResults",maxResults);

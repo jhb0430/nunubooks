@@ -37,6 +37,7 @@ public class OrderedBookList {
 	
 	private int price;
 	
+	
 	@CreationTimestamp
 	@Column(name="createdAt")
 	private LocalDateTime createdAt;

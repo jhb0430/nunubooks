@@ -1,9 +1,7 @@
 package com.jhb0430.nunubooks.books.service;
 
-import java.time.LocalDate;
-import java.time.temporal.WeekFields;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -17,7 +15,8 @@ public class BookService {
 	@Autowired
 	WebClient.Builder webClientBuilder;
 	
-	
+	 @Value("${aladin.api.ttbkey}")
+	    private String ttbKey;
 	
 	public BookDTO fetchBooks(String query
 			,int maxResults
@@ -35,7 +34,7 @@ public class BookService {
 							.host("www.aladin.co.kr")
 //							.port(8080)
 							.path("/ttb/api/ItemSearch.aspx")
-							.queryParam("ttbkey","ttbleky22241703001")
+							.queryParam("ttbkey",ttbKey)
 							.queryParam("Query",query)
 							.queryParam("QueryType","Title")
 							.queryParam("MaxResults",maxResults)
@@ -52,6 +51,7 @@ public class BookService {
 	}
 	
 	
+	// 책 상세정보
 	public BookDTO bookProduct(int itemId) {
 		
 		WebClient webClient = webClientBuilder.build();
@@ -62,13 +62,13 @@ public class BookService {
 						.scheme("https")
 						.host("www.aladin.co.kr")
 						.path("/ttb/api/ItemLookUp.aspx")
-						.queryParam("ttbkey","ttbleky22241703001")
+						.queryParam("ttbkey",ttbKey)
 						.queryParam("itemIdType","itemId")
 						.queryParam("itemId",itemId)
 						.queryParam("Cover","Big")
 						.queryParam("output","js")
 						.queryParam("Version","20131101")
-//OptResult=ebookList,usedList,reviewList
+						.queryParam("OptResult","packing")
 						.build()
 						)
 				.retrieve()
@@ -99,7 +99,7 @@ public class BookService {
 						.scheme("https")
 						.host("www.aladin.co.kr")
 						.path("/ttb/api/ItemList.aspx")
-						.queryParam("ttbkey","ttbleky22241703001")
+						.queryParam("ttbkey",ttbKey)
 						.queryParam("QueryType",queryType)
 //						.queryParam("QueryType","Bestseller")
 						.queryParam("MaxResults",maxResults)
@@ -131,7 +131,7 @@ public class BookService {
 							.scheme("https")
 							.host("www.aladin.co.kr")
 							.path("/ttb/api/ItemList.aspx")
-							.queryParam("ttbkey","ttbleky22241703001")
+							.queryParam("ttbkey",ttbKey)
 							.queryParam("QueryType",queryType)
 							.queryParam("SearchTarget","Book")
 							.queryParam("Cover","MidBig")

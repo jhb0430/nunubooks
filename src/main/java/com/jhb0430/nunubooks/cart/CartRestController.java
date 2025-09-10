@@ -48,7 +48,8 @@ public class CartRestController {
 			resultMap.put("result", "fail");
 		}
 		
-		if(cartService.addCart(itemId, quantity, userId)) {
+//		if(cartService.addCart(itemId, quantity, userId)) {
+		if(cartService.insertCart(itemId, quantity, userId)) {
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");

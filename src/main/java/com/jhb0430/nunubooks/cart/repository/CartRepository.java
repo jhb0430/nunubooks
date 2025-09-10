@@ -12,6 +12,8 @@ public interface CartRepository  extends JpaRepository<Cart, Integer>{
 	// userId를 입력하면 userId가 들어있는 전체 쿼리를 보여준다
 	public List<Cart> findAllByUserIdOrderByIdDesc(int userId);
 	
+	public Cart findByItemIdAndUserId(int itemId, int userId);
+	
 	public int countByUserId(int userId);
 	// update -- insert처럼 ... 
 

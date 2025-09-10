@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -90,6 +91,7 @@ public class UserRestController {
 				session.setAttribute("userId", user.getId());
 				session.setAttribute("userLoginId", user.getLoginId());
 				session.setAttribute("userName", user.getName());
+				session.setAttribute("userPoint", user.getPoint());
 				
 				resultMap.put("result", "success");
 				
@@ -104,16 +106,45 @@ public class UserRestController {
 	// 아이디 찾기
 	@PostMapping("/findId")
 	public Map<String,String> findUserId(
-			@RequestParam("email") String email
-			,@RequestParam("phoneNumber") String phoneNumber
+			@RequestParam("name") String name
+			,@RequestParam("userInfo") String userInfo
+//			,@RequestParam("email") String email
+//			,@RequestParam("phoneNumber") String phoneNumber
 			){
+		
 		
 		Map<String,String> resultMap = new HashMap<>();
 		
-		User user = userSevice.findUserId(email, phoneNumber);
+//		User user = userSevice.findUserId(name, email, phoneNumber);
+		User user = userSevice.findUserId(name, userInfo);
 		
 		if(user != null) {
 			
+			resultMap.put("result", "success");
+			resultMap.put("loginId", user.getLoginId()); 
+			
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+		
+	}
+	
+	// 회원정보 수정 들어가기 
+	@PostMapping("/enter-info")
+	public Map<String,String> enterUserInfo(
+			@RequestParam("password") String password
+			,HttpSession session 
+
+			){
+		int id = (Integer)session.getAttribute("userId");
+		
+		Map<String,String> resultMap = new HashMap<>();
+		
+		User user = userSevice.enterUserInfo(id, password);
+		
+		if(user != null) {
 			resultMap.put("result", "success");
 			
 		} else {
@@ -123,6 +154,68 @@ public class UserRestController {
 		return resultMap;
 		
 	}
+/*	
+ * 회원정보 전체 수정용으로 서야하는ㄷ수마ㅜㅎ;ㅁ
+ * 얘를 써야겠는데???? 
+ */
+	
+	@PutMapping("/update/user")
+	public Map<String,String> updateUserInfo(
+//			@RequestParam("password") String password
+//			,@RequestParam("email") String email
+//			,@RequestParam("postcode") String postcode
+//			,@RequestParam("address") String address
+//			,@RequestParam("phoneNumber") String phoneNumber
+			@RequestParam(value = "password", required = false) String password
+			,@RequestParam(value = "email", required = false) String email
+	        ,@RequestParam(value = "postcode", required = false) String postcode
+	        ,@RequestParam(value = "address", required = false) String address
+	        ,@RequestParam(value = "phoneNumber", required = false) String phoneNumber
+			,HttpSession session
+			){
+			// 조건 걸어서 입력 안받으면 변경 안되도록...? 
+		int id = (Integer)session.getAttribute("userId");
+		
+		Map<String,String> resultMap = new HashMap<>();
+		
+		 
+	    try {
+	        int updateCount = userSevice.updateUserInfo(id, password, email, postcode, address, phoneNumber);
+	        
+	        if (updateCount > 0) {
+	            resultMap.put("result", "success"); // 변경 성공
+	        } else {
+	            resultMap.put("result", "no_changes"); // 변경된 사항이 없는 경우
+	        }
+	    } catch (Exception e) {
+	        resultMap.put("result", "fail"); // DB 오류 같은 진짜 실패
+	    }
+		
+		return resultMap;
+	}
+	
+/*
+	@PutMapping("/update/user")
+	public Map<String,String> updatePassword(
+			@RequestParam("password") String password
+			,HttpSession session
+			){
+		
+		int id = (Integer)session.getAttribute("userId");
+		
+		Map<String,String> resultMap = new HashMap<>();
+		
+		if(userSevice.updateUserInfo(id, password) > 0) {
+			resultMap.put("result", "success");
+			
+		} else {
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+	}
+	
+ */	
 	
 	
 }

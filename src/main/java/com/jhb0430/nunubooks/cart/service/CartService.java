@@ -35,6 +35,40 @@ public class CartService {
 	}
 	
 	
+	
+	
+	
+	
+	
+	public boolean insertCart(int itemId, int quantity, int userId) {
+		
+//		quantity = 1;
+//		Cart cart = cartRepository.findByItemId(itemId,userId);
+		try {
+			Cart cart = cartRepository.findByItemIdAndUserId(itemId,userId);
+			
+		if(cart != null) { // 장바구니에 이미 아이템이 존재한다면
+		cart = cart.toBuilder().quantity(cart.getQuantity()+ quantity).build();
+		// 수량을 ++한다
+//		cart = cartRepository.save(cart);
+		} else {
+			// 장바구니에 존재하지 않으면 새로 저장한다
+			 cart =Cart.builder()
+			.itemId(itemId)
+			.userId(userId)
+			.quantity(quantity)
+			.build();
+		}
+		cart = cartRepository.save(cart);
+		return true;
+	} catch(Exception e) {
+		 e.printStackTrace();
+		return false;
+	}
+		
+	}
+	
+/*	
 	public boolean addCart(int itemId, int quantity, int userId) {
 		
 		quantity = 1;
@@ -45,16 +79,31 @@ public class CartService {
 				.quantity(quantity)
 				.build();
 		
+		
+		
 		try {
-			
+	
+//			if(itemId == cart.getItemId()) {
+//				cart = cart.toBuilder().quantity(quantity).build();
+//				cart = cartRepository.save(cart);
+//			} else {
 			cartRepository.save(cart);
+//			}
 				
 			return true;
 		} catch(Exception e) {
 			return false;
 		}
+		
+		// itemId가 같으면 기존 항목의 quantity++;
+//		if(itemId == cart.getItemId()) {
+//			quantity++;
+//		}
+		
+		
 	}
 	
+	*/
 	
 	
 	// 장바구니 리스트 출력
@@ -68,8 +117,23 @@ public class CartService {
 		
 		WebClient webClient = webClientBuilder.build();
 		
-		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
 // 리스트를 반복하면서 itemId마다 정보 가져오게 됨.... 
+		List<Cart> cartList = cartRepository.findAllByUserIdOrderByIdDesc(userId);
+		
+		 // 장바구니가 비어 있는 경우
+	    if (cartList.isEmpty()) {
+	        return TotalDTO.builder()
+	                .userId(userId)
+	                .cartDTOList(new ArrayList<>()) // 빈 리스트 반환
+	                .cartCount(0)
+	                .totalPrice(0)
+	                .totalPoints(0)
+	                .totalDiscount(0)
+	                .shippingFee(0)
+	                .finalPrice(0)
+	                .build();
+	    }
+		
 		
 		List<CartDTO> cartDTOList = new ArrayList<>();
 		

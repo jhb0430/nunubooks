@@ -108,6 +108,7 @@
 								</div>
 							</div>
 						</div>
+						<!-- 
 						<div id="creditBox">
 							<div class="my-3 d-flex">
 								<select class="form-control w-25" id="creditCardSel">
@@ -126,7 +127,7 @@
 						</div>
 						
 						<div class="d-none" id="bankBox">
-							<div class="my-3 d-flex"> <!-- d-none 되어야함 -->
+							<div class="my-3 d-flex"> 
 								<select class="form-control w-25" id="bankSel">
 									<option>은행을 선택해주세요</option>
 									<option>국민은행</option>
@@ -136,6 +137,7 @@
 								<input type="text" class="form-control w-25 ml-3 " placeholder="입금자명" id="depositorInput">
 							</div>
 						</div>
+						 -->
 					
 					</div><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 				</div>
@@ -229,8 +231,10 @@
 		<script layout:fragment="script">
 		
 		$(document).ready(function(){
+			
 
-
+		
+		
 		//userAdrBtn을 누르면 user가 등록해둔 정보가 출력됨 
 		//newAdrBtn을 누르면 필드 초기화(비워짐)
 		let name = $('#nameInput').val();
@@ -310,7 +314,38 @@
 
 			let payments = $("input[name=paymentSelect]:checked").val();
 		
-			
+			  // 주문 상품 정보
+		      let orderItems = [];
+			  
+		      $(".order-bookInfo").each(function () {
+		          let title = $(this).find(".order-book-title").text().trim();
+		          let quantity = $(this).find(".order-book-amount").text().replace("개", "").trim();
+		          orderItems.push(`${title} x${quantity}`);
+		      });
+
+		      let orderName = orderItems.join(", "); // 여러 상품일 경우 상품명 합치기
+
+		      const currentDate = new Date();
+		      //  각 구성 요소를 가져오기
+		      const year = currentDate.getFullYear(); // 2025
+		      const month = currentDate.getMonth() + 1; // 02
+		      const day = currentDate.getDate(); // 12
+		      const hours = currentDate.getHours(); // 18
+		      const minutes = currentDate.getMinutes(); //20
+		      const seconds = currentDate.getSeconds(); 
+		      const milliseconds = currentDate.getMilliseconds();
+		      
+			let auth = String(Math.floor(Math.random()*1000)).padStart(4,"0");
+		      
+			const merchant_uid = year + '' 
+								+ month.toString().padStart(2, "0") + '' 
+								+ day.toString().padStart(2, "0") + '' 
+								+ hours.toString().padStart(2, "0") + '' 
+								+ minutes.toString().padStart(2, "0") + ''
+								+ milliseconds.toString().padStart(3, "0") + ''
+								+ auth;
+		      
+		      
 			console.log("name"+name
 					,"phoneNumber :"+phone
 					,"postcode :"+postcode
@@ -318,7 +353,8 @@
 					,"totalPrice :"+finalPrice
 					,"payments :"+payments
 					,"shippingFee : "+shippingFee
-					,"point : "+point
+					,"point : "+ point
+					,"savePoint : "+savePoint
 					);
 			
 			if(!name){
@@ -332,35 +368,285 @@
 			}
 			
 			
-			$.ajax({
 
-				type:"post"
-				,url:"/order/order-add"
-				,data:{
-					"name":name
-					,"phoneNumber":phone
-					,"postcode":postcode
-					,"address":address
-					,"totalPrice":finalPrice
-					,"shippingFee":shippingFee
-					,"payments":payments
-					,"point":point
-					}
-				,success:function(response){
-
-					if(response.result == "success"){
-						location.href="/nunubooks/order/order-complete";
-					} else {
-						alert("주문 실패")
-					}
-				}
-				,error:function(){
-				alert("주문 오류")
-				}
+			  IMP.init("imp51147044"); // 예: 'imp00000000'
+			  //IMP.agency("imp51147044", "티어코드"); // 예: 'imp00000000', '123'
 			
-			});
-		
+			  IMP.request_pay({
+//			    pg : 'inicis_v2', 
+				//등록된 PG사가 하나일 경우에는 미 설정시 기본 PG사가 자동으로 적용됩니다. 등록된 PG사가 여러개인 경우에는 html5_inicis 또는 inicis(ActiveX 방식일 경우)로 지정합니다.
+				channelKey: "channel-key-213771af-73f5-4e72-a8f6-690198da0bd3"    
+				,pay_method : "card"
+				    ,merchant_uid: merchant_uid // 상점에서 관리하는 주문 번호를 전달
+				    ,name : orderName
+				    ,amount : finalPrice + shippingFee
+//				    ,amount : 100 // 최소 결제 금액 100원 // .나중엔 삭제하고 위에꺼 써야함
+				//    ,buyer_email : 'iamport@siot.do' // 이메일 
+				    ,buyer_name : name
+				    ,buyer_tel : phone
+				    ,buyer_addr : address
+				    ,buyer_postcode : postcode
+				    //m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
+				}, function(rsp) {
+
+					if (merchant_uid !== rsp.merchant_uid) {
+				        alert("결제 실패: 주문번호 불일치");
+				        return;
+				    }
+					
+				console.log(rsp);
+				
+				$.ajax({
+
+					type:"post"
+					,url:"/order/order-add"
+					,data:{
+						"name":name
+						,"phoneNumber":phone
+						,"postcode":postcode
+						,"address":address
+						,"totalPrice":finalPrice
+						,"shippingFee":shippingFee
+						,"payments":payments
+						,"point":point // 적립예정포인트
+						,"savePoint":savePoint // 적립예정포인트
+						,"impUid" : rsp.imp_uid
+//									,"merchantUid" : merchant_uid
+						,"merchantUid" : rsp.merchant_uid
+						,"orderItemName" : orderName
+					}
+					,success:function(response){
+
+						if(response.result == "success"){
+
+//							alert("결제 성공")
+
+							location.href="/nunubooks/order/order/complete?merchantUid=" +rsp.merchant_uid;
+						} else {
+							alert("주문 실패" + rsp.error_msg)
+						}
+					}
+					,error:function(){
+					alert("주문 오류")
+					}
+				    			
+				
+				    	});  		//$.ajax({
+				    	});  		//IMP.request_pay({
+				
+		    	}); //$("#orderBtn").on("click",function(){ 
+				    			
+			
+				 /*   	
+				
+				 
+				 
+			  IMP.init("imp51147044"); // 예: 'imp00000000'
+			  //IMP.agency("imp51147044", "티어코드"); // 예: 'imp00000000', '123'
+			
+			  IMP.request_pay({
+//			    pg : 'inicis_v2', 
+				//등록된 PG사가 하나일 경우에는 미 설정시 기본 PG사가 자동으로 적용됩니다. 등록된 PG사가 여러개인 경우에는 html5_inicis 또는 inicis(ActiveX 방식일 경우)로 지정합니다.
+				channelKey: "channel-key-213771af-73f5-4e72-a8f6-690198da0bd3"    
+				,pay_method : "card"
+				    ,merchant_uid: merchant_uid // 상점에서 관리하는 주문 번호를 전달
+				    ,name : orderName
+//				    ,amount : finalPrice + shippingFee
+				    ,amount : 100 // 최소 결제 금액 100원
+				//    ,buyer_email : 'iamport@siot.do' // 이메일 
+				    ,buyer_name : name
+				    ,buyer_tel : phone
+				    ,buyer_addr : address
+				    ,buyer_postcode : postcode
+				    //m_redirect_url : '{모바일에서 결제 완료 후 리디렉션 될 URL}' // 예: https://www.my-service.com/payments/complete/mobile
+				}, function(rsp) {
+
+					if (merchant_uid !== rsp.merchant_uid) {
+				        alert("결제 실패: 주문번호 불일치");
+				        return;
+				    }
+					
+				console.log(rsp);
+				
+				    if ( rsp.success ) {
+				    	//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+//				    	jQuery.ajax({
+				    	$.ajax({
+				    		url: "order/payments/complete" //cross-domain error가 발생하지 않도록 주의해주세요
+				    		,type: 'POST'
+				    		,dataType: 'json'
+				    		,data: {
+					    		imp_uid : rsp.imp_uid
+				    		//기타 필요한 데이터가 있으면 추가 전달
+					            ,merchant_uid: rsp.merchant_uid
+					           // amount: finalPrice + shippingFee
+					           
+				    		}
+				    	}).done(function(data) {
+				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+				    		
+//				    		if(data.result ==="success"){
+				    		if(data.result ==="paid"){
+
+				    			var msg = '결제가 완료되었습니다.';
+				    			msg += '\n고유ID : ' + rsp.imp_uid;
+				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+				    			msg += '\결제 금액 : ' + rsp.paid_amount;
+				    			msg += '카드 승인번호 : ' + rsp.apply_num;
+				    			alert(msg);
+				    			
+				    			
+				    			$.ajax({
+
+									type:"post"
+									,url:"/order/order-add"
+									,data:{
+										"name":name
+										,"phoneNumber":phone
+										,"postcode":postcode
+										,"address":address
+										,"totalPrice":finalPrice
+										,"shippingFee":shippingFee
+										,"payments":payments
+										,"point":point // 적립예정포인트
+										,"savePoint":savePoint // 적립예정포인트
+										,"impUid" : rsp.imp_uid
+	//									,"merchantUid" : merchant_uid
+										,"merchantUid" : rsp.merchant_uid
+										,"orderItemName" : orderName
+									}
+									,success:function(response){
+
+										if(response.result == "success"){
+
+											alert("결제 성공")
+
+//											location.href="/nunubooks/order/order/complete";
+										} else {
+											alert("주문 실패")
+										}
+									}
+									,error:function(){
+									alert("주문 오류")
+									}
+								
+								}).fail(function() {
+								    alert("결제 검증 요청 실패");
+								});
+				    			
+				    		}else {
+						        var msg = '결제에 실패하였습니다.';
+						        msg += '에러내용 : ' + rsp.error_msg;
+						        
+						        alert(msg);
+						    }
+				    	 }).fail(function () {
+				                alert("결제 검증 요청 실패");
+				            });
+
+				        } else {
+				            var msg = '결제 실패';
+				            msg += '\n에러 내용: ' + (rsp.error_msg || "알 수 없는 오류");
+				            alert(msg);
+				        }
+				    		console.log("결제 응답 객체:", rsp);
+				    	  		
+				    	});  		
+				    	});  		
+				    		
+//				    		if ( everythings_fine ) {
+				    		if ( data.result === "success") {
+				    			var msg = '결제가 완료되었습니다.';
+				    			msg += '\n고유ID : ' + rsp.imp_uid;
+				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+				    			msg += '\결제 금액 : ' + rsp.paid_amount;
+				    			msg += '카드 승인번호 : ' + rsp.apply_num;
+				    			alert(msg);
+				    		} else {
+				    			//[3] 아직 제대로 결제가 되지 않았습니다.
+				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+				    		}
+				    	});
+				    } else {
+				        var msg = '결제에 실패하였습니다.';
+				        msg += '에러내용 : ' + rsp.error_msg;
+				        
+				        alert(msg);
+				    }
+				    
+				    console.log(
+				    		
+							"channelKey:" +  "channel-key-213771af-73f5-4e72-a8f6-690198da0bd3"    
+								,"pay_method : " + "card"
+								    ,"merchant_uid: "+ merchant_uid // 상점에서 관리하는 주문 번호를 전달
+								    ,"name : "+ orderName
+								    ,"amount : "+ finalPrice + shippingFee
+								    ,"imp_uid : "+ rsp.imp_uid
+				//				    ,"buyer_email : "+'iamport@siot.do'
+								    ,"buyer_name :"+ name
+								    ,"buyer_tel : "+phone
+								    ,"buyer_addr : "+address
+								    ,"buyer_postcode : "+postcode
+							); 
+			
+				    
+				});
+
+				 */   	
+		/*		    	
+				$.ajax({
+
+					type:"post"
+					,url:"/order/order-add"
+					,data:{
+						"name":name
+						,"phoneNumber":phone
+						,"postcode":postcode
+						,"address":address
+						,"totalPrice":finalPrice
+						,"shippingFee":shippingFee
+						,"payments":payments
+						,"point":point // 적립예정포인트
+						,"savePoint":savePoint // 적립예정포인트
+						,"impUid" : rsp.imp_uid
+						,"merchantUid" : merchant_uid
+						,"orderItemName" : orderName
+						}
+					,success:function(response){
+
+						if(response.result == "success"){
+
+							location.href="/nunubooks/order/order/complete";
+						} else {
+							alert("주문 실패")
+						}
+					}
+					,error:function(){
+					alert("주문 오류")
+					}
+				
+				});
+				
+		*/		
+				// 주문번호 생성 -> 생성된 번호를 db에 저장해주는 흐름으로 변경하기 
+
+				    	
+				    	
+
+	//https://developers.portone.io/opi/ko/integration/start/v1/auth?v=v1
+			/*
+			}).done(function(data) {
+			    if (data.result === "success") {
+		        alert('결제가 완료되었습니다.');
+		        window.location.href = "/nunubooks/order/complete";  // 결제 완료 페이지로 이동
+		    } else {
+		        alert('결제 검증 실패: ' + data.message);
+		    }
 		});
+
+			
+		});
+			*/
 		
 		
 		

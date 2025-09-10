@@ -1,11 +1,17 @@
 package com.jhb0430.nunubooks.order.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.jhb0430.nunubooks.books.domain.Data;
+import com.jhb0430.nunubooks.books.dto.BookDTO;
 import com.jhb0430.nunubooks.books.service.BookService;
 import com.jhb0430.nunubooks.cart.dto.CartDTO;
 import com.jhb0430.nunubooks.cart.dto.TotalDTO;
@@ -17,6 +23,8 @@ import com.jhb0430.nunubooks.order.repository.OrderRepository;
 import com.jhb0430.nunubooks.order.repository.OrderedBookListRepositoy;
 import com.jhb0430.nunubooks.user.service.UserService;
 
+import reactor.core.publisher.Mono;
+
 @Service
 public class OrderService {
 
@@ -24,6 +32,9 @@ public class OrderService {
 	
 	@Autowired
 	WebClient.Builder webClientBuilder;
+	
+	 @Value("${aladin.api.ttbkey}")
+	    private String ttbKey;
 	
 	private OrderRepository orderRepository;
 	private OrderedBookListRepositoy orderedBookListRepositoy;
@@ -84,6 +95,10 @@ public class OrderService {
 			,int shippingFee
 			,String payments
 			,int point
+			,int savePoint
+			,String orderItemName
+			,String impUid
+			,String merchantUid
 			) {
 		
 		Order order = Order.builder()
@@ -95,7 +110,10 @@ public class OrderService {
 				.totalPrice(totalPrice)
 				.shippingFee(shippingFee)
 				.payments(payments)
-				.point(point)
+				.point(savePoint)
+				.orderItemName(orderItemName)
+				.impUid(impUid)
+				.merchantUid(merchantUid)
 				.build();
 		
 		if(totalPrice >= 15000 ){
@@ -103,18 +121,6 @@ public class OrderService {
 		}  else {
 			shippingFee = 4000;
 		}
-		
-		
-/*
-이제 말한대로 주문에 포함된 책 정보들만 ordered_list에 insert하면됩니다
-insert할 대상은 cart에 담긴 목록들이고요. 이를 조회 해서
-ordered_list 테이블에 항목에 맞게 저장하면 되요!
-
-말한대로 카트도 비우면 되고요.
-
-OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작업을 수행하면 됩니다.
-즉 해당 메소드에서 해당 코드를 이어서 작성하면 되요!!
- */
 		
 		
 		try {
@@ -130,7 +136,8 @@ OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작
 						 .orderId(order.getId())
 						 .itemId(cartDTO.getItemId())
 						 .quantity(cartDTO.getQuantity())
-						 .price(totalPrice)
+//						 .price(totalPrice)
+						 .price((cartDTO.getBookInfo().getItem().get(0).getPriceSales())*(cartDTO.getQuantity()))
 						 .build();
 				 
 				 orderedBookListRepositoy.save(orderedBookList);
@@ -155,9 +162,135 @@ OrderService에서 addOrder 메소드에서 order를 저장하고 바로 이 작
 	// 주문완료-> 주문번호 생성 
 	
 	
-	
-	public List<OrderedBookList> getOrderedBookList(int orderId) {
+	// 주문번호 1개에 대한 주문 정보 조회
+	public OrderDTO getOrderedBookList(int orderId, int userId) {
 		
-		return orderedBookListRepositoy.findByOrderId(orderId);
+		// 주문 완료 - > orderId, itemId, quantity, price , createdAt
+		// orderId가 같은 itemId의 정보를 조회해온다 ?? 
+		// itemId를 기준으로 책 정보를 가져오는 건 bookService에 있긴 한데.. .
+		// cartService를 가져올 필요는 없음 
+		// 하지만 cartService처럼 리스트를 만들어야 할 필요는 있다.
+		
+		// 주문에 포함된 책들을 리스트로 가져온다...? BookDTO가 List여야하나..? 
+		// 근데 Item List만 가져와도 되지않나..? @-@
+		// 주문자의 정보 -> Order에 저장된 정보도 가져와야함...
+		// bookDTO->item()의 정보.
+		
+//		List<OrderDTO> orderDTOList = new ArrayList<>();
+//		List<BookDTO> books = new ArrayList<>();
+		
+		
+		WebClient webClient = webClientBuilder.build();
+		// orderId마다 정보 가져오기 
+		List<OrderedBookList> orderedList = orderedBookListRepositoy.findAllByOrderId(orderId);
+		List<Data> orderedbookInfo = new ArrayList<>(); // 주문된 책 정보 담기
+		
+		Order order = null;
+		Optional<Order> optionalOrderInfo = orderRepository.findById(orderId);
+		if(optionalOrderInfo.isPresent()) {
+			order = optionalOrderInfo.get();
+		}	
+		
+		int quantity = 0;
+		
+		for(OrderedBookList orderedBook : orderedList) {
+			
+			 int itemId = orderedBook.getItemId();
+			
+			 quantity = orderedBook.getQuantity();
+			
+			  Mono<BookDTO> response = 
+						webClient.get()
+						.uri(uriBuilder -> uriBuilder
+								.scheme("https")
+								.host("www.aladin.co.kr")
+								.path("/ttb/api/ItemLookUp.aspx")
+								.queryParam("ttbkey",ttbKey)
+								.queryParam("itemIdType","itemId")
+								.queryParam("itemId",itemId)
+								.queryParam("Cover","Mid")
+								.queryParam("output","js")
+								.queryParam("Version","20131101")
+								.build()
+								)
+						.retrieve()
+						.bodyToMono(BookDTO.class);
+			  
+			  BookDTO book = response.block();
+			  
+			  // 정보값이 있으면 - 예외처리
+			  if (book != null && book.getItem() != null && !book.getItem().isEmpty()) {
+				  orderedbookInfo.add(book.getItem().get(0)); // 정보 추가
+		        }
+			  
+			  
+		}
+		return OrderDTO.builder()
+				.orderId(orderId)
+				.userId(userId)
+//				.itemId(itemId)
+				.item(orderedbookInfo)
+				.order(order)
+				.orderedBooks(orderedList)
+				.quantity(quantity)
+				.build();
+		
+		
 	}
+	
+	
+	// 주문자의 정보 출력
+
+	public Order getOrderUserInfo(int orderId ,int userId) {
+
+		Optional<Order> optionalOrderInfo = orderRepository.findById(orderId);
+		
+		return optionalOrderInfo.orElse(null);
+	}
+	
+	// UserId 넣으면 주문 번호(OrderId)를 가져옴
+	//SELECT `id` FROM `order` WHERE `userId`="#";
+	public List<Order> findOrderId(int userId){
+		return orderRepository.findByUserId(userId);
+		
+	};
+	
+	
+	
+	// 주문 삭제
+	@Transactional
+	public boolean deleteOrder(int id, int userId) {
+		
+		Optional<Order> optionalOrder = orderRepository.findById(id);
+		
+		if(optionalOrder.isEmpty()) {
+			return false;
+		}	
+		
+		Order order = optionalOrder.get();
+		
+			if (order.getUserId() != userId) {
+	            return false;
+	        }
+			
+			// orderedBookList도 같이 삭제 
+			List<OrderedBookList> orderBookList = orderedBookListRepositoy.findByOrderId(order.getId());
+			
+			  if (orderBookList != null) {
+		            orderedBookListRepositoy.deleteAll(orderBookList);
+		        }
+			
+			orderRepository.delete(order);
+			
+			return true;
+	}
+	
+	
+	
+	public Order findByMerchantUid(String merchantUid) {
+		
+		return orderRepository.findByMerchantUid(merchantUid);
+	}
+	
+	// 주문 번호를 출력해주는 페이지의 필요성.
 }

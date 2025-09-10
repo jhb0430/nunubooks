@@ -67,18 +67,80 @@
  	
  	
  	<select id="findUserId" resultType="com.jhb0430.nunubooks.user.domain.User">
- 	SELECT 
-		`loginId`
-	FROM 
-		`user`
-		
-		<!-- 
-	WHERE 
-		`email` = #{email}
+	 	SELECT 
+			`loginId`
+		FROM 
+			`user`
+		WHERE 
+			`name` = #{name}
 		AND 
-		`phoneNumber` = #{phoneNumber};
-		 -->
+			`email` = #{email}
+		OR 
+			`phoneNumber` = #{phoneNumber};
 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	<select id="findUserforSetPw"  parameterType="string" resultType="int">
+	 	SELECT 
+			count(*)
+		FROM 
+			`user`
+		WHERE 
+			`name` = #{name}
+		AND 
+			`loginId` = #{loginId}
+		AND 
+			`email` = #{email};
+	</select>
+ 	
+ 	
+ 	
+	 <update id="updatePassword" parameterType="map">
+			UPDATE `user`
+			SET
+				`password` = #{password}
+			WHERE
+				`loginId` = #{loginId}
+				OR 
+				`email` = #{email}; 	
+	 </update>
+ 	
+	 <update id="updateTmpPassWord" parameterType="map">
+			UPDATE `user`
+			SET
+				`password` = #{password}
+			WHERE
+				`email` = #{email}; 	
+	 </update>
+ 	
+ 	
+ 	<select id="enterUserInfo" resultType="com.jhb0430.nunubooks.user.domain.User">
+	 	SELECT 
+		 		`id`
+				,`loginId`
+				,`name`
+				, `email`
+				, `password`
+				, `postcode`
+				, `address`
+				, `phoneNumber`
+				, `point`
+				, `createdAt`
+				, `updatedAt`
+		FROM 
+				`user`
+		WHERE 
+				`id` = #{id}
+				AND 
+				`password` = #{password};
+ 	</select>
+ 	
+ 	
+ 	
+ 	
  	
  	
  	<select id="selectUserById" parameterType="int" 
@@ -109,5 +171,43 @@
 				`point` = #{point}
 			WHERE
 				`id` = #{id} 	
-	 	</update>
+	 </update>
+	 
+	 <!-- 
+	 <update id="updateUserInfo" parameterType="map">
+			UPDATE `user`
+			SET
+				`email` = #{email}
+				,`postcode` = #{postcode}
+				,`address` = #{address}
+				,`phoneNumber` = #{phoneNumber}
+				,`password` = #{password}
+			WHERE
+				`id` = #{id}
+	 </update>
+	 
+	 <update id="updateUserInfo" parameterType="map">
+			UPDATE `user`
+			SET
+				`password` = #{password}
+			WHERE
+				`id` = #{id}
+	 </update>
+	  -->
+	 
+	 <update id="updateUserInfo" parameterType="map">
+    			UPDATE `user`
+		<if test="email != null or postcode != null or address != null or phoneNumber != null or password != null">
+		    <set>
+		        <if test="email != null"> `email` = #{email},</if>
+		        <if test="postcode != null"> `postcode` = #{postcode},</if>
+		        <if test="address != null"> `address` = #{address},</if>
+		        <if test="phoneNumber != null"> `phoneNumber` = #{phoneNumber},</if>
+		        <if test="password != null and password != ''"> `password` = #{password},</if>
+		    </set>
+    			WHERE `id` = #{id}
+	    </if>
+		</update>
+	 
+	 
  </mapper>

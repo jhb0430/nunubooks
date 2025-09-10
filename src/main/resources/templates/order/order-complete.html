@@ -29,8 +29,10 @@
 				 	<tbody>
 					 	 <tr>
 					 	 	<td>
-						 	 	<span class="mr-1">주문번호 : </span>
-						 	 	<span>0000-0000-0000 </span>
+						 	 	<span class="mr-1" >주문번호 : </span>
+						 	 	<a th:href="@{/nunubooks/order/orderInfo(merchantUid=${merchantUid})}" class="font-weight-bold text-success">
+						 	 	<span th:text="${merchantUid}">0000-0000-0000 </span>
+						 	 	</a>
 					 	 	</td>
 					 	 </tr>
 				 	</tbody>
@@ -38,7 +40,7 @@
 				</div>
 				<div class="d-flex align-items-center justify-content-center my-4">
 					<a class="btn btn-primary mx-2" href="/nunubooks/main">메인으로 이동</a>
-					<a class="btn btn-primary mx-2 " href="/nunubooks/order/order-list">주문 내역 확인</a>
+					<a class="btn btn-primary mx-2 " href="/nunubooks/order/orderHistory">주문 내역 확인</a>
 				</div>
 			</div>
 		</div>
