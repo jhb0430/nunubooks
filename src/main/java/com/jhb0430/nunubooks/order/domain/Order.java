@@ -53,7 +53,13 @@ public class Order {
 	@Column(name="createdAt")
 	private LocalDateTime createdAt;
 
+	@Column(name="orderItemName")
+	private String orderItemName;
 	
+	@Column(name="impUid")
+	private String impUid;
 	
+	@Column(name="merchantUid")
+    private String merchantUid;
 	
 }
