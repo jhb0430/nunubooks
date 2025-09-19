@@ -11,7 +11,8 @@ public static String encode(String message) {
 		String result ="";
 		
 		try {
-			MessageDigest messageDigest = MessageDigest.getInstance("sha256");
+//			MessageDigest messageDigest = MessageDigest.getInstance("sha256");
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 			
 			byte[] bytes = message.getBytes();
 			
@@ -23,8 +24,9 @@ public static String encode(String message) {
 				result+= Integer.toHexString(digest[i] &0xff);
 			}
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return null;
+//			e.printStackTrace();
+//			return null;
+			throw new RuntimeException(e); // 이러면 NULL 오류 날 일도 없다고 한다
 		}
 		return result;
 		
