@@ -157,7 +157,7 @@
 								<img th:src="${orderBook.bookInfo.item[0].cover}" >
 							</td>
 							<td class="order-book-title align-middle">
-								<div class="font-weight-bold" th:text="${orderBook.bookInfo.item[0].title}">책 제목 어쩌구저쩌구저쩌구 </div>
+								<div class="font-weight-bold" th:utext="${orderBook.bookInfo.item[0].title}">책 제목 어쩌구저쩌구저쩌구 </div>
 							</td>
 							<td class="order-book-amount align-middle text-center">
 								<div class="font-weight-bold" th:text="|${orderBook.quantity}개|">1개</div>

@@ -11,7 +11,7 @@
 		<div class="container">
 				<div class="my-4" th:with="item =${book.item[0]}">
 					<div class="border-bottom">
-						<h3 class="font-weight-bold" th:text="${item.title}">책 제목</h3>
+						<h3 class="font-weight-bold" th:utext="${item.title}">책 제목</h3>
 						<span th:text="${item.author}" class="font-weight-bold">김솨솨(지은이)</span>
 						<span th:text="${item.publisher}">어쩌구출판</span>
 						<span th:text="${item.pubDate}">2025-01-01</span>

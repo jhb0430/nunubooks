@@ -17,7 +17,7 @@
 							</div>
 							<div class="main-info mt-2">
 							<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark main-title-info">
-								<h5 class="font-weight-bold" th:text="${newBook.title}">책이름</h5>
+								<h5 class="font-weight-bold" th:utext="${newBook.title}">책이름</h5>
 							</a>
 							<div class="main-pub-info mt-1">
 							<div th:text="${newBook.author}">작가 이름</div>
@@ -38,7 +38,7 @@
 							</div>
 							<div class="main-info mt-2">
 								<a th:href="|/nunubooks/product?itemId=${best.itemId}|" class="text-dark main-title-info">
-									<h5 class="font-weight-bold" th:text="${best.title}">책이름</h5>
+									<h5 class="font-weight-bold" th:utext="${best.title}">책이름</h5>
 								</a>
 								<div class="main-pub-info mt-1">
 								<span th:text="${best.author}">작가 이름</span>
@@ -59,7 +59,7 @@
 							</div>
 							<div class="main-info mt-2">
 								<a th:href="|/nunubooks/product?itemId=${special.itemId}|" class="text-dark main-title-info">
-									<h5 class="font-weight-bold" th:text="${special.title}">책이름</h5>
+									<h5 class="font-weight-bold" th:utext="${special.title}">책이름</h5>
 								</a>
 								<div class="main-pub-info mt-1">
 								<span th:text="${special.author}">작가 이름</span>
