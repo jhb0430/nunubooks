@@ -191,7 +191,7 @@
 							 </th>
 							<td class="d-flex align-items-center">
 								<input type="text" class="form-control" id="emailInput">
-								<span>@</span>
+								<span class="mx-1">@</span>
 								<input type="text" class="form-control d-none" id="fillEmail">
 								<select class="form-control text-center" id="domainSel">
 	                                <option selected value="1">이메일 선택</option>
@@ -293,7 +293,7 @@
 			isDuplicateCheck = false;
 			isDuplicateId = true;
 			
-			$("#availableText, #duplicateText").addClass("d-none");
+			$("#availableText, #dupText").addClass("d-none");
 		});
 		
 		$("#passwordConfirm").on("input",function(){ 
@@ -308,6 +308,12 @@
 
 			
 			let loginId = $("#idInput").val();
+			
+			if (loginId.trim() == "") {
+		        alert("아이디를 입력해 주세요.");
+		        $("#idInput").focus();
+		        return; // ajax 실행 방지 return
+		    }
 			
 			$.ajax({
 				type:"get"
