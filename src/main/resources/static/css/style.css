@@ -314,6 +314,7 @@ color: #7CC491;
 }
 .info-title{
 	width:700px;
+	text-overflow: ellipsis; /* ... 표시 */
 }
 .info-price{
 	width:150px;
