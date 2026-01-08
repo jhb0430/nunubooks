@@ -61,6 +61,7 @@ public class BookController {
 	@GetMapping("/books")
 	public String bestSellerList(
 					@RequestParam(value="queryType" , defaultValue = "Bestseller") String queryType
+					,@RequestParam(value = "mallType", defaultValue = "Book") String mallType
 					,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
 					,@RequestParam(value="outofStockfilter" , defaultValue = "0") int outofStockfilter
 					,@RequestParam(value = "year", required = false) Integer year
@@ -100,13 +101,14 @@ public class BookController {
 		    model.addAttribute("nowWeek",week);
 		
 		
-		 BookDTO bookDTO = bookService.bestSeller(queryType, maxResults, outofStockfilter, year, month, week);
-		 model.addAttribute("seller",bookDTO);
-		 
-		 model.addAttribute("maxResults",maxResults);
-		 model.addAttribute("queryType",queryType);
-		 model.addAttribute("outofStock",outofStockfilter);
-		
+		 BookDTO bookDTO = bookService.bestSeller(queryType, mallType, maxResults, outofStockfilter, year, month, week);
+			 model.addAttribute("seller",bookDTO);
+			 
+			 model.addAttribute("maxResults",maxResults);
+			 model.addAttribute("mallType",mallType);
+			 model.addAttribute("queryType",queryType);
+			 model.addAttribute("outofStock",outofStockfilter);
+			
 		
 		return "books/best-seller";
 	}
@@ -132,8 +134,8 @@ public class BookController {
 	@GetMapping("/searchList")
 	public String bookList(
 			@RequestParam("query") String query
+			,@RequestParam(value = "mallType", defaultValue = "Book") String mallType
 			,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
-//			, @RequestParam(value = "page", defaultValue = "1") int page
 			,@RequestParam(value = "start", defaultValue = "1") int start
 			,@RequestParam(value="outofStockfilter" , defaultValue = "0") int outofStockfilter
 			,Model model) {
@@ -150,9 +152,10 @@ public class BookController {
 //		 int offset = (page - 1) * maxResults; // 검색 결과에서 시작하는 인덱스 계산
 
 		 
-		 BookDTO bookDTO = bookService.fetchBooks(query, maxResults, page + 1,outofStockfilter);
+		 BookDTO bookDTO = bookService.fetchBooks(query,mallType,maxResults, page + 1,outofStockfilter);
 		 model.addAttribute("books",bookDTO);
 		 model.addAttribute("query",query);
+		 model.addAttribute("searchTarget",mallType);
 		 model.addAttribute("maxResults",maxResults);
 		 model.addAttribute("page", page); 
 		 model.addAttribute("outofStock", outofStockfilter); 
