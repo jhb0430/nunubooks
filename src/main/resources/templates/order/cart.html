@@ -95,15 +95,20 @@
 								
 									<div class="cart-deli mx-3"><!--  배송가능정보, 방문수랴ㅕㅇ정보  -->
 										<div class="text-center border-bottom my-1">
+												<!-- 
 												<h6 th:text="|${#temporals.format(cartDate,'MM월 dd')} 일 출고 예정|" class="my-3">00/00일 출고예정</h6>
+												 -->
+												<h6 th:text="|${#temporals.hour(cartDate)>= 15? #temporals.format(cartDate.plusDays(1),'MM월 dd일') : #temporals.format(cartDate,'MM월 dd일') } 출고 예정|" class="my-3">00/00일 출고예정</h6>
 												<!-- 
 												<div>(15시 이전 주문시 +2 일 뒤 몇시 배송 예정)</div>
 												 -->
 										</div>
 										<div class="text-center my-1">
-												<h6 th:text="|${#temporals.format(cartDate.plusHours(2),'hh 시 ')}이후|"s>00시 이후 방문수령 가능</h6>
+												<h6 th:text="|${#temporals.hour(cartDate) >= 21 ? #temporals.format(cartDate.plusDays(1).withHour(9).withMinute(0).withSecond(0) ,'HH 시') : #temporals.format(cartDate.plusHours(2),'HH 시')} 이후|">00시 이후 방문수령 가능</h6>
 												<h6>방문수령 가능</h6>
 												<!-- 
+												<h6 th:text="|${#temporals.format(cartDate.plusHours(2),'hh 시')}이후|"s>00시 이후 방문수령 가능</h6>
+												<h6>방문수령 가능</h6>
 											<button type="button" class="btn btn-0">방문수령</button>
 												 -->
 										</div>
