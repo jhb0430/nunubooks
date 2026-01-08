@@ -1,5 +1,8 @@
 package com.jhb0430.nunubooks.cart;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +45,9 @@ public class CartController {
 		int cartCount = cartService.countCart(userId); 
 		model.addAttribute("cartCount",cartCount);
 		
+		Date date = new Date();
+		LocalDateTime localDateTime = LocalDateTime.now();
+		model.addAttribute("cartDate" ,localDateTime);
 		
 		
 		
