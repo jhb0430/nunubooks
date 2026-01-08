@@ -39,7 +39,7 @@ public class BookService {
 							.queryParam("QueryType","Title")
 							.queryParam("MaxResults",maxResults)
 							.queryParam("start",start)
-							.queryParam("SearchTarget","Book")
+							.queryParam("SearchTarget","All")
 							.queryParam("outofStockfilter",outofStockfilter)
 							.queryParam("output","js")
 							.queryParam("Version","20131101")
