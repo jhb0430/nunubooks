@@ -145,6 +145,7 @@ color: #7CC491;
 	font-size:38px;
 }
 */
+
 .main-box{
 	width: 1200px;
   overflow: scroll;
@@ -225,6 +226,16 @@ color: #7CC491;
 .cart-title{
 	width:400px;
 }
+.cart-title-info{
+	overflow:hidden;
+	display: 
+	-webkit-box;
+    -webkit-line-clamp: 3; /* 텍스트를 3줄까지만 표시 */
+    -webkit-box-orient: vertical;
+	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
+    white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+}
+
 .cart-price{
 	width:100px;
 }
