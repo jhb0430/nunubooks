@@ -19,6 +19,7 @@ public class BookService {
 	    private String ttbKey;
 	
 	public BookDTO fetchBooks(String query
+			,String mallType
 			,int maxResults
 			,int start
 			,int outofStockfilter
@@ -38,8 +39,8 @@ public class BookService {
 							.queryParam("Query",query)
 							.queryParam("QueryType","Title")
 							.queryParam("MaxResults",maxResults)
-							.queryParam("start",start)
-							.queryParam("SearchTarget","All")
+							.queryParam("Start",start)
+							.queryParam("SearchTarget",mallType)
 							.queryParam("outofStockfilter",outofStockfilter)
 							.queryParam("output","js")
 							.queryParam("Version","20131101")
@@ -80,8 +81,9 @@ public class BookService {
 
 	public BookDTO bestSeller(
 			String queryType
+			,String mallType
 			,int maxResults
-			, int outofStockfilter 
+			,int outofStockfilter 
 			,int year
 			,int month
 			,int week
@@ -101,12 +103,13 @@ public class BookService {
 						.path("/ttb/api/ItemList.aspx")
 						.queryParam("ttbkey",ttbKey)
 						.queryParam("QueryType",queryType)
+						.queryParam("SearchTarget",mallType)
 //						.queryParam("QueryType","Bestseller")
 						.queryParam("MaxResults",maxResults)
 						.queryParam("Year",year)
 						.queryParam("Month",month)
 						.queryParam("Week",week)
-						.queryParam("SearchTarget","Book")
+//						.queryParam("SearchTarget","Book")
 						.queryParam("start",1)
 						.queryParam("outofStockfilter",outofStockfilter)
 						.queryParam("output","js")

@@ -12,10 +12,17 @@
 		
 		
 				<nav class="nav flex-column col-2 border-right text-center mr-4">
-					<h3 class="bg-secondary font-weight-bold my-4">국내도서</h3>
+					<h3 class="bg-secondary font-weight-bold my-4" th:if="${mallType =='Book'}">국내도서</h3>
+					<h3 class="bg-secondary font-weight-bold my-4" th:if="${mallType =='Foreign'}">해외도서</h3>
+					<h3 class="bg-secondary font-weight-bold my-4" th:if="${mallType =='eBook'}">eBook</h3>
+					<!-- 
 					  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewAll">신간도서</a>
 					  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewSpecial">화제의신간</a>
 					  <a class="nav-link text-dark" href="/nunubooks/books?queryType=Bestseller">베스트셀러</a>
+					 -->
+					<a class="nav-link text-dark" th:href="@{/nunubooks/books(queryType='ItemNewAll', mallType=${mallType})}">신간도서</a>
+				    <a class="nav-link text-dark" th:href="@{/nunubooks/books(queryType='ItemNewSpecial', mallType=${mallType})}">화제의신간</a>
+				    <a class="nav-link text-dark" th:href="@{/nunubooks/books(queryType='Bestseller', mallType=${mallType})}">베스트셀러</a>
 				</nav>
 		
 		

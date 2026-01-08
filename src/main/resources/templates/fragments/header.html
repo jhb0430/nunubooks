@@ -20,14 +20,22 @@
 				<form action="/nunubooks/searchList" method="get">
 					<div>
 						<div class="d-flex search-bar align-items-center border border-dark rounded-pill">
-							<button type="button" class="btn border-0  m-2">
-								<i class="search-icons bi bi-list"></i>
-							</button>
+								<!-- 
+								<button type="button" class="btn border-0 m-2">
+								</button>
+								 -->
+								 <div  class="btn border-0 m-3">
+									<i class="search-icons bi bi-list"></i>
+								 </div>
+								<select name="mallType" class="form-select border-0 bg-transparent m-2">
+						            <option value="Book" th:selected="${searchTarget == 'Book'}">국내도서</option>
+						            <option value="Foreign" th:selected="${searchTarget == 'Foreign'}">해외도서</option>
+						            <option value="eBook" th:selected="${searchTarget == 'eBook'}">eBook</option>
+						        </select>
 							<input type="search" class="search-tab form-control border-0" placeholder="이시간 가장 인기있는 도서는?" name="query" th:value="${query}">
 							<button type="submit" class="btn border-0 m-2" id="searchBtn">
 								<i class="search-icons bi bi-search"></i>
 							</button>
-						</div>
 					</div>
 				</form>
 			</div>
