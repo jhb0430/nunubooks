@@ -96,6 +96,15 @@ color: #7CC491;
 	width:1200px;
 }
 
+.menu-category{
+	width: 190px;
+}
+
+.menu-category > .category-bg{
+	height:60px;
+	background-color: #6CC491;
+ 	text-align: center;
+}
 
 .menu{
 	height:60px;
