@@ -86,7 +86,10 @@
 									</div>
 									<div class="d-flex align-items-center justify-content-center cart-price">
 										<div>
+											<h6 class="font-weight-bold  text-center my-4 priceUpdate" id="price" th:text="|${#numbers.formatInteger(item.priceSales * cart.quantity, 3, 'COMMA')} 원|" th:data-price="${#numbers.formatInteger(item.priceSales, 3, 'COMMA')}" th:data-eachprice="${item.priceSales}">18,000 원</h6>
+											<!-- 
 											<h6 class="font-weight-bold  text-center my-4 priceUpdate" id="price" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|" th:data-price="${#numbers.formatInteger(item.priceSales, 3, 'COMMA')}">18,000 원</h6>
+											 -->
 											<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
 												<button type="button" class="btn btn-0 subBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">-</button>
 												<div class="mx-1 qty" th:text="${cart.quantity}">1</div>
@@ -213,12 +216,20 @@
 //				alert("--!!")
 				let cartId = $(this).data("cart-id");
 				let quantity = $(this).data("quantity-id");
+				let $priceTag = $(this).closest(".cart-box").find(".priceUpdate");
+				let eachPrice = $priceTag.data("eachprice");
+
+				
 				
 				if(quantity > 1){ // quantity가 1보다 많으면 1 줄어든다 
 
 					quantity--;
+					
+					let quantityPrice = eachPrice * quantity;
+				
 			        $(this).data("quantity-id", quantity); // data-quantity-id 업데이트
 			        $(this).siblings(".qty").text(quantity); // 화면에 수량 업데이트
+			        $priceTag.text(quantityPrice.toLocaleString() + " 원");
 			        
 
 			        // 서버에 수량 업데이트 요청
@@ -227,7 +238,7 @@
 			            url: "/cart/update",
 			            data: { "id": cartId, "quantity": quantity },
 			            success: function (response) {
-			                alert("수량이 업데이트되었습니다.");
+			             //   alert("수량이 업데이트되었습니다.");
 			                location.reload();
 			            },
 			            error: function () {
@@ -269,18 +280,23 @@
 //				alert("++!!")
 				let cartId = $(this).data("cart-id");
 				let quantity = $(this).data("quantity-id");
+				let $priceTag = $(this).closest(".cart-box").find(".priceUpdate");
+				let eachPrice = $priceTag.data("eachprice");
 				
 				quantity++;
 				
+				let quantityPrice = eachPrice * quantity;
+				
 				$(this).data("quantity-id", quantity); // 업데이트된 수량 저장
 			    $(this).siblings(".qty").text(quantity); // 화면에 수량 반영
+			    $priceTag.text(quantityPrice.toLocaleString() + " 원");
 			    
 		        $.ajax({
 		            type: "put",
 		            url: "/cart/update",
 		            data: { "id": cartId, "quantity": quantity },
 		            success: function (response) {
-		                alert("수량이 업데이트되었습니다.");
+	//	                alert("수량이 업데이트되었습니다.");
 		                location.reload();
 		            },
 		            error: function () {

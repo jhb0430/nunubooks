@@ -72,63 +72,130 @@ public class EmailService {
             mimeMessageHelper.setSubject("누누북스 임시 비밀번호 안내 메일입니다.");
 
             // html 문법 적용한 메일의 내용
-            String content1 = """
-				<!DOCTYPE html>
-                    <html xmlns:th="http://www.thymeleaf.org">
-                                        
-                    <body>
-                    <div style="margin:100px;">
-                        <h1> 발급된 임시 비밀번호는 </h1>
-                        <br>
-                                        
-                                        
-                        <div align="center" style="border:1px solid black;">
-                            <h3>
-                    """;
-            String content2 = """
-		       		       </h3>
-                            <h3> 입니다 </h3>
-                        </div>
-					<div align="center"><a href="http://localhost:8080/nunubooks/account/login">로그인</a></div>
-                        <br/>
-                    </div>
-                                                                          
-                    </body>
-                    </html>
-				
-                
-                    """;
             
-            /*
-             <!DOCTYPE html>
-				<html lang="ko" 
-				    xmlns:th="http://www.thymeleaf.org">
-				<meta charset="UTF-8">
-				<head>
-					<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-					<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-					<link rel="preconnect" href="https://fonts.googleapis.com">
-					<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-					<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
-				</head>
+
+            String content1 = """
+            	    <!DOCTYPE html>
+            	    <html>
+            	    <head>
+            	        <meta charset="UTF-8">
+            	    </head>
+            	    <body style="margin: 0; padding: 0; background-color: #f8f9fa;">
+            	        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+            	            <tr>
+            	                <td style="padding: 30px 20px;">
+            	                    <div style="
+            	                        width: 100px;
+            	                        font-family: 'Black Han Sans', 'Apple SD Gothic Neo', sans-serif;
+            	                        font-size: 24px;
+            	                        line-height: 1;
+            	                        font-weight: 400;
+            	                        color: #7CC491;
+            	                        opacity: 0.5;
+            	                        text-align: left;
+            	                        text-shadow: -1.5px -1.5px 0 #1F7B3B, 1.5px -1.5px 0 #1F7B3B, -1.5px 1.5px 0 #1F7B3B, 1.5px 1.5px 0 #1F7B3B;
+            	                        margin-bottom: 20px;
+            	                    ">
+            	                        누누북스
+            	                    </div>
+
+            	                    <div style="padding: 20px; border-top: 2px solid #7CC491;">
+            	                        <h1 style="font-size: 24px; color: #333; margin-bottom: 20px;">임시 비밀번호 안내</h1>
+            	                        <p style="color: #666; font-size: 16px; line-height: 1.6;">
+            	                            안녕하세요. <strong>누누북스</strong>입니다.<br>
+            	                            요청하신 임시 비밀번호가 발급되었습니다.
+            	                        </p>
+            	                        
+            	                        <div style="margin: 30px 0; padding: 20px; background-color: #f1f3f5; text-align: center; border-radius: 8px;">
+            	                            <span style="font-size: 14px; color: #888; display: block; margin-bottom: 10px;">발급된 임시 비밀번호</span>
+            	                            <span style="font-size: 28px; font-weight: bold; color: #1F7B3B; letter-spacing: 1px;">
+            	                """;
+            
+        String content2 =   """
+                </span>
+            </div>
+
+            <p style="font-size: 14px; color: #ff5252; margin-bottom: 30px;">
+                * 로그인 후 마이페이지에서 반드시 비밀번호를 변경해 주세요.
+            </p>
+
+            <div style="text-align: center;">
+                <a href="http://localhost:8080/nunubooks/account/login" 
+                   style="display: inline-block; padding: 15px 40px; background-color: #7CC491; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                   누누북스 로그인하기
+                </a>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td style="padding: 20px; background-color: #eeeeee; text-align: center; font-size: 12px; color: #999;">
+        본 메일은 발신 전용입니다. 문의사항은 고객센터를 이용해 주세요.
+    </td>
+</tr>
+</table>
+</body>
+</html>
+""";
+        /*            
+        String content1 = """
+			<!DOCTYPE html>
+                <html xmlns:th="http://www.thymeleaf.org">
+                                    
                 <body>
-                
-                <div class="col-4 border">
-					<div class="my-4">
-						<span>발급된 임시 비밀번호는  </span>
-						<span class="text-success font-weight-bold">00000</span>
-						<span>입니다</span>
-					</div>
-					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
-				</div>
-                                        
-                                        
-				<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+                <div style="margin:100px;">
+                    <h1> 발급된 임시 비밀번호는 </h1>
+                    <br>
+                                    
+                                    
+                    <div align="center" style="border:1px solid black;">
+                        <h3>
+                """;
+        String content2 = """
+	       		       </h3>
+                        <h3> 입니다 </h3>
+                    </div>
+				<div align="center"><a href="http://localhost:8080/nunubooks/account/login">로그인</a></div>
+                    <br/>
+                </div>
+                                                                      
                 </body>
                 </html>
-             */
+			
+            
+                """;
+        
+        /*
+         <!DOCTYPE html>
+			<html lang="ko" 
+			    xmlns:th="http://www.thymeleaf.org">
+			<meta charset="UTF-8">
+			<head>
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+				<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+				<link rel="preconnect" href="https://fonts.googleapis.com">
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+				<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+			</head>
+            <body>
+            
+            <div class="col-4 border">
+				<div class="my-4">
+					<span>발급된 임시 비밀번호는  </span>
+					<span class="text-success font-weight-bold">00000</span>
+					<span>입니다</span>
+				</div>
+				<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
+			</div>
+                                    
+                                    
+			<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+            </body>
+            </html>
+         */
+            
             
             // 메일의 내용 설정
             mimeMessageHelper.setText(content1 + rpw + content2, true);
