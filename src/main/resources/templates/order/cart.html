@@ -5,8 +5,7 @@
      layout:decorate="~{layout/default}">
      
 
-		<section layout:fragment="contents" class="container">
-			<div class=" contents">
+		<section layout:fragment="contents" class="contents container-fluid px-5">
 				<div>
 					<div  class="d-flex justify-content-between p-2 mt-4">
 						<h2 class="font-weight-bold" th:text="|장바구니 (${cartCount})|" th:data-cart-count="${cartCount}" id="cartCount">장바구니(0)</h2>
@@ -57,75 +56,76 @@
 						</div>
 					</div>
 
-
-				<div th:if="${cartCount > 0}">
-					<div th:each="cart:${cartList.cartDTOList}">
-						<div class="cart-box d-flex align-items-center p-1 border"> <!-- 책 정보부분 (++++ ) -->
-							<div th:each="item : ${cart.bookInfo.item}"> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
-								<button type="button" class="close deleteBtn" th:data-cart-id="${cart.id}"> <!--  닫기버튼  -->
-									<span aria-hidden="true">&times;</span>
-								</button>
-							
-								<div class="d-flex align-items-center">
-									<div class="cart-check mr-4">
-										<input type="checkbox" class="mx-3 item-checkbox" th:data-cart-id="${cart.id}">
-									</div>
-									<div>
-									<img th:src="${item.cover}" class="cart-book-img mx-2">
-									</div>
-									<div class="mx-3 cart-title"> <!--  책 정보 -->
-										<a th:href="|/nunubooks/product?itemId=${cartList.itemId}|" class="text-dark">
-											<h5 class="font-weight-bold cart-title-info" th:utext="${item.title}">책 제목 어쩌구저쩌구저쩌구</h5>
-										</a>
-										<div class="d-flex mt-2">
-											<div class="text-success font-weight-bold mr-2" th:text="|(${item.discount}%)|">할인율</div>
-											<del><div th:text="|${#numbers.formatInteger(item.priceStandard, 3, 'COMMA')} 원|">정가</div></del>
-											<div class="font-weight-bold mx-1" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">판매가</div>
-											<div th:text="|(${#numbers.formatInteger(item.mileage, 3, 'COMMA')} point)|">point</div>
+				<div class="d-flex justify-content-start align-items-start">
+					<div th:if="${cartCount > 0}">
+						<div th:each="cart:${cartList.cartDTOList}" class="mr-3">
+							<div class="cart-box d-flex align-items-center p-1 border w-100"> <!-- 책 정보부분 (++++ ) -->
+								<div th:each="item : ${cart.bookInfo.item}" class="w-100 p-1"> <!-- 닫기버튼 포함한 책 정보 묶는 div -->
+									<button type="button" class="close deleteBtn" th:data-cart-id="${cart.id}"> <!--  닫기버튼  -->
+										<span aria-hidden="true">&times;</span>
+									</button>
+								
+									<div class="d-flex align-items-center">
+										<div class="cart-check mr-4">
+											<input type="checkbox" class="mx-3 item-checkbox" th:data-cart-id="${cart.id}">
 										</div>
-									</div>
-									<div class="d-flex align-items-center justify-content-center cart-price">
 										<div>
-											<h6 class="font-weight-bold  text-center my-4 priceUpdate" id="price" th:text="|${#numbers.formatInteger(item.priceSales * cart.quantity, 3, 'COMMA')} 원|" th:data-price="${#numbers.formatInteger(item.priceSales, 3, 'COMMA')}" th:data-eachprice="${item.priceSales}">18,000 원</h6>
-											<!-- 
-											<h6 class="font-weight-bold  text-center my-4 priceUpdate" id="price" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|" th:data-price="${#numbers.formatInteger(item.priceSales, 3, 'COMMA')}">18,000 원</h6>
-											 -->
-											<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
-												<button type="button" class="btn btn-0 subBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">-</button>
-												<div class="mx-1 qty" th:text="${cart.quantity}">1</div>
-												<button type="button" class="btn btn-0 addBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">+</button>
+											<img th:src="${item.cover}" class="cart-book-img mx-2">
+										</div>
+										<div class="mx-3 cart-title"> <!--  책 정보 -->
+											<a th:href="|/nunubooks/product?itemId=${cartList.itemId}|" class="text-dark">
+												<h5 class="font-weight-bold cart-title-info" th:utext="${item.title}">책 제목 어쩌구저쩌구저쩌구</h5>
+											</a>
+											<div class="d-flex mt-2">
+												<div class="text-success font-weight-bold mr-2" th:text="|(${item.discount}%)|">할인율</div>
+												<del><div th:text="|${#numbers.formatInteger(item.priceStandard, 3, 'COMMA')} 원|">정가</div></del>
+												<div class="font-weight-bold mx-1" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">판매가</div>
+												<div th:text="|(${#numbers.formatInteger(item.mileage, 3, 'COMMA')} point)|">point</div>
 											</div>
 										</div>
-									</div>
-								
-									<div class="cart-deli mx-3"><!--  배송가능정보, 방문수랴ㅕㅇ정보  -->
-										<div class="text-center border-bottom my-1">
+										<div class="d-flex align-items-center justify-content-center cart-price">
+											<div>
+												<h6 class="font-weight-bold  text-center my-4 priceUpdate" id="price" th:text="|${#numbers.formatInteger(item.priceSales * cart.quantity, 3, 'COMMA')} 원|" th:data-price="${#numbers.formatInteger(item.priceSales, 3, 'COMMA')}" th:data-eachprice="${item.priceSales}">18,000 원</h6>
 												<!-- 
-												<h6 th:text="|${#temporals.format(cartDate,'MM월 dd')} 일 출고 예정|" class="my-3">00/00일 출고예정</h6>
+												<h6 class="font-weight-bold  text-center my-4 priceUpdate" id="price" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|" th:data-price="${#numbers.formatInteger(item.priceSales, 3, 'COMMA')}">18,000 원</h6>
 												 -->
-												<h6 th:text="|${#temporals.hour(cartDate)>= 15? #temporals.format(cartDate.plusDays(1),'MM월 dd일') : #temporals.format(cartDate,'MM월 dd일') } 출고 예정|" class="my-3">00/00일 출고예정</h6>
-												<!-- 
-												<div>(15시 이전 주문시 +2 일 뒤 몇시 배송 예정)</div>
-												 -->
+												<div class="d-flex align-items-center justify-content-center bg-light border rounded border-secondary">
+													<button type="button" class="btn btn-0 subBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">-</button>
+													<div class="mx-1 qty" th:text="${cart.quantity}">1</div>
+													<button type="button" class="btn btn-0 addBtn" th:data-cart-id="${cart.id}" th:data-quantity-id="${cart.quantity}">+</button>
+												</div>
+											</div>
 										</div>
-										<div class="text-center my-1">
-												<h6 th:text="|${#temporals.hour(cartDate) >= 21 ? #temporals.format(cartDate.plusDays(1).withHour(9).withMinute(0).withSecond(0) ,'HH 시') : #temporals.format(cartDate.plusHours(2),'HH 시')} 이후|">00시 이후 방문수령 가능</h6>
-												<h6>방문수령 가능</h6>
-												<!-- 
-												<h6 th:text="|${#temporals.format(cartDate.plusHours(2),'hh 시')}이후|"s>00시 이후 방문수령 가능</h6>
-												<h6>방문수령 가능</h6>
-											<button type="button" class="btn btn-0">방문수령</button>
-												 -->
+									
+										<div class="cart-deli mx-3"><!--  배송가능정보, 방문수랴ㅕㅇ정보  -->
+											<div class="text-center border-bottom my-1">
+													<!-- 
+													<h6 th:text="|${#temporals.format(cartDate,'MM월 dd')} 일 출고 예정|" class="my-3">00/00일 출고예정</h6>
+													 -->
+													<h6 th:text="|${#temporals.hour(cartDate)>= 15? #temporals.format(cartDate.plusDays(1),'MM월 dd일') : #temporals.format(cartDate,'MM월 dd일') } 출고 예정|" class="my-3">00/00일 출고예정</h6>
+													<!-- 
+													<div>(15시 이전 주문시 +2 일 뒤 몇시 배송 예정)</div>
+													 -->
+											</div>
+											<div class="text-center my-1">
+													<h6 th:text="|${#temporals.hour(cartDate) >= 21 ? #temporals.format(cartDate.plusDays(1).withHour(9).withMinute(0).withSecond(0) ,'HH 시') : #temporals.format(cartDate.plusHours(2),'HH 시')} 이후|">00시 이후 방문수령 가능</h6>
+													<h6>방문수령 가능</h6>
+													<!-- 
+													<h6 th:text="|${#temporals.format(cartDate.plusHours(2),'hh 시')}이후|"s>00시 이후 방문수령 가능</h6>
+													<h6>방문수령 가능</h6>
+												<button type="button" class="btn btn-0">방문수령</button>
+													 -->
+											</div>
 										</div>
-									</div>
-								</div><!-- 책 이미지 제목 수량 -->
-							</div><!-- 닫기버튼 포함한 책 정보 묶는 div -->
-	
-						</div> <!--   cart-box  -->
+									</div><!-- 책 이미지 제목 수량 -->
+								</div><!-- 닫기버튼 포함한 책 정보 묶는 div -->
+		
+							</div> <!--   cart-box  -->
+						</div>
 					</div>
 				</div>
 						
-				<div class="col-3 border p-2 cart-total-price ml-1" th:if="${cartCount > 0}">
+				<div class="cart-orderInfo border p-2 cart-total-price" th:if="${cartCount > 0}">
 					<table class="table table-borderless">
 						<tr>
 							<th>상품 금액</th>
@@ -153,7 +153,7 @@
 						<button type="button" class="btn btn-primary my-3 w-100">방문 수령</button>
 				</div>
 				
-				<div class="col-3 border p-2 cart-total-price ml-1" th:if="${cartCount == 0}">
+				<div class="cart-orderInfo border p-2 cart-total-price ml-1" th:if="${cartCount == 0}">
 					<table class="table table-borderless">
 						<tr>
 							<th>상품 금액</th>
@@ -187,7 +187,7 @@
 			
 			
 			
-			</div><!-- contents -->
+			<!-- contents -->
 		
 		</section>
 

@@ -21,7 +21,8 @@
 				 -->
 				
 					<div class="border main-box mt-4" >
-						<a href="/nunubooks/books?queryType=ItemNewAll" class="text-dark"><h2 class="font-weight-bold m-3 ">새로 나온 도서</h2></a>
+						<a href="/nunubooks/books?queryType=ItemNewAll" class="text-dark">
+							<h2 class="font-weight-bold ml-3 mt-3 mb-3 ">새로 나온 도서</h2></a>
 						<div class="d-flex align-items-center"> <!--  리스트 옆으로 출력시키기 위함임 -->
 							<div th:each="newBook : ${newBook.item}">
 								<div class="ml-3 main-bookbox">
@@ -29,14 +30,14 @@
 										<img th:src="${newBook.cover}" class="main-img">
 									</div>
 									<div class="main-info mt-2">
-									<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark main-title-info">
-										<h5 class="font-weight-bold" th:utext="${newBook.title}">책이름</h5>
-									</a>
-									<div class="main-pub-info mt-1">
-									<div th:text="${newBook.author}">작가 이름</div>
-									<div th:text="${newBook.publisher}">출판사 이름</div>
+										<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark main-title-info">
+											<h5 class="font-weight-bold" th:utext="${newBook.title}">책이름</h5>
+										</a>
+										<div class="main-pub-info mt-1">
+											<div class="author-text" th:text="${newBook.author}">작가 이름</div>
+											<div class="publisher-text" th:text="${newBook.publisher}">출판사 이름</div>
+										</div>
 									</div>
-								</div>
 								</div>
 							</div>
 						</div>
@@ -54,8 +55,8 @@
 											<h5 class="font-weight-bold" th:utext="${best.title}">책이름</h5>
 										</a>
 										<div class="main-pub-info mt-1">
-										<span th:text="${best.author}">작가 이름</span>
-										<span th:text="${best.publisher}">출판사 이름</span>
+										<span class="author-text" th:text="${best.author}">작가 이름</span>
+										<span class="publisher-text" th:text="${best.publisher}">출판사 이름</span>
 										</div>
 									</div>
 								</div>
@@ -75,8 +76,8 @@
 											<h5 class="font-weight-bold" th:utext="${special.title}">책이름</h5>
 										</a>
 										<div class="main-pub-info mt-1">
-										<span th:text="${special.author}">작가 이름</span>
-										<span th:text="${special.publisher}">출판사 이름</span>
+										<span class="author-text" th:text="${special.author}">작가 이름</span>
+										<span class="publisher-text" th:text="${special.publisher}">출판사 이름</span>
 										</div>
 									</div>
 									</div>
