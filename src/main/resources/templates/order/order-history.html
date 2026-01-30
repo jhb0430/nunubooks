@@ -61,8 +61,12 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="order-box" th:if="${orderInfo != null}"><!--주문내역확인 페이지 리스트-->
+				<!--주문내역확인 페이지 리스트
+				<div class="order-box" th:if="${orderInfo != null}">-->
+				<div class="order-box" th:if="${not #lists.isEmpty(orderInfo)}">
+					<!-- 
+					<table class="table" th:each="info, status : ${orderInfo}">
+					 -->
 					<table class="table" th:each="order:${order}">
 						<thead>
 							<tr>
