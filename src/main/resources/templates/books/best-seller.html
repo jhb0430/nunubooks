@@ -11,9 +11,9 @@
 		
 		
 			<nav class="menu-category flex-column border-right text-center mr-4">
-				<h3 class="category-bg font-weight-bold p-2 my-4" th:if="${mallType =='Book'}">국내도서</h3>
-				<h3 class="category-bg font-weight-bold p-2 my-4" th:if="${mallType =='Foreign'}">해외도서</h3>
-				<h3 class="category-bg font-weight-bold p-2 my-4" th:if="${mallType =='eBook'}">eBook</h3>
+				<h3 class="category-bg font-weight-bold p-2 my-4 mallType" th:if="${mallType =='Book'}" th:data-mall-id="${mallType}">국내도서</h3>
+				<h3 class="category-bg font-weight-bold p-2 my-4 mallType" th:if="${mallType =='Foreign'}" th:data-mall-id="${mallType}">해외도서</h3>
+				<h3 class="category-bg font-weight-bold p-2 my-4 mallType" th:if="${mallType =='eBook'}" th:data-mall-id="${mallType}">eBook</h3>
 				<!-- 
 				  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewAll">신간도서</a>
 				  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewSpecial">화제의신간</a>
@@ -184,13 +184,15 @@ $(document).ready(function(){
 		const maxResults = $("#maxResultSel").val() || 10;
 		const outofStock = $("#outofStockSel").val() || 0;
 		const queryType = $(".queryType").data("query-id") || 'Bestseller'; 
+		const mallType =$(".mallType").data("mall-id") || 'Book';
     	
 		const baseUrl = "/nunubooks/books";
 	    // history.pushState() 새로고침 안되게함
 //	    history.pushState(null, null, baseUrl 
 		
 		location.href = baseUrl 
-	        + "?queryType=" + queryType 
+	        + "?mallType=" + mallType 
+	        + "&queryType=" + queryType 
 	        + "&maxResults=" + maxResults 
 	        + "&outofStockfilter=" + outofStock
 	        + "&year=" + year
