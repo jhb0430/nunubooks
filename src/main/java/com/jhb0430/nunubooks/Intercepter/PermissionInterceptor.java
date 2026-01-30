@@ -38,6 +38,12 @@ public class PermissionInterceptor implements HandlerInterceptor{
 						response.sendRedirect("/nunubooks/account/login");
 						return false;
 					}
+					if(uri.startsWith("/nunubooks/account/userInfo/")) {
+						
+						// 로그인 페이지로 리다이렉트 정보를 response에 담는다. 
+						response.sendRedirect("/nunubooks/account/login");
+						return false;
+					}
 				} 
 				
 //				로그인이 되어있는 경우는 막을 게 없지 않나...? d아~~

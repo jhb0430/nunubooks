@@ -54,6 +54,24 @@ color: #7CC491;
 
 	
 }
+.logo-sm{
+width: 230px;
+height: 90px;
+
+font-family: 'Black Han Sans';
+font-style: normal;
+font-weight: 450;
+font-size: 56px;
+line-height: 90px;
+align-items: center;
+text-align: center;
+color: #7CC491;
+-webkit-text-stroke-width: 3px;
+-webkit-text-stroke-color: #1F7B3B;
+opacity:30%;
+
+	
+}
 
 .logo > a {
   text-decoration: none;
@@ -61,11 +79,15 @@ color: #7CC491;
 }
 
 .category{
-	width:170px;
+	flex: 0 0 210px; /* 늘어나지도(0), 줄어들지도(0) 말고 딱 200px 고정 */
+    width: 210px; /* 적절한 고정 너비 설정 */
 }
 .mypage{
-	height:100px;
+	min-height: 120px;
+	height: auto; 
 	align-items: center;
+	text-align: center;
+	
 }
 .pwAlert{
 	height:150px;
@@ -249,8 +271,8 @@ color: #7CC491;
     overflow: hidden;
     line-height: 1.2rem;
     word-break: break-word;
-    font-size: 0.85rem;
-    color: #666;
+    font-size: 0.9rem;
+    color: rgb(90, 90, 90);
     margin-bottom: 4px;      /* 출판사와의 간격 */
 }
 
@@ -261,7 +283,7 @@ color: #7CC491;
     overflow: hidden;
     text-overflow: ellipsis; /* 넘치면 ... */
     font-size: 0.85rem;
-    color: #999;
+    color: rgb(137, 126, 129);
 }
 
 .book-image {
@@ -380,13 +402,22 @@ color: #7CC491;
 }
 	*/
 
+.userinfo-layout{
+	width : 100%;
+	max-width:1200px;
+	
+}
 
 .order-header{
-	width:900px;
-	height:120px;
+	width : auto;
+	max-width:1200px;
+	min-height: 120px;
+	margin: 20px auto;
+	height: auto; 
 }
+
 .order-info-none{
-	width:900px;
+	max-width:1200px;
 	height:400px;
 }
 

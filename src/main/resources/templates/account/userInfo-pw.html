@@ -5,55 +5,62 @@
      layout:decorate="~{layout/default}">
      
 
-		<section layout:fragment="contents">
-		<div class="d-flex container">
-			<nav class="nav flex-column category border-right mr-4">
-			<div class="mt-4 mypage mr-1 border-bottom">
-				<h4 class="font-weight-bold mt-3">마이 페이지</h4>
-				<div class="mr-2 mt-2">
-					<div  th:text="|${session.userName} 님 |">김뫄뫄님</div>
-					<div class="small logo-color font-weight-bold" th:text="|(${#numbers.formatInteger(session.userPoint, 3, 'COMMA')} point)|">포인트</div>
-				</div>
-			</div>
-				<div class="mr-1 text-center  mt-4">
-					<h6 class="font-weight-bold mb-2">쇼핑 내역</h6>
-					  <a class="nav-link text-dark" href="/nunubooks/order/orderHistory">주문 내역</a>
-					<h6 class="font-weight-bold mb-2">회원정보</h6>
-					  <a class="nav-link text-dark" href="/nunubooks/account/userInfo">회원정보 수정</a>
+		<section layout:fragment="contents" class="contents">
+			<div class="d-flex mt-4"> <!-- container -->
+				<nav class="nav flex-column category border-right mr-1">
+					<div class="mypage mr-1 border-bottom p-2">
+						<div class="mt-3">
+							<h4 class="font-weight-bold ">마이 페이지</h4>
+						</div>
+						<div class="mr-2 mt-4">
+							<div  th:text="|${session.userName} 님 |">김뫄뫄님</div>
+							<div class="small logo-color font-weight-bold my-1" th:text="|보유 포인트 : ${#numbers.formatInteger(session.userPoint, 3, 'COMMA')} point|">포인트</div>
+						</div>
+					</div>
+					<div class="mr-1 text-center  mt-4">
+						<h6 class="font-weight-bold mb-2">쇼핑 내역</h6>
+						<h6 class="font-weight-bold mb-2">
+						  <a class="nav-link text-dark" href="/nunubooks/order/orderHistory">주문 내역</a>
+						</h6>
+						<h6 class="font-weight-bold mb-2">회원정보</h6>
+						<h6 class="font-weight-bold mb-2">
+						  <a class="nav-link text-dark" href="/nunubooks/account/userInfo">회원정보 수정</a>
+						</h6>
 					  <!-- 
 					  <a class="nav-link text-dark" href="#">카테고리3</a>
 					  <a class="nav-link text-dark" href="#">카테고리4</a>
 					   -->
-				</div>
-			</nav>
-			
-			<div class="contents">
-			
-					<div  class="order-header d-flex justify-content-between align-items-center border-bottom">
-						<h3 class="font-weight-bold" >회원정보 수정</h3>
-						
 					</div>
-			<div class="my-4">
-				<h4 class="font-weight-bold">비밀번호 확인</h4>
-				<h6>안전한 개인정보보호를 위해 비밀번호를 입력해 주세요.</h6>
-			</div>
+				</nav>
 			
-			<table class="table table-borderless col-6">
-				<tr>
-					<th>비밀번호</th>
-					<td>
-						<input type="password" class="form-control" id="passwordInput">
-						<div class="text-danger small d-none" id="difPwAlt">비밀번호를 확인해주세요</div>
-					</td>
-				</tr>
-			</table>
-			<div class="d-flex justify-content-center">
-				<button type="button" class="btn btn-success" id="enterInfoBtn">확인</button>
-			</div>
-			
-			
-			</div><!-- contents -->
-		</div><!-- container -->
+				<div class="userinfo-layout"> <!-- contents -->
+					<div  class="order-header d-flex align-items-center border-bottom">
+						<div class="logo-sm">
+							누누북스
+						</div>
+						<h3 class="font-weight-bold ml-1" >회원정보 수정</h3>
+					</div>
+				<div class="userinfo-layout">
+					<div class="my-3 ml-4">
+						<h4 class="font-weight-bold">비밀번호 확인</h4>
+						<h6>안전한 개인정보보호를 위해 비밀번호를 입력해 주세요.</h6>
+					</div>
+					<table class="table table-borderless col-6 my-3 ml-4 ">
+						<tr>
+							<th>비밀번호</th>
+							<td>
+								<input type="password" class="form-control" id="passwordInput">
+								<div class="text-danger small d-none" id="difPwAlt">비밀번호를 확인해주세요</div>
+							</td>
+						</tr>
+					</table>
+					<div class="d-flex justify-content-center">
+						<button type="button" class="btn btn-success" id="enterInfoBtn">확인</button>
+					</div>
+				</div>
+				
+				</div><!-- 회원정보수레이아웃 -->
+			</div><!-- 전체 d-flex -->
 		</section>
 
 
