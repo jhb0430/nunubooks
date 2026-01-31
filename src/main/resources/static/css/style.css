@@ -368,6 +368,22 @@ color: #7CC491;
 	max-width:1200px;
 	margin: 20px auto;
 }
+.order-box-complete{
+	width : auto;
+	max-width:1000px;
+	margin: 80px auto;
+	padding: 80px 60px;
+	border: 1px solid #e9ecef;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+	
+	display: flex;
+    flex-direction: column;
+	align-items:center;
+	justify-content:center;
+	text-align: center;
+}
+
 .order-address{
 	width:600px;
 }
@@ -377,9 +393,14 @@ color: #7CC491;
 	height:160px;
 }
 .order-date{
-	width: auto;
-	max-width:200px;
+	width: 12%; /* 고정px보다는 비율이 안전합니다 */
+    min-width: 100px;
+    font-weight: bold;
+    color: #666;
 }
+
+
+
 .order-book-img{
 	width:100px;
 	object-fit: contain;
@@ -392,7 +413,37 @@ color: #7CC491;
 .order-book-amount{
 	width: auto;
 	width:250px;
+	
 }
+.order-book-number{
+	width: 20%;
+	min-width:170px;
+    text-align: center;
+	
+}
+
+.order-summary{
+	width: 56%; 
+	min-width:600px;
+    padding-left: 20px;
+    font-size: 1.1rem;
+}
+
+.summary-title{
+	width: 85%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+    flex: 0 1 auto;
+    display: 
+	-webkit-box;
+    -webkit-line-clamp: 1; /* 텍스트를 1줄까지만 표시 */
+    -webkit-box-orient: vertical;
+	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
+    white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+    
+}
+
 .order-book-price{
 	width:145px;
 }

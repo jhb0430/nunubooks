@@ -64,20 +64,29 @@
 				<!--주문내역확인 페이지 리스트
 				<div class="order-box" th:if="${orderInfo != null}">-->
 				<div class="order-box" th:if="${not #lists.isEmpty(orderInfo)}">
+					<table class="table" th:each="info : ${orderInfo}">
 					<!-- 
-					<table class="table" th:each="info, status : ${orderInfo}">
-					 -->
 					<table class="table" th:each="order:${order}">
+					 -->
 						<thead>
 							<tr>
-								<th class="order-date align-middle" colspan="3" th:text="${#temporals.format(order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
-								<th class="order-book-amount align-middle" ><a th:href="@{/nunubooks/order/orderInfo(merchantUid=${order.merchantUid})}" th:text="${order.merchantUid}" class="text-success">주문번호</a></th>
+								<th class="order-date align-middle" colspan="2" th:text="${#temporals.format(info.order.createdAt,'yyyy/MM/dd')}">2025년 0월 00일</th>
+								<th class="align-middle order-summary">
+				                    <th:block th:if="${not #lists.isEmpty(info.item)}">
+				                    <div class="d-flex align-items-center">
+				                        <div class="summary-title" th:text="${info.item[0].title}">첫 번째 책 제목</div>
+				                        <div class="ml-2 text-secondary small font-weight-bold" th:if="${#lists.size(info.item) > 1}" 
+				                              th:text="| 외 ${#lists.size(info.item) - 1}권|"></div>
+				                    </div>
+				                    </th:block>
+			               		 </th>
+								<th class="order-book-number align-middle" ><a th:href="@{/nunubooks/order/orderInfo(merchantUid=${info.order.merchantUid})}" th:text="${info.order.merchantUid}" class="text-success">주문번호</a></th>
 								<!-- 
 								<th><a th:href="@{/order/delete(id=${order.id})}" class="text-dark">삭제</a></th>
 								 -->
 								<th class="align-middle">
-									<div class="d-flex justify-content-end">
-									<button type="button" class="btn btn-outline-secondary deleteBtn" th:data-delete-order="${order.id}">삭제</button>
+									<div class="d-flex justify-content-end ">
+									<button type="button" class="btn btn-outline-secondary deleteBtn" th:data-delete-order="${info.order.id}">삭제</button>
 									</div>
 								</th>
 							</tr>
