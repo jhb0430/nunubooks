@@ -3,10 +3,12 @@
 
 #wrap{
 	/*
-	width:1500px;
 	height:1000px;
 	*/
+	width:1400px;
+	max-width: 100%;
 	margin: 0 auto;
+	overflow: hidden;
 }
 
 /* <uniquifier>: Use a unique and descriptive class name
@@ -646,6 +648,7 @@ color: #7CC491;
 .userinfo-layout{
 	width : 100%;
 	max-width:1200px;
+	min-height:350px;
 	
 }
 
@@ -658,7 +661,8 @@ color: #7CC491;
 }
 
 .order-info-none{
-	max-width:1200px;
+	width: 100%;
+	max-width:900px;
 	height:400px;
 }
 
