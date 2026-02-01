@@ -78,6 +78,32 @@ opacity:30%;
   color: inherit;
 }
 
+
+.terms-box {
+    height: 280px;             /* 원하는 높이 설정 */
+    overflow-y: auto;          /* 내용이 길면 스크롤 생성 */
+    padding: 15px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    /* 텍스트 내 줄바꿈(\n)을 화면에 그대로 반영 */
+    white-space: pre-wrap;     
+    word-break: break-all;
+}
+
+.terms-box::-webkit-scrollbar {
+    width: 6px;
+}
+.terms-box::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+
+
+
+
+
 .category{
 	flex: 0 0 210px; /* 늘어나지도(0), 줄어들지도(0) 말고 딱 200px 고정 */
     width: 210px; /* 적절한 고정 너비 설정 */
@@ -298,7 +324,8 @@ color: #7CC491;
 
 
 .info-btn {
-	width:300px;
+	width:100%;
+	max-width:400px;
 	height:50px;
 	text-align: center;
 	font-weight: bolder;
