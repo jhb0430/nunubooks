@@ -2,83 +2,59 @@
 <html lang="ko" 
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-     layout:decorate="~{layout/default}">
+     layout:decorate="~{layout/default2}">
      
 
-		<section layout:fragment="contents">
+		<section layout:fragment="contents" class="contents">
 		
-			<div class="contents container m-4">
+			<div class="login-page-container">
 		
-				<div class="input-box mb-4">
+				<div class="login-input-box">
+					<div class="logo">
+						<a href="/nunubooks/main" >누누북스</a>
+					</div>
 					
-					<div class="info-btn btn-lgn border border-dark border-bottom-0  d-flex align-items-center justify-content-center">
-						<h3>내 계정 찾기</h3>
+					<div class="border-bottom mb-4 pb-2">
+						<h4 class="font-weight-bold">아이디/비밀번호 찾기</h4>
 					</div>
-							<!-- 
-					<div class="border-bottom">
-						<h3>내 계정 찾기</h3>
-					</div>
-							 -->
-				<div class="outline">
-					<div>
-						<h4>아이디 찾기</h4>
-					</div>
+					<div class="find-tabs">
+				        <div class="find-tab active" id="tabId">아이디 찾기</div>
+				        <div class="find-tab" id="tabPw">비밀번호 찾기</div>
+				    </div>
+					<div id="sectionId">
+				        <button type="button" class="btn-accordion"  id="findUserbyEmailBtn">
+				            이메일로 찾기
+				        </button>
+				        <div id="findbyEmail" class="d-none p-3 bg-light rounded mb-3">
+				            <input type="text" class="form-control mb-2 userNameInput" placeholder="이름">
+				            <input type="text" class="form-control mb-2 findInfoInput" placeholder="이메일">
+				            <button class="btn btn-nunu w-100 findBtn">확인</button>
+				        </div>
 				
-				<div>
-					<button type="button" class="btn  btn-lgn btn-outline-secondary my-2" id="findUserbyEmailBtn">회원 정보에 등록된 이메일로 찾기</button>
-						<!--  버튼 누르면 인풋창 show -->
-						<div id="findbyEmail" class="d-none" >
-							<div>
-								<input type="text" class="form-control my-2 userNameInput" placeholder="이름">
-							</div>
-							<div>
-								<input type="text" class="form-control my-2 findInfoInput" placeholder="이메일">
-							</div>
-							<div class="d-flext justify-content-end my-2">
-								<button class="btn btn btn-success findBtn">찾기</button>
-							</div>
-						</div>
-				</div>
-					
-					
-				<div>
-					<button type="button" class="btn btn-lgn btn-outline-secondary my-2" id="findUserbyPhoneBtn">회원 정보에 등록된 휴대폰으로 찾기</button>
-						<!--  버튼 누르면 인풋창 show -->
-						<div id="findbyPhone" class="d-none">
-							<div>
-								<input type="text" class="form-control my-2 userNameInput" placeholder="이름">
-							</div>
-							<div>
-								<input type="text" class="form-control my-2 findInfoInput" placeholder="휴대폰 번호 (하이픈'-'을 포함시켜 입력해주세요)" >
-							</div>
-							<div class="d-flext justify-content-end my-2">
-								<button class="btn btn btn-success findBtn" >찾기</button>
-							</div>
-						</div>
-				</div>
-	
-				<div>
-					<button type="button" class="btn btn-lgn btn-outline-secondary my-2" id="newSetPwBtn">임시 비밀번호 발급 받기</button>
-					<!--  버튼 누르면 인풋창 show -->
-						<div id="updatePw" class="d-none">
-							<h5 class="font-weight-bold my-4">임시 비밀번호 발급을 위한 정보를 입력해주세요</h5>
-							<div>
-								<input type="text" class="form-control my-2" placeholder="이름" id="nameInput">
-							</div>
-							<div>
-								<input type="text" class="form-control my-2" placeholder="아이디" id="idInput">
-							</div>
-							<div>
-								<input type="text" class="form-control my-2" placeholder="이메일주소" id="emailInput">
-							</div>
-							<div>
-								<button type="button" class="btn btn-success mb-4" id="setPwBtn">확인</button>
-							</div>
-						</div>
-				</div>
-	
-				</div>
-			</div>
+				        <button type="button" class="btn-accordion"  id="findUserbyPhoneBtn">
+				            휴대폰으로 찾기
+				        </button>
+				        <div id="findbyPhone" class="d-none p-3 bg-light rounded mb-3">
+				            <input type="text" class="form-control mb-2 userNameInput" placeholder="이름">
+				            <input type="text" class="form-control mb-2 findInfoInput" placeholder="휴대폰 번호">
+				            <button class="btn btn-nunu w-100 findBtn">확인</button>
+				        </div>
+   					</div>
+
+			    <div id="sectionPw" class="d-none">
+			        <button type="button" class="btn-accordion"  id="newSetPwBtn">
+			            임시 비밀번호 발급 받기
+			        </button>
+			        <div id="updatePw" class="d-none p-3 bg-light rounded mb-3">
+			            <input type="text" class="form-control mb-2" placeholder="이름" id="nameInput">
+			            <input type="text" class="form-control mb-2" placeholder="아이디" id="idInput">
+			            <input type="text" class="form-control mb-2" placeholder="이메일" id="emailInput">
+			            <button type="button" class="btn btn-nunu w-100" id="setPwBtn">발급하기</button>
+			        </div>
+			    </div>
+
+   		 </div>
+    </div>
 				<!--  비밀번호 설정은 임시비밀번호로 바꾸기...  -->
 				<!-- Modal --> <!-- data-toggle="modal" data-target="#moreModal" -->
 		<div class="modal fade" id="moreModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -97,7 +73,6 @@
 		    </div>
 		  </div>
 		</div>
-				
 		<div class="modal fade" id="moreModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
@@ -108,7 +83,7 @@
 						<div class="border pwAlert d-flex justify-content-center align-items-center">
 							<div>
 								<span class="text-success font-weight-bold getEmail">aaaa@bbb.com</span>
-								<span> 으로 메일이 발송되었습니다</h6>
+								<span> 으로 메일이 발송되었습니다</span>
 							</div>
 						</div>
 					</div>
@@ -118,27 +93,6 @@
 		    </div>
 		  </div>
 		</div>
-				
-				
-				<!-- 
-				<div class="col-4 border">
-					<div class="my-4">
-						<span>고객님이 설정하신 비밀번호는 </span>
-						<span class="text-success font-weight-bold">00000</span>
-						<span>입니다</span>
-					</div>
-					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
-				</div>
-				 -->
-				
-				
-				
-				
-				
-		</div>
-	
-	
-	
 	
 		</section>
 		
@@ -160,9 +114,58 @@
 		        }
 		        return false;	// 둘 다 만족 안하면 false
 		    }
+			 
+			 
+			 function toggleAccordion(btnId,targetId){
+				 $(btnId).on("click", function() {
+	           		 const $target = $(targetId);
+			 
+	           	// 이미 열려있는 경우 -> 닫기
+	                 if (!$target.hasClass('d-none')) {
+	                     $target.slideUp(300, function() {
+	                         $(this).addClass('d-none');
+	                     });
+	                     $(this).removeClass('active');
+	                 } 
+	                 // 닫혀있는 경우 -> 열기
+	                 else {
+	                     // (선택사항) 다른 게 열려있으면 닫고 싶을 때 아래 주석 해제
+	                     // $(".accordion-content").not($target).slideUp(300).addClass('d-none');
+	                     // $(".btn-accordion").not($(this)).removeClass('active');
+
+	                     $target.hide().removeClass('d-none').slideDown(300);
+	                     $(this).addClass('active');
+	                     $target.find("input").prop("disabled", false);
+	                 }
+	             });
+	           		 
+	           		 
+			 }
+			 
+			 
+			 
 			
+		 // 탭 전환 이벤트
+		    $('#tabId').on('click', function() {
+		        $(this).addClass('active');
+		        $('#tabPw').removeClass('active');
+		        $('#sectionId').removeClass('d-none');
+		        $('#sectionPw').addClass('d-none');
+		    });
+
+		    $('#tabPw').on('click', function() {
+		        $(this).addClass('active');
+		        $('#tabId').removeClass('active');
+		        $('#sectionPw').removeClass('d-none');
+		        $('#sectionId').addClass('d-none');
+		    });
+		    
+		    
+		    toggleAccordion("#findUserbyEmailBtn", "#findbyEmail");
+		    toggleAccordion("#findUserbyPhoneBtn", "#findbyPhone");
+		    toggleAccordion("#newSetPwBtn", "#updatePw");
 			
-			
+		 /*   
 			$("#findUserbyEmailBtn").on("click",function(){
 				$("#findbyEmail").removeClass("d-none").find("input").prop("disabled", false);
 				$("#findbyPhone").addClass("d-none").find("input").prop("disabled", true);
@@ -180,7 +183,7 @@
 
 			});
 			 
-			 
+		*/	 
 			
 			$(".findBtn").on("click",function(){
 
