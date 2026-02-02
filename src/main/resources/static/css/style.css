@@ -756,6 +756,48 @@ color: #7CC491;
 }
 
 
+.chk-container input {
+    display: none;
+}
+
+.checkmark {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    background-color: #fff;
+}
+
+.chk-container input:checked + .checkmark {
+    background-color: #7CC491; 
+    border-color: #7CC491;
+}
+
+/* 체크 표시 (흰색 'V') */
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.chk-container input:checked + .checkmark:after {
+    display: block;
+}
+
+
+
+
 footer{
 	color:#797979;
 	height:60px;
