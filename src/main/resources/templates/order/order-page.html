@@ -432,20 +432,40 @@
 						,"merchantUid" : rsp.merchant_uid
 						,"orderItemName" : orderName
 					}
-					,success:function(response){
+				
+				
+				
+				// ... 결제 요청 코드 ...
+				,success: function(response) {
+				    if (response.result == "success") {
+				        console.log("결제 결과 객체(rsp):", rsp); // 여기서 값을 확인
+				        alert("카드사: " + rsp.card_name + ", 결제수단: " + rsp.pay_method);
+				        
+				        // 페이지 이동을 잠시 막아서 콘솔을 확인합니다.
+				        // location.href = "/nunubooks/order/order/complete?merchantUid=" + rsp.merchant_uid;
+				    } else {
+				        alert("주문 실패");
+				    }
+				}
+				
+				
+				
+				
+				
+//					,success:function(response){
 
-						if(response.result == "success"){
+//						if(response.result == "success"){
 
 //							alert("결제 성공")
 
-							location.href="/nunubooks/order/order/complete?merchantUid=" +rsp.merchant_uid;
-						} else {
-							alert("주문 실패" + rsp.error_msg)
-						}
-					}
-					,error:function(){
-					alert("주문 오류")
-					}
+//							location.href="/nunubooks/order/order/complete?merchantUid=" +rsp.merchant_uid;
+//						} else {
+//							alert("주문 실패" + rsp.error_msg)
+//						}
+//					}
+//					,error:function(){
+//					alert("주문 오류")
+//					}
 				    			
 				
 				    	});  		//$.ajax({

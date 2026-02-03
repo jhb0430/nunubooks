@@ -18,6 +18,9 @@
 					</div>
 				
 				</div>
+				
+				
+				
 				 -->
 				
 					<div class="border main-box mt-4" >
@@ -28,11 +31,13 @@
 							<div th:each="newBook : ${newBook.item}">
 								<div class="ml-3 main-bookbox">
 									<div>
-										<img th:src="${newBook.cover}" class="main-img">
+									 	<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|">
+											<img th:src="${newBook.cover}" class="main-img">
+										</a>
 									</div>
 									<div class="main-info mt-2">
-										<h5 class="font-weight-bold main-title-info" th:utext="${newBook.title}">
-											<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark">책이름</a>
+										<h5 class="font-weight-bold main-title-info">
+											<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark" th:utext="${newBook.title}">책이름</a>
 										</h5>
 										<div class="main-pub-info mt-1">
 											<div class="author-text" th:text="${newBook.author}">작가 이름</div>
@@ -51,11 +56,13 @@
 							<div th:each="best : ${best.item}">
 								<div  class="ml-3 main-bookbox ">
 									<div>
-										<img th:src="${best.cover}" class="main-img">
+										<a th:href="|/nunubooks/product?itemId=${best.itemId}|">
+											<img th:src="${best.cover}" class="main-img">
+										</a>
 									</div>
 									<div class="main-info mt-2">
-										<h5 class="font-weight-bold main-title-info" th:utext="${best.title}">
-											<a th:href="|/nunubooks/product?itemId=${best.itemId}|" class="text-dark">책이름</a>
+										<h5 class="font-weight-bold main-title-info">
+											<a th:href="|/nunubooks/product?itemId=${best.itemId}|" class="text-dark" th:utext="${best.title}">책이름</a>
 										</h5>
 										<div class="main-pub-info mt-1">
 										<span class="author-text" th:text="${best.author}">작가 이름</span>
@@ -74,11 +81,13 @@
 								<div th:each="special : ${special.item}">
 									<div  class="ml-3 main-bookbox">
 									<div>
-										<img th:src="${special.cover}" class="main-img">
+										<a th:href="|/nunubooks/product?itemId=${special.itemId}|">
+											<img th:src="${special.cover}" class="main-img">
+											</a>
 									</div>
 									<div class="main-info mt-2">
-										<h5 class="font-weight-bold main-title-info" th:utext="${special.title}">
-											<a th:href="|/nunubooks/product?itemId=${special.itemId}|" class="text-dark">책이름</a>
+										<h5 class="font-weight-bold main-title-info">
+											<a th:href="|/nunubooks/product?itemId=${special.itemId}|" class="text-dark" th:utext="${special.title}">책이름</a>
 										</h5>
 										<div class="main-pub-info mt-1">
 										<span class="author-text" th:text="${special.author}">작가 이름</span>
