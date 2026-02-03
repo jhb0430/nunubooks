@@ -85,6 +85,9 @@ public class OrderService {
 	}
 
 		
+	
+	// 여러가지 db가 업데이트 되는 메서드기 때문에 트랜잭션 처리 해줘야한다
+	@Transactional
 	public boolean addOrder(
 			int userId
 			,String name
@@ -154,7 +157,14 @@ public class OrderService {
 		return true;
 		
 		} catch(Exception e) {
-			return false;
+			
+			e.printStackTrace();
+//			return false; 
+			// throw 안해주면 실패해도 try-catch처리해줘서 그냥 처리해버림
+			
+			throw new RuntimeException("주문 처리 중 오류 ",e);
+			
+			
 		}
 		
 	}
