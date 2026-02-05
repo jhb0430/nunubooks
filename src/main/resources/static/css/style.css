@@ -709,7 +709,7 @@ color: #7CC491;
 	width: 120px;  
     flex-shrink: 0; 
 }
-
+/*
 .pageNum-now{
 	width:20px;
 	height:20px;
@@ -740,6 +740,54 @@ color: #7CC491;
 	text-align: center;
 	margin-right:4px;
 }
+
+
+*/
+
+
+.pageNum,
+.pageNum-now {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 25%;        /* 살짝 각진 네모 */
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+/* 기본 페이지 */
+.pageNum {
+    background-color: #FFFFFF;
+    color: #1F7B3B;
+    border: 1px solid #7CC491;
+}
+
+/* 현재 페이지 */
+.pageNum-now {
+    background-color: #7CC491;
+    color: #FFFFFF;
+    border: 1px solid #7CC491;
+}
+
+.pageNum a,
+.pageNum-now a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.pageNum:hover:not(.pageNum-now) {
+    background-color: #F4FFF8;
+}
+
 
 .outline{
 	border:solid 1px #E7E5E5;

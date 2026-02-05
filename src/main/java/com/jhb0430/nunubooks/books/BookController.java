@@ -152,7 +152,7 @@ public class BookController {
 //		 int offset = (page - 1) * maxResults; // 검색 결과에서 시작하는 인덱스 계산
 
 		 
-		 BookDTO bookDTO = bookService.fetchBooks(query,mallType,maxResults, page + 1,outofStockfilter);
+		 BookDTO bookDTO = bookService.fetchBooks(query,mallType,maxResults, page,outofStockfilter);
 		 model.addAttribute("books",bookDTO);
 		 model.addAttribute("query",query);
 		 model.addAttribute("searchTarget",mallType);
