@@ -64,6 +64,7 @@ public class BookController {
 					,@RequestParam(value = "mallType", defaultValue = "Book") String mallType
 					,@RequestParam(value="maxResults" , defaultValue = "10") int maxResults
 					,@RequestParam(value="outofStockfilter" , defaultValue = "0") int outofStockfilter
+					,@RequestParam(value = "start", defaultValue = "1") int start
 					,@RequestParam(value = "year", required = false) Integer year
 				    ,@RequestParam(value = "month", required = false) Integer month
 				    ,@RequestParam(value = "week", required = false) Integer week
@@ -94,20 +95,21 @@ public class BookController {
 		    }
 		    
 		    
-		    
+		    int page = start; // start가 페이지 번호이므로 그대로 사용
 		    
 		    model.addAttribute("nowYear",year);
 		    model.addAttribute("nowMonth",month);
 		    model.addAttribute("nowWeek",week);
 		
 		
-		 BookDTO bookDTO = bookService.bestSeller(queryType, mallType, maxResults, outofStockfilter, year, month, week);
+		 BookDTO bookDTO = bookService.bestSeller(queryType, mallType, maxResults, outofStockfilter, start,year, month, week);
 			 model.addAttribute("seller",bookDTO);
 			 
 			 model.addAttribute("maxResults",maxResults);
 			 model.addAttribute("mallType",mallType);
 			 model.addAttribute("queryType",queryType);
 			 model.addAttribute("outofStock",outofStockfilter);
+			 model.addAttribute("page", page); 
 			
 		
 		return "books/best-seller";

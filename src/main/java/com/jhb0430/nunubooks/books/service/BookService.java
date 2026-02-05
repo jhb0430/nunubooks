@@ -84,6 +84,7 @@ public class BookService {
 			,String mallType
 			,int maxResults
 			,int outofStockfilter 
+			,int start
 			,int year
 			,int month
 			,int week
@@ -110,7 +111,7 @@ public class BookService {
 						.queryParam("Month",month)
 						.queryParam("Week",week)
 //						.queryParam("SearchTarget","Book")
-						.queryParam("start",1)
+						.queryParam("start",start)
 						.queryParam("outofStockfilter",outofStockfilter)
 						.queryParam("output","js")
 						.queryParam("Version","20131101")
