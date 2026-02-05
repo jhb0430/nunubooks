@@ -22,6 +22,7 @@
 				        <div class="find-tab" id="tabPw">비밀번호 찾기</div>
 				    </div>
 					<div id="sectionId">
+					<p class="text-muted small mb-3">가입 시 등록한 정보를 입력해주세요</p>
 				        <button type="button" class="btn-accordion"  id="findUserbyEmailBtn">
 				            이메일로 찾기
 				        </button>
@@ -42,6 +43,7 @@
    					</div>
 
 			    <div id="sectionPw" class="d-none">
+			    <p class="text-muted small mb-3"style="font-size: 0.8rem; letter-spacing: -0.1px; white-space: nowrap;">※ 직접 조회 불가 안내: 본인 확인 후 임시 비밀번호가 메일로 발송됩니다.</p>
 			        <button type="button" class="btn-accordion"  id="newSetPwBtn">
 			            임시 비밀번호 발급 받기
 			        </button>
@@ -67,9 +69,11 @@
 						<span class="text-success font-weight-bold getloginId">00000</span>
 						<span>입니다</span>
 					</div>
-					<a href="/nunubooks/account/login" class="btn btn-outline-secondary mb-4">로그인</a>
-				</div>
-		      
+					<div class="d-flex justify-content-center align-items-center my-3">
+						<a href="/nunubooks/account/login" class="btn btn-outline-secondary">로그인</a>
+						<div class="btn btn-outline-secondary ml-4" data-dismiss="modal">닫기</div>
+					</div>
+			</div>      
 		    </div>
 		  </div>
 		</div>
@@ -87,7 +91,10 @@
 							</div>
 						</div>
 					</div>
-					<a href="/nunubooks/account/login" class="btn btn-outline-secondary my-3">로그인</a>
+					<div class="d-flex justify-content-center align-items-center my-3">
+						<a href="/nunubooks/account/login" class="btn btn-outline-secondary">로그인</a>
+						<div class="btn btn-outline-secondary ml-4" data-dismiss="modal">닫기</div>
+					</div>
 				</div>
 		      
 		    </div>
@@ -99,6 +106,44 @@
 		<script layout:fragment="script">
 		
 		$(document).ready(function(){
+
+			
+			
+			function maskingInfo(str) {
+			    if (!str) return "";
+
+			    //이메일인
+			    if (str.includes('@')) {
+			    	let [id, domain] = str.split('@');
+			    	let lastDotIdx = domain.lastIndexOf('.');
+			        let site = domain.substring(0, lastDotIdx);
+			        let extension = domain.substring(lastDotIdx); //
+			        
+			        // 아이디 앞 3글자 + *** + 마지막 1글자
+			        let maskedId = id;
+			        if (id.length >=3) {
+			            maskedId = id.substring(0, 2) + "*".repeat(id.length - 3) + id.slice(-1);
+			        }
+
+			        // nunubooks -> nu***ks
+			        let maskedSite = site;
+			        if (site.length >= 5) { // 최소 5글자는 되어야 중간을 가림
+			            maskedSite = site.substring(0, 2) + "*".repeat(site.length - 4) + site.slice(-2);
+			        } else if (site.length > 2) { // 짧은 경우(예: abc)는 앞 2글자만 노출
+			            maskedSite = site.substring(0, 2) + "*".repeat(site.length - 2);
+			        }
+
+			        return maskedId + "@" + maskedSite + extension;
+			    }
+
+			    // 일반 아이디인 경우앞 3글자 + *** + 마지막 1글자
+			    if (str.length > 3) {
+			        return str.substring(0, 2) + "*".repeat(str.length - 3) + str.slice(-1);
+			    }
+
+			    return str; 
+			}
+			
 
 			// 비밀번호 찾기 -> 버튼을 누르면 비밀번호 새로 설정할 수 있게 해야함...냅다 비번 알려주면 x 
 			
@@ -228,8 +273,12 @@
 					,success:function(response){
 
 						if(response.result=="success"){
-							$("#moreModal1").modal("show");
-							$("#moreModal1 .getloginId").text(response.loginId);
+							let maskedId = maskingInfo(response.loginId);
+							
+							$("#moreModal1").modal({
+							    backdrop: 'static'
+							}).modal("show");
+							$("#moreModal1 .getloginId").text(maskedId);
 					    } else {
 					        alert("회원 정보가 없습니다. 다시 시도해주세요.");
 					    }
@@ -273,8 +322,13 @@
 					,success:function(response){
 
 						if(response.result){
-							$("#moreModal2").modal("show");
-							$("#moreModal2 .getEmail").text(email);
+							let maskedEmail = maskingInfo(email);
+							
+							$("#moreModal2").modal({
+							    backdrop: 'static'
+							}).modal("show");
+				//			$("#moreModal2").modal("show");
+							$("#moreModal2 .getEmail").text(maskedEmail);
 					    } else {
 					        alert("회원 정보가 없습니다. 다시 시도해주세요.");
 					    }
