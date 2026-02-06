@@ -3,17 +3,16 @@
 
 #wrap{
 	/*
+	1rem = 16px
+	
 	height:1000px;
 	*/
-	width:1400px;
-	max-width: 100%;
+	width: 100%;
+    max-width: 1400px;
 	margin: 0 auto;
 	overflow: hidden;
 }
 
-/* <uniquifier>: Use a unique and descriptive class name
- <weight>: Use a value from 100 to 900
-*/
 .noto-sans-kr {
   font-family: "Noto Sans KR", serif;
   font-optical-sizing: auto;
@@ -36,41 +35,38 @@ header{
 }
 
 .logo{
-width: 300px;
-height: 100px;
+	width: 300px;
+	height: 100px;
 
+	font-family: 'Black Han Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 4.5rem;   /* 72px */
+	line-height: 5rem;   /* 80px */
+	align-items: center;
+	text-align: center;
 
-
-font-family: 'Black Han Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 72px;
-line-height: 80px;
-align-items: center;
-text-align: center;
-
-color: #7CC491;
--webkit-text-stroke-width: 3px;
--webkit-text-stroke-color: #1F7B3B;
-
-
-	
+	color: #7CC491;
+	-webkit-text-stroke-width: 3px;
+	-webkit-text-stroke-color: #1F7B3B;
 }
-.logo-sm{
-width: 230px;
-height: 90px;
 
-font-family: 'Black Han Sans';
-font-style: normal;
-font-weight: 450;
-font-size: 56px;
-line-height: 90px;
-align-items: center;
-text-align: center;
-color: #7CC491;
--webkit-text-stroke-width: 3px;
--webkit-text-stroke-color: #1F7B3B;
-opacity:30%;
+
+.logo-sm{
+	width: 230px;
+	height: 90px;
+
+	font-family: 'Black Han Sans';
+	font-style: normal;
+	font-weight: 450;
+	font-size: 3.5rem;     /* 56px */
+	line-height: 5.625rem; /* 90px */
+	align-items: center;
+	text-align: center;
+	color: #7CC491;
+	-webkit-text-stroke-width: 3px;
+	-webkit-text-stroke-color: #1F7B3B;
+	opacity:30%;
 
 	
 }
@@ -85,7 +81,7 @@ opacity:30%;
     height: 280px;             /* 원하는 높이 설정 */
     overflow-y: auto;          /* 내용이 길면 스크롤 생성 */
     padding: 15px;
-    font-size: 15px;
+    font-size: 0.9375rem;      /* 15px */
     line-height: 1.6;
     color: #333;
     /* 텍스트 내 줄바꿈(\n)을 화면에 그대로 반영 */
@@ -117,7 +113,7 @@ opacity:30%;
     padding-right: 20px;         /* 텍스트와 우측 경계 사이 간격 */
     text-align: left;           /* 왼쪽 정렬 */
     vertical-align: middle;
-    font-size: 16px;
+    font-size: 1rem;            /* 16px */
     color: #333;
 }
 
@@ -183,7 +179,7 @@ opacity:30%;
 .login-input-box .logo {
     width: 100% !important;
     height: auto !important;
-    font-size: 58px !important;
+    font-size: 3.625rem !important; /* 58px */
     display: flex;
     justify-content: center; /* 가로 중앙 */
     align-items: center;    /* 세로 중앙 */
@@ -194,12 +190,12 @@ opacity:30%;
 .login-input-box .form-control {
     height: 55px; /* 높이를 키워 시원하게 */
     margin-top: 15px !important;
-    font-size: 16px;
+    font-size: 1rem;  /* 16px */
 }
 
 .loginBtn {
     height: 55px;
-    font-size: 18px;
+    font-size: 1.125rem; /* 18px */
     font-weight: bold;
     color:#fff !important;
     background-color: #7CC491;
@@ -247,7 +243,7 @@ opacity:30%;
     display: flex;
     justify-content: space-between; /* 텍스트는 왼쪽, 화살표는 오른쪽 */
     align-items: center;
-    font-size: 16px;
+    font-size: 1rem;   /* 16px */
     font-weight: 500;
     color: #333;
     transition: 0.2s;
@@ -260,7 +256,7 @@ opacity:30%;
 
 .btn-accordion::after {
     content: '▼'; /* 화살표 아이콘 대신 사용 */
-    font-size: 15px;
+    font-size: 0.9375rem; /* 15px */
     color: #999;
 }
 
@@ -356,38 +352,9 @@ color: #7CC491;
 	background-color : #FEF9F9"
 }
 
-/*
-.banner {
-	
-	width:1400px;
-	height:320px;
-}
-
-.banner-image {
-	height:300px;
-	object-fit: cover;
-	border-radius: 15px;
-	z-index:3;
-}
-
-.image-text {
-	width:300px;
-	word-break:keep-all;
-	position: absolute;
-	z-index:1;
-	color:white;
-	font-weight:bold;
-	font-size:38px;
-}
-*/
 
 .main-box{
-	/* width: 1200px;
-  overflow: scroll;
-   /* 가로 스크롤 
-  overflow: auto;
-  white-space: nowrap;
- */ 
+
   	width: 100%;       /* 부모 너비에 맞춤 */
     max-width: 1400px;
     margin: 0 auto;
@@ -421,9 +388,7 @@ color: #7CC491;
 	align-items: center;
 }
 .main-title-info{
-	/*
-	width: 150px;
-	 height:72px; */
+	
 	width: 150px;
 	height: 3rem;       /* 2줄 분량의 높이 고정 (폰트 사이즈에 맞춰 조절) */
 	overflow:hidden;
@@ -753,7 +718,7 @@ color: #7CC491;
     width: 26px;
     height: 26px;
     border-radius: 25%;        /* 살짝 각진 네모 */
-    font-size: 13px;
+    font-size: 0.8125rem;      /* 13px */
     font-weight: 600;
     margin-right: 6px;
     cursor: pointer;
