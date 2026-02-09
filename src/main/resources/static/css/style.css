@@ -353,27 +353,49 @@ color: #7CC491;
 }
 
 
-.main-box{
+.signup-banner {
+    background-color: #F4FFF8;       
+    border: 1px solid #E7E5E5;
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+}
 
+.signup-badge {
+    background-color: #7CC491;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+}
+
+.signup-text strong {
+    color: #1F7B3B;              
+}
+
+
+
+.main-box{
   	width: 100%;       /* 부모 너비에 맞춤 */
     max-width: 1400px;
     margin: 0 auto;
-    overflow-x: auto;  /* 가로 스크롤 허용 */
+	/*
+  overflow: scroll;
+  overflow: auto;
+   /* 가로 스크롤  허용
+  white-space: nowrap;
+    overflow-x: auto; 
     overflow-y: hidden;
      white-space: nowrap;
+ */ 
 }
 
-.main-bookbox{
-	width: 190px;
-	height: auto;           /* 내용물에 맞게 자동으로 조절 */
-    min-height: 375px;      /* 최소 높이만 살짝 지정 */
-	display: inline-block;
-	white-space: normal;   /* 여기서 다시 줄바꿈이 가능하도록 설정 (제목 등) */
-    vertical-align: top;   /* 박스들의 높낮이 정렬 유지 */
-    margin-left: 1rem;
-    padding-bottom: 20px;   /* 아래쪽 테두리와의 여백 확보 */
-	
+.main-list-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 0.5rem;
 }
+
 
 .main-img{
 	width: 100%;
