@@ -8,7 +8,7 @@
 		<section layout:fragment="contents" class="container">
 			<div class=" contents">
 				<div>
-					<div  class="d-flex justify-content-between my-3">
+					<div  class="d-flex justify-content-between mt-3 mb-4">
 						<h2 class="font-weight-bold" >주문/결제</h2>
 						
 						<div class="d-flex">
@@ -36,7 +36,7 @@
 			<div class="d-flex"><!--주문정보- 배송정보 전체 묶는 div-->
 
 			<div> <!--  배송정보, 주문상품 묶는 div -->
-				<div class="border rounded order-box p-1"> <!--  주문자 정보 -->
+				<div class="border rounded order-box p-1 px-3"> <!--  주문자 정보 -->
 				<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 			
 					<h4 class="font-weight-bold my-3 ">배송지 정보</h4>
@@ -76,7 +76,7 @@
 				</div>
 				
 				
-				<div class="border rounded order-box p-1 mt-4"> <!--  결제 정보 -->
+				<div class="border rounded order-box p-1 mt-4 px-3"> <!--  결제 정보 -->
 					<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 						<div class="border-bottom">
 							<h5 class="font-weight-bold my-3">결제수단</h5>
@@ -143,7 +143,7 @@
 				</div>
 				
 				
-				<div class="border rounded order-box p-1 mt-4"> <!--  주문하려는 책 정보 -->
+				<div class="border rounded order-box p-1 mt-4 px-3"> <!--  주문하려는 책 정보 -->
 				<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 					<h4 class="font-weight-bold my-3" th:text="|주문 상품 (${orderDTO.totalDTO.cartCount})|">주문 상품 (0)</h4>
 					<!-- 
@@ -181,7 +181,7 @@
 						
 			</div><!--  배송정보, 주문상품 묶는 div -->
 						
-					<div class="col-3 border p-2 cart-total-price ml-1"><!--  결제금액 정보 -->
+					<div class="border p-3 cart-total-price ml-3"><!--  결제금액 정보 -->
 						
 						<table class="table table-borderless">
 							<tr>
@@ -211,7 +211,7 @@
 							</tr>
 						</table>
 							<button type="button" class="btn btn-primary my-3 w-100" id="orderBtn">결제하기</button>
-							<button type="button" class="btn btn-primary my-3 w-100">수령 매장 선택</button>
+							<button type="button" class="btn btn-outline-primary my-2 w-100">수령 매장 선택</button>
 							<!-- 
 						<button type="button" class="btn btn-primary my-3 w-100">이전 화면으로</button>
 							 -->
