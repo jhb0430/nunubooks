@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -28,6 +29,8 @@ public class CartService {
 	@Autowired
 	WebClient.Builder webClientBuilder;
 	
+	 @Value("${aladin.api.ttbkey}")
+	    private String ttbKey;
 	
 	public CartService(CartRepository cartRepository,UserService userService) {
 		this.cartRepository = cartRepository;
@@ -43,7 +46,6 @@ public class CartService {
 	public boolean insertCart(int itemId, int quantity, int userId) {
 		
 //		quantity = 1;
-//		Cart cart = cartRepository.findByItemId(itemId,userId);
 		try {
 			Cart cart = cartRepository.findByItemIdAndUserId(itemId,userId);
 			
@@ -68,42 +70,7 @@ public class CartService {
 		
 	}
 	
-/*	
-	public boolean addCart(int itemId, int quantity, int userId) {
-		
-		quantity = 1;
-		
-		Cart cart = Cart.builder()
-				.itemId(itemId)
-				.userId(userId)
-				.quantity(quantity)
-				.build();
-		
-		
-		
-		try {
 	
-//			if(itemId == cart.getItemId()) {
-//				cart = cart.toBuilder().quantity(quantity).build();
-//				cart = cartRepository.save(cart);
-//			} else {
-			cartRepository.save(cart);
-//			}
-				
-			return true;
-		} catch(Exception e) {
-			return false;
-		}
-		
-		// itemId가 같으면 기존 항목의 quantity++;
-//		if(itemId == cart.getItemId()) {
-//			quantity++;
-//		}
-		
-		
-	}
-	
-	*/
 	
 	
 	// 장바구니 리스트 출력
@@ -154,7 +121,7 @@ public class CartService {
 						.scheme("https")
 						.host("www.aladin.co.kr")
 						.path("/ttb/api/ItemLookUp.aspx")
-						.queryParam("ttbkey","ttbleky22241703001")
+						.queryParam("ttbkey",ttbKey)
 						.queryParam("itemIdType","itemId")
 						.queryParam("itemId",itemId)
 						.queryParam("Cover","Mid")
