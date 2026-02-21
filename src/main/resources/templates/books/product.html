@@ -8,13 +8,15 @@
 		<section layout:fragment="contents" class="contents">
 			
 		
-		<div class="container">
+		<div >
 				<div class="my-4" th:with="item =${book.item[0]}">
 					<div class="border-bottom">
-						<h3 class="font-weight-bold" th:text="${item.title}">책 제목</h3>
-						<span th:text="${item.author}" class="font-weight-bold">김솨솨(지은이)</span>
-						<span th:text="${item.publisher}">어쩌구출판</span>
-						<span th:text="${item.pubDate}">2025-01-01</span>
+						<h3 class="font-weight-bold" th:utext="${item.title}">책 제목</h3>
+						<div class="my-4 d-flex">
+							<div th:text="${item.author}" class="font-weight-bold">김솨솨(지은이)</div>
+							<div th:text="${item.publisher}" class="mx-3" >어쩌구출판</div>
+							<div th:text="${item.pubDate}">2025-01-01</div>
+						</div>
 						
 					</div>
 					
@@ -28,9 +30,14 @@
 								<th>가격</th>
 								<td>
 									<div class="d-flex align-items-center"> <!--  가격정보 -->
-										<h3 class="font-weight-bold mx-2" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">13,500원</h3>
-										<del><h6 th:text="|${#numbers.formatInteger(item.priceStandard, 3, 'COMMA')} 원|">18,000원</h6></del>
-										<h5 class="menu-text font-weight-bold mx-2">(10%)</h5>
+										<div class="mr-2">
+											<h3 class="font-weight-bold" th:text="|${#numbers.formatInteger(item.priceSales, 3, 'COMMA')} 원|">13,500원</h3>
+										</div>
+										<div>
+											<del>
+											<h6 th:text="|${#numbers.formatInteger(item.priceStandard, 3, 'COMMA')} 원|">18,000원</h6></del>
+										</div>
+										<h5 class="menu-text font-weight-bold mx-2" th:text="|(${item.discount}%)|">(10%)</h5>
 									</div> 
 								</td>
 							</tr>
@@ -54,7 +61,7 @@
 					
 					<!--  책정보 -->
 					
-						<div class=" ml-3">
+						<div class=" ml-3" style="height:100px;">
 <!--					<div class="my-4"> 
 							<div>
 								작가 소개

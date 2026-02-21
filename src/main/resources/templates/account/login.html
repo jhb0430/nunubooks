@@ -2,16 +2,53 @@
 <html lang="ko" 
     xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-     layout:decorate="~{layout/default}">
+     layout:decorate="~{layout/default2}">
      
 
-		<section layout:fragment="contents" class="d-flex justify-content-center">
+		<section layout:fragment="contents" class="contents">
 		
-			<div class="contents">
+			<div class="login-page-container">
+				<div class="login-input-box">
+			
+					<div class="logo">
+						<a href="/nunubooks/main" >누누북스</a>
+					</div>
+					
+					<div>
+						<input type="text" class="form-control mt-3" placeholder="아이디" id="idInput">
+						<input type="password" class="form-control mt-3" placeholder="비밀번호" id="passwordInput">
+						<div class="mt-3 d-flex justify-content-between">
+							<label><input type="checkbox" checked>아이디 저장</label>
+							<label class="ml-3"><input type="checkbox" checked>로그인 상태 유지</label>
+						</div>
+						<button type="button" class="btn  w-100 mt-4 loginBtn" id="loginBtn">로그인</button>
+						<div class="d-flex justify-content-between m-3">
+							<div>
+								<a href="/nunubooks/account/find-account" class="text-dark mr-3">아이디 / 비밀번호 찾기</a>
+								<!-- 
+								<a href="#" class="text-dark mr-3">아이디 찾기</a>
+								<a href="#" class="text-dark">비밀번호 찾기</a>
+								 -->
+							</div>
+							<a href="/nunubooks/account/sign-up" class="text-dark mr-3">회원가입</a>
+						</div>
+					</div>
+				</div>
 			
 			
-			<div class="input-box mb-4"> <!--  로그인 box 전체 div -->
 			
+			
+
+			</div>
+		
+		</section>
+		
+<!-- 
+
+<div class="contents container m-4">
+			
+			
+			<div class="input-box mb-4"> 
 				<div class="info-btn btn-lgn border border-dark border-bottom-0  d-flex align-items-center justify-content-center">
 				회원 로그인
 				</div>
@@ -26,29 +63,17 @@
 					<div class="d-flex justify-content-between m-3">
 						<div>
 							<a href="/nunubooks/account/find-account" class="text-dark mr-3">아이디 / 비밀번호 찾기</a>
-							<!-- 
-							<a href="#" class="text-dark mr-3">아이디 찾기</a>
-							<a href="#" class="text-dark">비밀번호 찾기</a>
-							 -->
 						</div>
 					<div>
 					<a href="/nunubooks/account/sign-up" class="text-dark mr-3">회원가입</a>
 					</div>
 					</div>
 				</div>
-				<!-- 
-				<div class="text-center outline h-50">
-				간편 로그인창
-				</div>
-				 -->
 			</div>
 		
 		</div>
-		
-		
-		</section>
-		
 
+ -->
 		
 
 

@@ -18,44 +18,38 @@
 					</div>
 				
 				</div>
+				
 				 -->
+			    <div class="signup-banner d-flex align-items-center justify-content-between mt-4">
+			        <div class="d-flex align-items-center">
+			            <span class="badge badge-success mr-2 signup-badge">WELCOME</span>
+			            <span class="signup-text">
+			                누누북스 회원가입 시 <strong>3,000P</strong> 증정 ! <strong>15시 이전</strong> 주문시 당일 출고!
+			            </span>
+			        </div>
+			    </div>
 				
 					<div class="border main-box mt-4" >
-						<a href="/nunubooks/books?queryType=ItemNewAll" class="text-dark"><h2 class="font-weight-bold m-3 ">새로 나온 도서</h2></a>
-						<div class="d-flex align-items-center"> <!--  리스트 옆으로 출력시키기 위함임 -->
+						<h2 class="font-weight-bold ml-3 mt-3 mb-3 ">
+							<a href="/nunubooks/books?queryType=ItemNewAll" class="text-dark">새로 나온 도서</a>
+							
+						</h2>
+						
+						<div class="d-flex align-items-center main-list-scroll mt-2"> <!--  리스트 옆으로 출력시키기 위함임 -->
 							<div th:each="newBook : ${newBook.item}">
 								<div class="ml-3 main-bookbox">
 									<div>
-										<img th:src="${newBook.cover}" class="main-img">
-									</div>
-									<div class="main-info mt-2">
-									<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark main-title-info">
-										<h5 class="font-weight-bold" th:text="${newBook.title}">책이름</h5>
-									</a>
-									<div class="main-pub-info mt-1">
-									<div th:text="${newBook.author}">작가 이름</div>
-									<div th:text="${newBook.publisher}">출판사 이름</div>
-									</div>
-								</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="border main-box mt-4">
-						<a href="/nunubooks/books?queryType=Bestseller" class="text-dark"><h2 class="font-weight-bold m-3">베스트셀러</h2></a>
-						<div class="d-flex " > <!--  리스트 옆으로 출력시키기 위함임 -->
-							<div th:each="best : ${best.item}">
-								<div  class="ml-3 main-bookbox ">
-									<div>
-										<img th:src="${best.cover}" class="main-img">
-									</div>
-									<div class="main-info mt-2">
-										<a th:href="|/nunubooks/product?itemId=${best.itemId}|" class="text-dark main-title-info">
-											<h5 class="font-weight-bold" th:text="${best.title}">책이름</h5>
+									 	<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|">
+											<img th:src="${newBook.cover}" class="main-img">
 										</a>
+									</div>
+									<div class="main-info mt-2">
+										<h5 class="font-weight-bold main-title-info">
+											<a th:href="|/nunubooks/product?itemId=${newBook.itemId}|" class="text-dark" th:utext="${newBook.title}">책이름</a>
+										</h5>
 										<div class="main-pub-info mt-1">
-										<span th:text="${best.author}">작가 이름</span>
-										<span th:text="${best.publisher}">출판사 이름</span>
+											<div class="author-text" th:text="${newBook.author}">작가 이름</div>
+											<div class="publisher-text" th:text="${newBook.publisher}">출판사 이름</div>
 										</div>
 									</div>
 								</div>
@@ -63,20 +57,49 @@
 						</div>
 					</div>
 					<div class="border main-box mt-4">
-						<a href="/nunubooks/books?queryType=ItemNewSpecial" class="text-dark"><h2 class="font-weight-bold m-3">화제의 신간</h2></a>
-							<div class="d-flex"> <!--  리스트 옆으로 출력시키기 위함임 -->
+						<h2 class="font-weight-bold m-3">
+							<a href="/nunubooks/books?queryType=Bestseller" class="text-dark">베스트셀러</a>
+						</h2>
+						<div class="d-flex main-list-scroll mt-2" > <!--  리스트 옆으로 출력시키기 위함임 -->
+							<div th:each="best : ${best.item}">
+								<div  class="ml-3 main-bookbox ">
+									<div>
+										<a th:href="|/nunubooks/product?itemId=${best.itemId}|">
+											<img th:src="${best.cover}" class="main-img">
+										</a>
+									</div>
+									<div class="main-info mt-2">
+										<h5 class="font-weight-bold main-title-info">
+											<a th:href="|/nunubooks/product?itemId=${best.itemId}|" class="text-dark" th:utext="${best.title}">책이름</a>
+										</h5>
+										<div class="main-pub-info mt-1">
+										<span class="author-text" th:text="${best.author}">작가 이름</span>
+										<span class="publisher-text" th:text="${best.publisher}">출판사 이름</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="border main-box mt-4">
+						<h2 class="font-weight-bold m-3">
+							<a href="/nunubooks/books?queryType=ItemNewSpecial" class="text-dark">화제의 신간</a>
+						</h2>
+							<div class="d-flex main-list-scroll mt-2"> <!--  리스트 옆으로 출력시키기 위함임 -->
 								<div th:each="special : ${special.item}">
 									<div  class="ml-3 main-bookbox">
 									<div>
-										<img th:src="${special.cover}" class="main-img">
+										<a th:href="|/nunubooks/product?itemId=${special.itemId}|">
+											<img th:src="${special.cover}" class="main-img">
+											</a>
 									</div>
 									<div class="main-info mt-2">
-										<a th:href="|/nunubooks/product?itemId=${special.itemId}|" class="text-dark main-title-info">
-											<h5 class="font-weight-bold" th:text="${special.title}">책이름</h5>
-										</a>
+										<h5 class="font-weight-bold main-title-info">
+											<a th:href="|/nunubooks/product?itemId=${special.itemId}|" class="text-dark" th:utext="${special.title}">책이름</a>
+										</h5>
 										<div class="main-pub-info mt-1">
-										<span th:text="${special.author}">작가 이름</span>
-										<span th:text="${special.publisher}">출판사 이름</span>
+										<span class="author-text" th:text="${special.author}">작가 이름</span>
+										<span class="publisher-text" th:text="${special.publisher}">출판사 이름</span>
 										</div>
 									</div>
 									</div>

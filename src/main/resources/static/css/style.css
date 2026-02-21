@@ -3,15 +3,16 @@
 
 #wrap{
 	/*
-	width:1500px;
+	1rem = 16px
+	
 	height:1000px;
 	*/
+	width: 100%;
+    max-width: 1400px;
 	margin: 0 auto;
+	overflow: hidden;
 }
 
-/* <uniquifier>: Use a unique and descriptive class name
- <weight>: Use a value from 100 to 900
-*/
 .noto-sans-kr {
   font-family: "Noto Sans KR", serif;
   font-optical-sizing: auto;
@@ -29,26 +30,43 @@
 
 header{
 	height:180px;
+	max-width: 1400px;  /* 본문과 동일하게 */
+    margin: 0 auto;     /* 중앙 정렬의 핵심! */
 }
 
 .logo{
-width: 288px;
-height: 93px;
+	width: 300px;
+	height: 100px;
+
+	font-family: 'Black Han Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 4.5rem;   /* 72px */
+	line-height: 5rem;   /* 80px */
+	align-items: center;
+	text-align: center;
+
+	color: #7CC491;
+	-webkit-text-stroke-width: 3px;
+	-webkit-text-stroke-color: #1F7B3B;
+}
 
 
+.logo-sm{
+	width: 230px;
+	height: 90px;
 
-font-family: 'Black Han Sans';
-font-style: normal;
-font-weight: 400;
-font-size: 64px;
-line-height: 80px;
-align-items: center;
-text-align: center;
-
-color: #7CC491;
--webkit-text-stroke-width: 3px;
--webkit-text-stroke-color: #1F7B3B;
-
+	font-family: 'Black Han Sans';
+	font-style: normal;
+	font-weight: 450;
+	font-size: 3.5rem;     /* 56px */
+	line-height: 5.625rem; /* 90px */
+	align-items: center;
+	text-align: center;
+	color: #7CC491;
+	-webkit-text-stroke-width: 3px;
+	-webkit-text-stroke-color: #1F7B3B;
+	opacity:30%;
 
 	
 }
@@ -58,12 +76,201 @@ color: #7CC491;
   color: inherit;
 }
 
+
+.terms-box {
+    height: 280px;             /* 원하는 높이 설정 */
+    overflow-y: auto;          /* 내용이 길면 스크롤 생성 */
+    padding: 15px;
+    font-size: 0.9375rem;      /* 15px */
+    line-height: 1.6;
+    color: #333;
+    /* 텍스트 내 줄바꿈(\n)을 화면에 그대로 반영 */
+    white-space: pre-wrap;     
+    word-break: break-all;
+}
+
+.terms-box::-webkit-scrollbar {
+    width: 6px;
+}
+.terms-box::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+
+
+/* 1. 테이블 전체 설정 */
+.sign-up-table {
+    table-layout: fixed; /* 모든 열의 너비를 고정된 값으로 강제함 */
+    width: 640px !important; /* th(170) + td(450) = 620px */
+    margin-left: 0; 
+}
+
+
+/* 회원가입/정보입력 테이블 전용 스타일 */
+.sign-up-table th {
+    width: 170px !important;    /* 항목명 칸 너비 확보 */
+    padding-right: 20px;         /* 텍스트와 우측 경계 사이 간격 */
+    text-align: left;           /* 왼쪽 정렬 */
+    vertical-align: middle;
+    font-size: 1rem;            /* 16px */
+    color: #333;
+}
+
+.sign-up-table td {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    vertical-align: middle;
+   width: 450px !important;
+}
+
+.sign-up-table .form-control {
+	width: 100% !important;
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 5. 예외: 휴대전화 (3개가 나란히 딱 맞게) */
+#phoneInput1, #phoneInput2, #phoneInput3 {
+    flex: 1;
+    text-align: center;
+}
+.sign-up-table .d-flex {
+    width: 100%; /* 부모 td의 450px을 꽉 채움 */
+}
+
+
+
+/* 예외: 한 줄에 여러 요소가 있는 경우 (아이디 중복확인, 이메일 등) */
+.sign-up-table td .d-flex .form-control {
+	width: 0;
+    flex: 1; /* 남는 공간을 인풋이 다 채우도록 */
+    width: auto !important;
+}
+
+
+
+
+
+.login-page-container {
+    padding: 60px 0; /* 위아래 여백 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-input-box {
+	
+ 	width: 100%;
+    max-width: 500px; 
+    min-height: 750px;
+    background: #fff;
+    padding: 60px 50px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+    margin: 0 auto;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.login-input-box .logo {
+    width: 100% !important;
+    height: auto !important;
+    font-size: 3.625rem !important; /* 58px */
+    display: flex;
+    justify-content: center; /* 가로 중앙 */
+    align-items: center;    /* 세로 중앙 */
+    margin: 0 auto 50px auto !important; /* 아래쪽 여백만 충분히 */
+}
+
+
+.login-input-box .form-control {
+    height: 55px; /* 높이를 키워 시원하게 */
+    margin-top: 15px !important;
+    font-size: 1rem;  /* 16px */
+}
+
+.loginBtn {
+    height: 55px;
+    font-size: 1.125rem; /* 18px */
+    font-weight: bold;
+    color:#fff !important;
+    background-color: #7CC491;
+    text-decoration: none; 
+}
+
+.btn-nunu{
+    font-weight: bold;
+    color:#fff !important;
+    background-color: #7CC491;
+    text-decoration: none; 
+    -webkit-text-stroke-color: 1px #1F7B3B;
+}
+
+.find-tabs {
+    display: flex;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+.find-tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: bold;
+    color: #999;
+    transition: 0.3s;
+}
+
+.find-tab.active {
+    background-color: #7CC491;/* 누누북스 포인트 컬러로 변경 가능 */
+    color: #fff;
+}
+
+/* 아코디언 스타일 버튼 (이미지의 본인인증 수단으로 찾기 등) */
+.btn-accordion {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px; /* 이미지처럼 둥근 모서리 */
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between; /* 텍스트는 왼쪽, 화살표는 오른쪽 */
+    align-items: center;
+    font-size: 1rem;   /* 16px */
+    font-weight: 500;
+    color: #333;
+    transition: 0.2s;
+}
+
+.btn-accordion:hover {
+    background-color: #fcfcfc;
+    border-color: #bbb;
+}
+
+.btn-accordion::after {
+    content: '▼'; /* 화살표 아이콘 대신 사용 */
+    font-size: 0.9375rem; /* 15px */
+    color: #999;
+}
+
+
 .category{
-	width:170px;
+	flex: 0 0 210px; /* 늘어나지도(0), 줄어들지도(0) 말고 딱 200px 고정 */
+    width: 210px; /* 적절한 고정 너비 설정 */
 }
 .mypage{
-	height:100px;
+	min-height: 120px;
+	height: auto; 
 	align-items: center;
+	text-align: center;
+	
 }
 .pwAlert{
 	height:150px;
@@ -93,13 +300,37 @@ color: #7CC491;
 
 
 .contents{
-	width:1200px;
+/*	width:1200px;*/
+	width: 100%;       /* 고정 너비 해제 */
+    max-width: 1400px; /* 최대 너비만 제한 */
+    margin: 0 auto;    /* 중앙 정렬 */
+    padding: 40px 15px; /* 상단 여백과 좌우 최소 여백 */
+	
 }
 
+.menu-category{
+	/*width: 190px;*/
+	flex-shrink: 0; 
+	flex: 0 0 200px; /* 늘어나지도(0), 줄어들지도(0) 말고 딱 200px 고정 */
+    width: 200px; /* 적절한 고정 너비 설정 */
+}
+
+.flex-grow-1 {
+    flex: 1; 
+    min-width: 0; /* 내부 요소 때문에 레이아웃 깨지는 것 방지 */
+}
+
+.menu-category > .category-bg{
+	height:60px;
+	background-color: #6CC491;
+ 	text-align: center;
+}
 
 .menu{
 	height:60px;
 	background-color: #F4FFF8;
+	max-width: 1400px;  /* 본문과 동일하게 */
+    margin: 0 auto;     /* 중앙 정렬의 핵심! */
 }	
 .order-menu{
 	
@@ -121,44 +352,54 @@ color: #7CC491;
 	background-color : #FEF9F9"
 }
 
-/*
-.banner {
-	
-	width:1400px;
-	height:320px;
+
+.signup-banner {
+    background-color: #F4FFF8;       
+    border: 1px solid #E7E5E5;
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
 }
 
-.banner-image {
-	height:300px;
-	object-fit: cover;
-	border-radius: 15px;
-	z-index:3;
+.signup-badge {
+    background-color: #7CC491;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
 }
 
-.image-text {
-	width:300px;
-	word-break:keep-all;
-	position: absolute;
-	z-index:1;
-	color:white;
-	font-weight:bold;
-	font-size:38px;
+.signup-text strong {
+    color: #1F7B3B;              
 }
-*/
+
+
+
 .main-box{
-	width: 1200px;
+  	width: 100%;       /* 부모 너비에 맞춤 */
+    max-width: 1400px;
+    margin: 0 auto;
+	/*
   overflow: scroll;
-   /* 가로 스크롤 */
   overflow: auto;
+   /* 가로 스크롤  허용
   white-space: nowrap;
+    overflow-x: auto; 
+    overflow-y: hidden;
+     white-space: nowrap;
+ */ 
 }
 
-.main-bookbox{
-	width: 190px;
-	height:400px;
+.main-list-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 0.5rem;
 }
+
+
 .main-img{
-	width: 150px;
+	width: 100%;
+	max-width: 150px;
 	height:220px;
 	object-fit: cover;
 }
@@ -166,26 +407,58 @@ color: #7CC491;
 .main-info{
 	width: 160px;
 	height:130px;
+	align-items: center;
 }
 .main-title-info{
+	
 	width: 150px;
-	 height:72px;
+	height: 3rem;       /* 2줄 분량의 높이 고정 (폰트 사이즈에 맞춰 조절) */
 	overflow:hidden;
-	display: 
-	-webkit-box;
-    -webkit-line-clamp: 3; /* 텍스트를 3줄까지만 표시 */
+	display: -webkit-box;
+    -webkit-line-clamp: 2; /* 텍스트를 3줄까지만 표시 */
     -webkit-box-orient: vertical;
 	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
     white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
-}
-.main-pub-info{
-	width: 150px;
-	height:80px;
-	overflow:hidden;
-	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
-    white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+    line-height: 1.5rem;
+    text-decoration: none;
+    margin-bottom: 10px;
 }
 
+.main-pub-info{
+	width: 150px;
+	 display: block; 
+    margin-top: 8px;
+	/*height:80px;
+	min-height: 60px;
+	overflow:hidden;
+	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
+  /*  white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+  
+}
+.author-text {
+	width: 150px;
+    height: 2.4rem;      
+    /* 작가 이름 2줄 높이 확보 line-height 1.2rem 기준 2줄 고정 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;   /* 2줄까지만 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.2rem;
+    word-break: break-word;
+    font-size: 0.9rem;
+    color: rgb(90, 90, 90);
+    margin-bottom: 4px;      /* 출판사와의 간격 */
+}
+
+/* 출판사 이름: 깔끔하게 한 줄 처리 */
+.publisher-text {
+    display: block;
+    white-space: nowrap;     /* 한 줄로만 나오게 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘치면 ... */
+    font-size: 0.85rem;
+    color: rgb(137, 126, 129);
+}
 
 .book-image {
 	width:250px;
@@ -199,7 +472,8 @@ color: #7CC491;
 
 
 .info-btn {
-	width:300px;
+	width:100%;
+	max-width:400px;
 	height:50px;
 	text-align: center;
 	font-weight: bolder;
@@ -215,21 +489,43 @@ color: #7CC491;
 
 
 .cart-box{
-	width:900px;
+	/*width:900px;*/
 	height:150px;
+	 	width: 100%;
+    max-width: 1000px;  
+
+}
+
+.cart-orderInfo {
+    width: 300px; /* 원하는 너비로 고정 */
+    flex-shrink: 0; /* 자리가 좁아져도 찌그러지지 않게 */
 }
 
 .cart-check{
 	width:20px;
 }
 .cart-title{
-	width:400px;
+	/*width:400px;*/
+	flex: 1;           /* 남는 공간을 제목이 다 채우도록 설정 */
+    min-width: 300px;
 }
+.cart-title-info{
+	overflow:hidden;
+	display: 
+	-webkit-box;
+    -webkit-line-clamp: 3; /* 텍스트를 3줄까지만 표시 */
+    -webkit-box-orient: vertical;
+	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
+    white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+}
+
 .cart-price{
 	width:100px;
+	flex-shrink: 0;
 }
 .cart-deli{
 	width:150px;
+	flex-shrink: 0;
 }
 .cart-book-img{
 	width:90px;
@@ -238,13 +534,36 @@ color: #7CC491;
 	vertical-align: middle;
 }
 .cart-total-price{
-	width:290px;
-	height:450px;
+	width: 100%;
+	max-width:320px;
+	flex-shrink: 0;
+	height:470px;
 }
 
 .order-box{
-	width:900px;
+	width : auto;
+	max-width:1200px;
+	 margin-top: 0;       
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
+.order-box-complete{
+	width : auto;
+	max-width:1000px;
+	margin: 80px auto;
+	padding: 80px 60px;
+	border: 1px solid #e9ecef;
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+	
+	display: flex;
+    flex-direction: column;
+	align-items:center;
+	justify-content:center;
+	text-align: center;
+}
+
 .order-address{
 	width:600px;
 }
@@ -254,8 +573,14 @@ color: #7CC491;
 	height:160px;
 }
 .order-date{
-	width:500px;
+	width: 12%; /* 고정px보다는 비율이 안전합니다 */
+    min-width: 100px;
+    font-weight: bold;
+    color: #666;
 }
+
+
+
 .order-book-img{
 	width:100px;
 	object-fit: contain;
@@ -266,8 +591,39 @@ color: #7CC491;
     white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
 }
 .order-book-amount{
-	width:200px;
+	width: auto;
+	width:250px;
+	
 }
+.order-book-number{
+	width: 20%;
+	min-width:170px;
+    text-align: center;
+	
+}
+
+.order-summary{
+	width: 56%; 
+	min-width:600px;
+    padding-left: 20px;
+    font-size: 1.1rem;
+}
+
+.summary-title{
+	width: 85%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+    flex: 0 1 auto;
+    display: 
+	-webkit-box;
+    -webkit-line-clamp: 1; /* 텍스트를 1줄까지만 표시 */
+    -webkit-box-orient: vertical;
+	word-break: break-word; /* 긴 단어가 넘어갈 때 자동으로 줄바꿈 */
+    white-space: normal; /* 텍스트가 넘어가면 줄 바꿈 */
+    
+}
+
 .order-book-price{
 	width:145px;
 }
@@ -281,13 +637,24 @@ color: #7CC491;
 }
 	*/
 
+.userinfo-layout{
+	width : 100%;
+	max-width:1200px;
+	min-height:350px;
+	
+}
 
 .order-header{
-	width:900px;
-	height:120px;
+	width : auto;
+	max-width:1200px;
+	min-height: 120px;
+	margin: 20px auto;
+	height: auto; 
 }
+
 .order-info-none{
-	width:900px;
+	width: 100%;
+	max-width:900px;
 	height:400px;
 }
 
@@ -295,13 +662,20 @@ color: #7CC491;
 
 .contents > .input-box {
 	
-	width: 640px;
- 	margin-top:80px;
+/*	width: 640px;
+ 	margin-top:80px; */
+ 	width: 100%;
+    max-width: 640px;  /* 입력창은 너무 넓지 않게 */
+    margin: 40px auto; /* 상단 마진을 80px에서 40px 정도로 조정 */
 }
 
+
 .book-info{
-	width:1200px;
-	height:200px;
+	width: 100%;  
+    max-width: 1200px;
+	/*height:200px;*/
+	min-height: 200px; /* height 대신 min-height 사용 */
+    height: auto;      /* 내용에 따라 늘어나게 */
 }
 .info-checkbox{
 	width:20px;
@@ -313,15 +687,21 @@ color: #7CC491;
 	
 }
 .info-title{
-	width:700px;
+	/*width:700px;*/
+	flex: 1; 
+    min-width: 0;
+	text-overflow: ellipsis; /* ... 표시 */
 }
 .info-price{
 	width:150px;
+	flex-shrink: 0; /* 절대 줄어들지 마! */
 }
 .info-cart{
-	width:100px;
+	/*width:100px;*/
+	width: 120px;  
+    flex-shrink: 0; 
 }
-
+/*
 .pageNum-now{
 	width:20px;
 	height:20px;
@@ -353,6 +733,54 @@ color: #7CC491;
 	margin-right:4px;
 }
 
+
+*/
+
+
+.pageNum,
+.pageNum-now {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 25%;        /* 살짝 각진 네모 */
+    font-size: 0.8125rem;      /* 13px */
+    font-weight: 600;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+/* 기본 페이지 */
+.pageNum {
+    background-color: #FFFFFF;
+    color: #1F7B3B;
+    border: 1px solid #7CC491;
+}
+
+/* 현재 페이지 */
+.pageNum-now {
+    background-color: #7CC491;
+    color: #FFFFFF;
+    border: 1px solid #7CC491;
+}
+
+.pageNum a,
+.pageNum-now a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.pageNum:hover:not(.pageNum-now) {
+    background-color: #F4FFF8;
+}
+
+
 .outline{
 	border:solid 1px #E7E5E5;
 	padding: 4% 10%;
@@ -366,6 +794,48 @@ color: #7CC491;
 .bg-mgn{
 	 background-color: #F4FFF8;
 }
+
+
+.chk-container input {
+    display: none;
+}
+
+.checkmark {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    background-color: #fff;
+}
+
+.chk-container input:checked + .checkmark {
+    background-color: #7CC491; 
+    border-color: #7CC491;
+}
+
+/* 체크 표시 (흰색 'V') */
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.chk-container input:checked + .checkmark:after {
+    display: block;
+}
+
+
 
 
 footer{

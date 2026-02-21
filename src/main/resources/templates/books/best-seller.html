@@ -5,112 +5,135 @@
      layout:decorate="~{layout/default}">
      
 
-		<section layout:fragment="contents">
-			
-		
-		<div class="d-flex"> <!--  카테고리/ 결과 나란히 -->
-		
-		
-				<nav class="nav flex-column col-2 border-right text-center mr-4">
-					<h3 class="bg-secondary font-weight-bold my-4">국내도서</h3>
-					  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewAll">신간도서</a>
-					  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewSpecial">화제의신간</a>
-					  <a class="nav-link text-dark" href="/nunubooks/books?queryType=Bestseller">베스트셀러</a>
-				</nav>
+		<section layout:fragment="contents" class="contents">
+		<div>	
+		<div class="d-flex mt-3"> <!--  카테고리/ 결과 나란히 -->
 		
 		
-		<div class="contents">
-			<div>
-				<div class="d-flex align-items-center justify-content-between mt-4 queryType"  th:if="${queryType == 'Bestseller' }" th:data-query-id="${queryType}">
-					 <div class="d-flex align-items-center">
-						 <h3 class="font-weight-bold seller-option" >주간 베스트셀러</h3>
-						 <h5 class="font-weight-bold ml-1 week-info" th:text="|(${nowYear}년  ${nowMonth}월 ${nowWeek}주)|"></h5>
-					 </div>
-					 <div class="d-flex">
-						 <select class="form-control select mx-2" id="yearSel">
-						</select>
-						 <select class="form-control select mx-2" id="monthSel">
-						</select>
-						 <select class="form-control select ml-2" id="weekSel">
-						  <option value="1" th:selected="${nowWeek == 1 or week == 1}">1주</option>
-			              <option value="2" th:selected="${nowWeek == 2 or week == 2}">2주</option>
-			              <option value="3" th:selected="${nowWeek == 3 or week == 3}">3주</option>
-			              <option value="4" th:selected="${nowWeek == 4 or week == 4}">4주</option>
-			             </select>
-					 <!-- 
-						<button type="button" class="btn btn-secondary mx-1" id="weekBtn" value="week">주간</button>
-						<button type="button" class="btn btn-secondary mx-1" id="monthBtn" value="month">월간</button>
-						<button type="button" class="btn btn-secondary mx-1" id="yearBtn" value="year">연간</button>
-					  -->
-					 </div>
-				</div>
-					  <div class="d-flex align-items-center mt-4 queryType" th:if="${queryType == 'ItemNewAll' }" th:data-query-id="${queryType}">
-						 <h3 class="font-weight-bold seller-option" >새로 나온 도서</h3>
-					 </div>
-					 <div class="d-flex align-items-center mt-4 queryType" th:if="${queryType == 'ItemNewSpecial'}" th:data-query-id="${queryType}">
-						 <h3 class="font-weight-bold seller-option" >화제의 신간</h3>
-					 </div>
-				
-				<div class="d-flex justify-content-end align-items-center my-3">
+			<nav class="menu-category flex-column border-right text-center mr-4">
+				<h3 class="category-bg font-weight-bold p-2 my-4 mallType" th:if="${mallType =='Book'}" th:data-mall-id="${mallType}">국내도서</h3>
+				<h3 class="category-bg font-weight-bold p-2 my-4 mallType" th:if="${mallType =='Foreign'}" th:data-mall-id="${mallType}">해외도서</h3>
+				<h3 class="category-bg font-weight-bold p-2 my-4 mallType" th:if="${mallType =='eBook'}" th:data-mall-id="${mallType}">eBook</h3>
+				<!-- 
+				  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewAll">신간도서</a>
+				  <a class="nav-link text-dark" href="/nunubooks/books?queryType=ItemNewSpecial">화제의신간</a>
+				  <a class="nav-link text-dark" href="/nunubooks/books?queryType=Bestseller">베스트셀러</a>
+				 -->
+				<a class="nav-link text-dark font-weight-bold" th:href="@{/nunubooks/books(queryType='ItemNewAll', mallType=${mallType})}">신간도서</a>
+			    <a class="nav-link text-dark font-weight-bold" th:href="@{/nunubooks/books(queryType='ItemNewSpecial', mallType=${mallType})}">화제의신간</a>
+			    <a class="nav-link text-dark font-weight-bold" th:href="@{/nunubooks/books(queryType='Bestseller', mallType=${mallType})}">베스트셀러</a>
+			</nav>
+
+		
+			<div class="m-1 flex-grow-1">
+				<div>
+					<div class="d-flex align-items-center justify-content-between mt-4 queryType"  th:if="${queryType == 'Bestseller' }" th:data-query-id="${queryType}">
+						 <div class="d-flex align-items-center">
+							 <h3 class="font-weight-bold seller-option" >주간 베스트셀러</h3>
+							 <h5 class="font-weight-bold ml-1 week-info" th:text="|(${nowYear}년  ${nowMonth}월 ${nowWeek}주)|"></h5>
+						 </div>
+						 <div class="d-flex">
+							 <select class="form-control select mx-2" id="yearSel">
+							</select>
+							 <select class="form-control select mx-2" id="monthSel">
+							</select>
+							 <select class="form-control select ml-2" id="weekSel">
+							  <option value="1" th:selected="${nowWeek == 1 or week == 1}">1주</option>
+				              <option value="2" th:selected="${nowWeek == 2 or week == 2}">2주</option>
+				              <option value="3" th:selected="${nowWeek == 3 or week == 3}">3주</option>
+				              <option value="4" th:selected="${nowWeek == 4 or week == 4}">4주</option>
+				              <option value="5" th:selected="${nowWeek == 5 or week == 5}">5주</option>
+				             </select>
+						 <!-- 
+							<button type="button" class="btn btn-secondary mx-1" id="weekBtn" value="week">주간</button>
+							<button type="button" class="btn btn-secondary mx-1" id="monthBtn" value="month">월간</button>
+							<button type="button" class="btn btn-secondary mx-1" id="yearBtn" value="year">연간</button>
+						  -->
+						 </div>
+					</div>
+						  <div class="d-flex align-items-center mt-4 queryType" th:if="${queryType == 'ItemNewAll' }" th:data-query-id="${queryType}">
+							 <h3 class="font-weight-bold seller-option" >새로 나온 도서</h3>
+						 </div>
+						 <div class="d-flex align-items-center mt-4 queryType" th:if="${queryType == 'ItemNewSpecial'}" th:data-query-id="${queryType}">
+							 <h3 class="font-weight-bold seller-option" >화제의 신간</h3>
+						 </div>
 					
-					<div class="d-flex">
-						<select class="form-control select mx-2" id="maxResultSel">
-							<option th:selected="${maxResults == 10}" value="10">10개씩 보기</option>
-							<option th:selected="${maxResults == 20}" value="20">20개씩 보기</option>
-							<option th:selected="${maxResults == 50}" value="50">50개씩 보기</option>
-						</select>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="multiCartBtn"><i class="bi bi-cart"></i></button>
+					<div class="d-flex justify-content-end align-items-center my-3">
+						
+						<div class="d-flex">
+							<select class="form-control select mx-2" id="maxResultSel">
+								<option th:selected="${maxResults == 10}" value="10">10개씩 보기</option>
+								<option th:selected="${maxResults == 20}" value="20">20개씩 보기</option>
+								<option th:selected="${maxResults == 50}" value="50">50개씩 보기</option>
+							</select>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1"><i class="bi bi-heart"></i></button>
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="multiCartBtn"><i class="bi bi-cart"></i></button>
+							<!-- 
+							<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn" value="0">품절/절판 제외</button>
+							 -->
+							 <select class="form-control" id="outofStockSel">
+								<option value="0" th:selected="${outofStock == 0}">품절/절판 포함</option>
+								<option value="1" th:selected="${outofStock == 1}">품절/절판 제외</option>
+							 </select>
+						</div>
+					</div>
+				</div>	
+					
+				<div class="d-flex align-items-center book-info p-2 border my-3 mx-1" th:each="book, status: ${seller.item}">
+					<div class="mx-3 info-checkbox">
+					<span th:text="${status.count}">1</span>
+						<input type="checkbox" class="item-checkbox" th:data-item-id="${book.itemId}">
+					</div>
+					<img th:src="${book.cover}" class="info-img">
+					<div class="mx-3 info-title">
+						<a th:href="|/nunubooks/product?itemId=${book.itemId}|" class="text-dark">
+							<h5 class="font-weight-bold" th:utext="${book.title}">책 제목 어쩌구저쩌구</h5>
+						</a>
+						<h6 th:text="|${book.author}|">저자</h6>
+						<div class="d-flex align-items-center">
+							<h6 th:text="${book.publisher}">출판사</h6>
+							<h6 class= "ml-3" th:text="${book.pubDate}">출판일</h6>
+						</div>
+					</div>
 						<!-- 
-						<button type="button" class="btn btn-light btn-outline-secondary mr-1" id="outofStockBtn" value="0">품절/절판 제외</button>
+						<div class="mx-3 info-price">품절</div>
+						<div class="mx-3 info-price" th:if="${book.stockStatus =='절판'}">절판</div>
+						<div class="mx-3 info-price" th:if="${book.stockStatus ==''  or book.stockStatus =='예약판매'}">
 						 -->
-						 <select class="form-control" id="outofStockSel">
-							<option value="0" th:selected="${outofStock == 0}">품절/절판 포함</option>
-							<option value="1" th:selected="${outofStock == 1}">품절/절판 제외</option>
-						 </select>
+					 <div class="text-center info-price p-1">
+						<del><span th:text="|${#numbers.formatInteger(book.priceStandard, 3, 'COMMA')} 원|">정가 </span></del>
+						<span class="text-success font-weight-bold h6" th:text="|(${book.discount}%)|">(10%)</span> 
+						<div class="font-weight-bold text-primary ml-1" th:text="|${#numbers.formatInteger(book.priceSales, 3, 'COMMA')} 원|">할인가</div>
+						<div class="font-weight-bold text-info ml-1 text-small" th:text="|(${#numbers.formatInteger(book.mileage, 3, 'COMMA')} point)|">포인트</div>
+					</div>
+					<div class="info-cart" >
+						<div class="text-center my-3">
+							<button type="button" class="btn btn-outline-secondary cartBtn" th:data-item-id="${book.itemId}">장바구니</button>
+						</div>
+						<div class="text-center my-3">
+							<button type="button" class="btn btn-outline-secondary" th:data-item-id="${book.itemId}">바로구매</button>
+						</div>
 					</div>
 				</div>
-			</div>	
-				
-			<div class="d-flex align-items-center book-info p-2 border my-3 mx-1" th:each="book, status: ${seller.item}">
-				<div class="mx-3 info-checkbox">
-				<span th:text="${status.count}">1</span>
-					<input type="checkbox" class="item-checkbox" th:data-item-id="${book.itemId}">
-				</div>
-				<img th:src="${book.cover}" class="info-img">
-				<div class="mx-3 info-title">
-					<a th:href="|/nunubooks/product?itemId=${book.itemId}|" class="text-dark">
-						<h5 class="font-weight-bold" th:text="${book.title}">책 제목 어쩌구저쩌구</h5>
-					</a>
-					<h6 th:text="|${book.author}|">저자</h6>
-					<div class="d-flex align-items-center">
-						<h6 th:text="${book.publisher}">출판사</h6>
-						<h6 class= "ml-3" th:text="${book.pubDate}">출판일</h6>
-					</div>
-				</div>
-					<!-- 
-					<div class="mx-3 info-price">품절</div>
-					<div class="mx-3 info-price" th:if="${book.stockStatus =='절판'}">절판</div>
-					<div class="mx-3 info-price" th:if="${book.stockStatus ==''  or book.stockStatus =='예약판매'}">
-					 -->
-				 <div class="text-center info-price p-1">
-					<del><span th:text="|${#numbers.formatInteger(book.priceStandard, 3, 'COMMA')} 원|">정가 </span></del>
-					<span class="text-success font-weight-bold h6" th:text="|(${book.discount}%)|">(10%)</span> 
-					<div class="font-weight-bold text-primary ml-1" th:text="|${#numbers.formatInteger(book.priceSales, 3, 'COMMA')} 원|">할인가</div>
-					<div class="font-weight-bold text-info ml-1 text-small" th:text="|(${#numbers.formatInteger(book.mileage, 3, 'COMMA')} point)|">포인트</div>
-				</div>
-				<div class="info-cart" >
-					<div class="text-center my-3">
-						<button type="button" class="btn btn-outline-secondary cartBtn" th:data-item-id="${book.itemId}">장바구니</button>
-					</div>
-					<div class="text-center my-3">
-						<button type="button" class="btn btn-outline-secondary" th:data-item-id="${book.itemId}">바로구매</button>
-					</div>
-				</div>
-			</div>
-	
+		
+		</div>	
+		
+					
+		
+		
+	</div> <!--  카테고리~ -->
+	 	<input type="hidden" id="currentPage" th:value="${page}">
+	 	<input type="hidden" id="totalResults" value="200">
+			 
+		<div class="d-flex align-items-center justify-content-center">
+			<ul class="numberWrapper list-inline d-flex">
+			    <li class="pageNum" id="allPrevBtn"><a href="#"><i class="bi bi-chevron-double-left"></i></a></li>
+			    <li class="pageNum" id="prevBtn"><a href="#"><i class="bi bi-chevron-compact-left"></i></a></li>
+			    <li class="pageNum" id="nextBtn"><a href="#"><i class="bi bi-chevron-compact-right"></i></a></li>
+			    <li class="pageNum" id="allNextBtn"><a href="#"><i class="bi bi-chevron-double-right"></i></a></li>
+		  	</ul>
+		</div>
 	</div>	<!--  전체 div -->
-	
 		</section>
 
 <script layout:fragment="script">
@@ -118,13 +141,163 @@
 
 $(document).ready(function(){
 	
+	/* 페이지네이션 */
+	
+		const totalResults = 200;
+		let maxResults = parseInt($("#maxResultSel").val())|| 10;
+	
+		let start = parseInt($("#currentPage").val()) || 1; 
+	
+		function getTotalPageCount(){  // 총 페이지 수 
+			return Math.ceil(totalResults / maxResults);
+		}
+		
+		const totalPageCount = getTotalPageCount();
+			
+		//화면에 보여질 페이지 그룹 = Math.ceil(현재 페이지/ 한 화면에 나타낼 페이지 수);
+		
+		function setPageButtons(){
+
+			const $numberWrapper = $('.numberWrapper'); // jQuery 객체일 때는 $를 붙여서 사용하래... 
+			$numberWrapper.empty(); // 페이지 번호 wrapper 내부를 비워줌
+			
+			const groupSize = 7;
+		    const pageGroup = Math.ceil(start / groupSize);
+		    const totalPageCount = getTotalPageCount();
+		    
+
+			let first = (pageGroup - 1) * groupSize + 1;
+			let last  = Math.min(first + groupSize - 1, totalPageCount);
+			
+			   //  이전 그룹 / 이전 페이지 버튼
+		    if (totalPageCount > groupSize) {      // 페이지가 groupSize(7) 초과일 때만 << >>
+		        if (pageGroup > 1) {
+		            // << (이전 그룹)
+		            const $allPrevBtn = $(`
+		                <li class="pageNum" id="allPrevBtn">
+		                    <a href="#"><i class="bi bi-chevron-double-left"></i></a>
+		                </li>
+		            `);
+		            $numberWrapper.append($allPrevBtn);
+		        }
+		    }
+
+		    // < (이전 페이지) : 첫 페이지가 아닐 때만
+		    if (start > 1) {
+		        const $prevBtn = $(`
+		            <li class="pageNum" id="prevBtn">
+		                <a href="#"><i class="bi bi-chevron-compact-left"></i></a>
+		            </li>
+		        `);
+		        $numberWrapper.append($prevBtn);
+		    }
+
+		    // 페이지 숫자 버튼들
+		    for (let i = first; i <= last; i++) {
+		        const $pageButton = $(`<li class="pageNum"><a href="#">${i}</a></li>`);
+		        if (i === start) {
+		            $pageButton.addClass("pageNum-now");
+		        }
+		        $numberWrapper.append($pageButton);
+		    }
+
+		    // 다음 페이지 / 다음 그룹 버튼
+		    if (start < totalPageCount) {
+		        const $nextBtn = $(`
+		            <li class="pageNum" id="nextBtn">
+		                <a href="#"><i class="bi bi-chevron-compact-right"></i></a>
+		            </li>
+		        `);
+		        $numberWrapper.append($nextBtn);
+		    }
+
+		    if (totalPageCount > groupSize) {
+		        if (last < totalPageCount) {
+		            // >> (다음 그룹)
+		            const $allNextBtn = $(`
+		                <li class="pageNum" id="allNextBtn">
+		                    <a href="#"><i class="bi bi-chevron-double-right"></i></a>
+		                </li>
+		            `);
+		            $numberWrapper.append($allNextBtn);
+		        }
+		    }
+		 
+		  
+		};
+		
+		 // 페이지 버튼 클릭 이벤트 연결
+		function attachPageButtonEvents(){
+			$(".numberWrapper").on("click", ".pageNum", function(event) {
+			    event.preventDefault(); // 기본 링크 동작 방지
+			    const selectedPage = parseInt($(this).text());
+			    
+			    if (!isNaN(selectedPage) && selectedPage !== start) {
+			        start = selectedPage;
+			        setPageButtons();  // 페이지 버튼 다시 그리기
+			        updateBestSeller();       // URL 업데이트
+			    }
+			});
+
+
+
+				}
+			
+				
+				$(".numberWrapper").on("click", "#prevBtn", function (e) {
+
+					e.preventDefault();
+				    if (start > 1) {
+				        start--;
+				        setPageButtons();
+				        updateBestSeller();
+				    }
+				});
+				
+				$(".numberWrapper").on("click", "#nextBtn", function (e) {
+					e.preventDefault();
+				    if (start < getTotalPageCount()) {
+				        start++;
+				        setPageButtons();
+				        updateBestSeller();
+				    }
+				});
+				
+				$(".numberWrapper").on("click", "#allPrevBtn", function (e) {
+					e.preventDefault();
+				    if (start > 1) {
+				        start = Math.max(1, start - 10);
+				        setPageButtons();
+				        updateBestSeller();
+				    }
+				});
+				
+				$(".numberWrapper").on("click", "#allNextBtn", function (e) {
+					e.preventDefault();
+				    if (start < getTotalPageCount()) {
+				        start = Math.min(getTotalPageCount(), start + 10);
+				        setPageButtons();
+				        updateBestSeller();
+				    }
+				});
+
+
+			 attachPageButtonEvents(); // 각 버튼에 클릭 이벤트 연결
+
+	   		 setPageButtons();
+				
+			 
+		
+		
+		
+		
 	// 주간/ 월간/ 연간 버튼을 누르면 주간 베스트셀러, 월간 베스트셀러, 연간 베스트셀러 목록을 띄워줌
 	// 품절/절판 제외 버튼을 누르면 outofStock = 1;이 된다
 	// 10개 , 20개, 50개씩 select를 누르면 10, 20, 50개씩 출력.
 	// 파라미터값엔 전체 다 필요하니까 초기변수로 주기
 
 	let outofStock = 0;
-	let maxResults = 10;
+//	let maxResults = 10;
 	
 	const now = new Date();
 	const now_year = now.getFullYear();
@@ -176,18 +349,44 @@ $(document).ready(function(){
 		const maxResults = $("#maxResultSel").val() || 10;
 		const outofStock = $("#outofStockSel").val() || 0;
 		const queryType = $(".queryType").data("query-id") || 'Bestseller'; 
+		const mallType =$(".mallType").data("mall-id") || 'Book';
     	
 		const baseUrl = "/nunubooks/books";
 	    // history.pushState() 새로고침 안되게함
 //	    history.pushState(null, null, baseUrl 
-		
+		const newUrl = baseUrl 
+		+ "?mallType=" + mallType 
+        + "&queryType=" + queryType 
+        + "&maxResults=" + maxResults 
+        + "&outofStockfilter=" + outofStock
+        +"&start=" + start 
+        + "&year=" + year
+        + "&month=" + month
+        + "&week=" + week;
+	/*			
 		location.href = baseUrl 
-	        + "?queryType=" + queryType 
+	        + "?mallType=" + mallType 
+	        + "&queryType=" + queryType 
 	        + "&maxResults=" + maxResults 
 	        + "&outofStockfilter=" + outofStock
+	        +"&start=" + start 
 	        + "&year=" + year
 	        + "&month=" + month
 	        + "&week=" + week;
+	*/
+		 location.href = newUrl;
+		 
+		 window.history.pushState({}, "", newUrl);
+		 //history.pushState(state, title, url);
+		 
+		    $.get(newUrl, function(data) {
+		        // 페이지 내용을 새로운 데이터로 업데이트 (예: 페이지 콘텐츠)
+		        $("#content").html($(data).find("#content").html());
+
+		        // 페이지 버튼 다시 그리기
+		        setPageButtons();
+		    });
+	
 	}
 
 	

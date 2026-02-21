@@ -6,47 +6,57 @@
      
 
 		<section layout:fragment="contents">
-		<div class="d-flex align-items-center justify-content-center w-75 contents">
-			<div class="my-4 order-box border">
-				<div class="d-flex align-items-center justify-content-center ">
-				<!-- 
-					<div>
-						<h3 class="font-weight-bold">주문이 완료되었습니다</h3>
+		<!-- 
+			<div class="container d-flex justify-content-center">
+					<div class="my-4 order-box-complete border ">
+						 <table class="my-4">
+						 	<thead>
+							 	 <tr>
+							 	 	<th>
+							 	 		<h3 class="font-weight-bold">주문이 완료되었습니다</h3>
+							 	 	</th>
+							 	 </tr>
+						 	</thead>
+						 	<tbody>
+							 	 <tr>
+							 	 	<td>
+								 	 	<span class="mr-1" >주문번호 : </span>
+								 	 	<a th:href="@{/nunubooks/order/orderInfo(merchantUid=${merchantUid})}" class="font-weight-bold text-success">
+								 	 	<span th:text="${merchantUid}">0000-0000-0000 </span>
+								 	 	</a>
+							 	 	</td>
+							 	 </tr>
+						 	</tbody>
+						 </table>
+						<div class="d-flex align-items-center justify-content-center my-4">
+							<a class="btn btn-primary mx-2" href="/nunubooks/main">메인으로 이동</a>
+							<a class="btn btn-primary mx-2 " href="/nunubooks/order/orderHistory">주문 내역 확인</a>
+						</div>
 					</div>
-					<div class="d-flex align-items-center justify-content-center">
-						<h6 class="my-4 mr-2">주문번호 : </h6>
-						<h6 class="my-4 mr-4">0000-0000-0000</h6>
-					</div>
-				 -->
-				 <table class=" my-4">
-				 	<thead>
-					 	 <tr>
-					 	 	<th>
-					 	 		<h3 class="font-weight-bold">주문이 완료되었습니다</h3>
-					 	 	</th>
-					 	 </tr>
-				 	</thead>
-				 	<tbody>
-					 	 <tr>
-					 	 	<td>
-						 	 	<span class="mr-1" >주문번호 : </span>
-						 	 	<a th:href="@{/nunubooks/order/orderInfo(merchantUid=${merchantUid})}" class="font-weight-bold text-success">
-						 	 	<span th:text="${merchantUid}">0000-0000-0000 </span>
-						 	 	</a>
-					 	 	</td>
-					 	 </tr>
-				 	</tbody>
-				 </table>
-				</div>
-				<div class="d-flex align-items-center justify-content-center my-4">
-					<a class="btn btn-primary mx-2" href="/nunubooks/main">메인으로 이동</a>
-					<a class="btn btn-primary mx-2 " href="/nunubooks/order/orderHistory">주문 내역 확인</a>
-				</div>
-			</div>
-		</div>
-			
-			
+			</div>	
+				
+		 -->	
 		
+		<div class="container d-flex justify-content-center"> 
+			<div class="order-box-complete">
+	            <i class="bi bi-check-circle-fill logo-color mb-4" style="font-size: 4rem;"></i>
+	            
+	            <h2 class="font-weight-bold mb-3">주문이 완료되었습니다</h2>
+	            
+	            <div class="order-number-box mb-5 p-3 bg-light w-100 rounded">
+	                <span class="text-secondary">주문번호 : </span>
+	                <a th:href="@{/nunubooks/order/orderInfo(merchantUid=${merchantUid})}" 
+	                   class="font-weight-bold text-success h5 ml-1">
+	                    <span th:text="${merchantUid}">2026020102330980476</span>
+	                </a>
+	            </div>
+	
+	            <div class="d-flex align-items-center justify-content-center">
+	                <a class="btn btn-outline-success btn-lg mx-2 px-4" href="/nunubooks/main">메인으로 이동</a>
+	                <a class="btn btn-success btn-lg mx-2 px-4 " href="/nunubooks/order/orderHistory">주문 내역 확인</a>
+	            </div>
+        	</div>
+    	</div>
 		
 		
 		</section>

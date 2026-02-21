@@ -50,6 +50,23 @@ public class OrderRestController {
 			resultMap.put("result", "fail");
 		}
 		
+		
+		// Service에서 if-> true로 받아온 경우? result-> success 처리 해주고, true값이 돌아오지 않고 예외처리발생시 catch로 넘어가는 형태
+		try {
+			
+			orderService.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments, point, savePoint, orderItemName, impUid, merchantUid);
+				
+			resultMap.put("result", "success");
+			
+		} catch (Exception e) {
+			
+			resultMap.put("result", "fail");
+		}
+		
+		return resultMap;
+		
+	/*	↑ 로 수정 (Service에서 addOrder를 Transaction 처리 해줬기 때문)
+	 
 		if(orderService.addOrder(userId, name, phoneNumber, postcode, address, totalPrice, shippingFee, payments, point, savePoint, orderItemName, impUid, merchantUid)) {
 			resultMap.put("result", "success");
 		} else{
@@ -57,7 +74,7 @@ public class OrderRestController {
 			
 		}
 		return resultMap;
-		
+		*/
 	}
 	
 	

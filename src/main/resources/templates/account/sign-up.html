@@ -5,9 +5,9 @@
      layout:decorate="~{layout/default}">
      
 
-		<section layout:fragment="contents" class="d-flex justify-content-center">
+		<section layout:fragment="contents" class="contents">
 		
-			<div class="contents"> <!--  회원가입 전체 틀 -->
+			<div > <!--  회원가입 전체 틀 -->
 				<div class="d-flex align-items-center join-ad">  <!--  회원가입시 어쩌고저쩌고 특전 안내  -->
 					<h2 class=" font-weight-bold ml-4 logo-color">
 					  누누북스 회원가입
@@ -16,7 +16,7 @@
 					  회원가입시 적립금 3000p 증정! 
 					</h4>
 				</div>
-				<div class="d-flex"> <!-- 회원가입 대상 구분 --> <!--  div 안에 div 따로 줘서 하나하나 주는것도...  -->
+				<div class="d-flex justify-content-between"> <!-- 회원가입 대상 구분 --> <!--  div 안에 div 따로 줘서 하나하나 주는것도...  -->
 					<button class="info-btn btn-lgn btn rounded-0">만 14세 이상 일반 개인 회원</button>
 					<button class="info-btn btn rounded-0">만 14세 미만 어린이 회원</button>
 					<button class="info-btn btn rounded-0">법인/ 단체 회원</button>
@@ -35,7 +35,10 @@
 					</div>
 					
 					<div class="col-9">
-					<textarea class="border-0 w-100" rows="10" > 
+					<!--
+					<textarea class="border-0 w-100" rows="10" readonly> 
+					  -->
+					  <div class="terms-box">
 					제 1 장 총칙
 제 1 조 (목적)
 본 약관은 (주)누누북스(이하 “회사”라 합니다)가 운영하는 웹사이트 ‘누누북스’(이하 “웹사이트”라 합니다)에서 제공하는 온라인 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버몰과 이용자의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
@@ -145,29 +148,33 @@
 제1항의 규정에도 불구하고 동 분쟁으로 인하여 소송이 제기될 경우 동 소송은 회사의 본사 소재지를 관할하는 법원의 관할로 본다.
 <부칙>
 본 약관은 2025년 1월 1일부터 적용한다.
+<!-- 
 					</textarea>
-					
+ -->
 					</div>
 				</div>
+			</div>
 				
-				<div class="d-flex border-top">
-					<div class="border-right col-3 d-flex align-items-center justify-content-center">
-						<div class="font-weight-bold">
-					 		기본 정보 입력 
+			<div class="d-flex border-top">
+				<div class="border-right col-3 d-flex align-items-center justify-content-center">
+					<div class="font-weight-bold">
+					<div class="my-2">
+				 		기본 정보 입력 
+					</div>
 						<div>
 					 		<span class="text-primary">*</span> 필수항목
 						</div>
-						</div>
 					</div>
-					<div class="col-9 p-3">
-					<table class="table table-borderless w-75">
+				</div>
+				<div class="p-3">
+					<table class="table table-borderless sign-up-table ml-3">
 						<tr>
 							 <th>
 							 이름
 							 <span class="text-primary">*</span>
 							 </th>
 							<td>
-								<input type="text" class="form-control w-50" id="nameInput">
+								<input type="text" class="form-control" id="nameInput">
 							</td>
 						</tr>
 						<tr>
@@ -178,7 +185,7 @@
 							<td>
 								<div class="d-flex">
 									<input type="text" class="form-control" id="idInput">
-									<button type="button" class="btn btn-outline-secondary w-50 ml-2" id="dupBtn">중복 확인</button>
+									<button type="button" class="btn btn-outline-secondary font-weight-bold col-3 ml-2" id="dupBtn">중복 확인</button>
 								</div>
 								<div class="small text-danger d-none" id="dupText">중복된 아이디입니다</div>
 								<div class="small text-success d-none" id="availableText">사용가능한 아이디 입니다</div>
@@ -191,7 +198,7 @@
 							 </th>
 							<td class="d-flex align-items-center">
 								<input type="text" class="form-control" id="emailInput">
-								<span>@</span>
+								<span class="mx-1">@</span>
 								<input type="text" class="form-control d-none" id="fillEmail">
 								<select class="form-control text-center" id="domainSel">
 	                                <option selected value="1">이메일 선택</option>
@@ -230,11 +237,11 @@
 							 </th>
 							<td>
 								<div class="d-flex">
-								<input type="text" class="form-control w-25" id="postcode"> <!-- 다음 주소 api 활용 -->
-								<button type="button" class="btn btn-outline-secondary w-25 ml-2" id="postCodeBtn">우편번호 찾기</button>
+								<input type="text" class="form-control" id="postcode"> <!-- 다음 주소 api 활용 -->
+								<button type="button" class="btn btn-outline-secondary font-weight-bold  ml-2" id="postCodeBtn">우편번호 찾기</button>
 								</div>
-								<input type="text" class="form-control mt-2 w-75" placeholder="주소" id="addr"> 
-								<input type="text" class="form-control mt-2 w-75" placeholder="상세 주소 입력" id="detailAddr"> 
+								<input type="text" class="form-control mt-2" placeholder="주소" id="addr"> 
+								<input type="text" class="form-control mt-2" placeholder="상세 주소 입력" id="detailAddr"> 
 							</td>
 						</tr>
 						<tr>
@@ -242,8 +249,8 @@
 							 휴대전화
 							 <span class="text-primary">*</span>
 							 </th>
-							<td class="d-flex align-items-center justfiy-content-between">
-								<input type="text" class="form-control" id="phoneInput1">
+							<td class="d-flex align-items-center ">
+								<input type="text" class="form-control " id="phoneInput1">
 								<span> - </span>
 								<input type="text" class="form-control" id="phoneInput2">
 								<span> - </span>
@@ -251,21 +258,18 @@
 							</td>
 						</tr>
 					</table>
-					
-					</div>
+				
 				</div>
-					<div class="d-flex align-items-center justify-content-around my-5">
-						<button type="button" class="btn btn-danger col-3" id="prevBtn">이전화면</button>
-						<button type="button" class="btn btn-primary col-3" id="signUpBtn">회원가입하기</button>
-					</div>
-				
-				
-				
-			</div> <!--  회원가입 전체 닫는 -->
+			</div>
+				<div class="d-flex align-items-center justify-content-around my-5">
+					<button type="button" class="btn btn-danger font-weight-bold col-3" id="prevBtn">이전화면</button>
+					<button type="button" class="btn btn-nunu col-3" id="signUpBtn">회원가입하기</button>
+				</div>
 			
 			
-		
-		
+			
+		</div> <!--  회원가입 전체 닫는 -->
+			
 		
 		</section> <!--  section 닫는  -->
 		
@@ -293,7 +297,7 @@
 			isDuplicateCheck = false;
 			isDuplicateId = true;
 			
-			$("#availableText, #duplicateText").addClass("d-none");
+			$("#availableText, #dupText").addClass("d-none");
 		});
 		
 		$("#passwordConfirm").on("input",function(){ 
@@ -308,6 +312,12 @@
 
 			
 			let loginId = $("#idInput").val();
+			
+			if (loginId.trim() == "") {
+		        alert("아이디를 입력해 주세요.");
+		        $("#idInput").focus();
+		        return; // ajax 실행 방지 return
+		    }
 			
 			$.ajax({
 				type:"get"
@@ -498,6 +508,7 @@
 			,success:function(response){
 	
 				if(response.result == "success"){
+					alert(name + "님, 누누북스 회원이 되신 것을 축하합니다!");
 					location.href="/nunubooks/account/login";
 				} else{
 					alert("양식을 다시 확인해 주세요")

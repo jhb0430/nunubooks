@@ -8,7 +8,7 @@
 		<section layout:fragment="contents" class="container">
 			<div class=" contents">
 				<div>
-					<div  class="d-flex justify-content-between my-3">
+					<div  class="d-flex justify-content-between mt-3 mb-4">
 						<h2 class="font-weight-bold" >주문/결제</h2>
 						
 						<div class="d-flex">
@@ -36,7 +36,7 @@
 			<div class="d-flex"><!--주문정보- 배송정보 전체 묶는 div-->
 
 			<div> <!--  배송정보, 주문상품 묶는 div -->
-				<div class="border rounded order-box p-1"> <!--  주문자 정보 -->
+				<div class="border rounded order-box p-1 px-3"> <!--  주문자 정보 -->
 				<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 			
 					<h4 class="font-weight-bold my-3 ">배송지 정보</h4>
@@ -76,7 +76,7 @@
 				</div>
 				
 				
-				<div class="border rounded order-box p-1 mt-4"> <!--  결제 정보 -->
+				<div class="border rounded order-box p-1 mt-4 px-3"> <!--  결제 정보 -->
 					<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 						<div class="border-bottom">
 							<h5 class="font-weight-bold my-3">결제수단</h5>
@@ -143,7 +143,7 @@
 				</div>
 				
 				
-				<div class="border rounded order-box p-1 mt-4"> <!--  주문하려는 책 정보 -->
+				<div class="border rounded order-box p-1 mt-4 px-3"> <!--  주문하려는 책 정보 -->
 				<div class="ml-2"><!-- 박스 안에서 마진값 전체로 주는 역할 -->
 					<h4 class="font-weight-bold my-3" th:text="|주문 상품 (${orderDTO.totalDTO.cartCount})|">주문 상품 (0)</h4>
 					<!-- 
@@ -157,7 +157,7 @@
 								<img th:src="${orderBook.bookInfo.item[0].cover}" >
 							</td>
 							<td class="order-book-title align-middle">
-								<div class="font-weight-bold" th:text="${orderBook.bookInfo.item[0].title}">책 제목 어쩌구저쩌구저쩌구 </div>
+								<div class="font-weight-bold" th:utext="${orderBook.bookInfo.item[0].title}">책 제목 어쩌구저쩌구저쩌구 </div>
 							</td>
 							<td class="order-book-amount align-middle text-center">
 								<div class="font-weight-bold" th:text="|${orderBook.quantity}개|">1개</div>
@@ -181,7 +181,7 @@
 						
 			</div><!--  배송정보, 주문상품 묶는 div -->
 						
-					<div class="col-3 border p-2 cart-total-price ml-1"><!--  결제금액 정보 -->
+					<div class="border p-3 cart-total-price ml-3"><!--  결제금액 정보 -->
 						
 						<table class="table table-borderless">
 							<tr>
@@ -211,7 +211,7 @@
 							</tr>
 						</table>
 							<button type="button" class="btn btn-primary my-3 w-100" id="orderBtn">결제하기</button>
-							<button type="button" class="btn btn-primary my-3 w-100">수령 매장 선택</button>
+							<button type="button" class="btn btn-outline-primary my-2 w-100">수령 매장 선택</button>
 							<!-- 
 						<button type="button" class="btn btn-primary my-3 w-100">이전 화면으로</button>
 							 -->
@@ -323,8 +323,25 @@
 		          orderItems.push(`${title} x${quantity}`);
 		      });
 
-		      let orderName = orderItems.join(", "); // 여러 상품일 경우 상품명 합치기
+//		      let orderName = orderItems.join(", "); // 여러 상품일 경우 상품명 합치기 -- 상품명이 길면 db저장값을 넘겨서 저장실패하는 오류가 발생
 
+		   // --- 수정 후 (상품명 가공) ---
+		      let orderName = "";
+		      let firstItemTitle = $(".order-bookInfo").first().find(".order-book-title").text().trim();
+		      let totalItemCount = $(".order-bookInfo").length;
+
+		      if (totalItemCount > 1) {
+		          orderName = firstItemTitle + " 외 " + (totalItemCount - 1) + "건";
+		      } else {
+		          orderName = firstItemTitle;
+		      }
+
+		      // 혹시 모를 상황을 대비해 최대 100자로 제한 (DB 컬럼 보호)
+		      if (orderName.length > 100) {
+		          orderName = orderName.substring(0, 97) + "...";
+		      }
+		      
+		      
 		      const currentDate = new Date();
 		      //  각 구성 요소를 가져오기
 		      const year = currentDate.getFullYear(); // 2025
@@ -379,8 +396,8 @@
 				,pay_method : "card"
 				    ,merchant_uid: merchant_uid // 상점에서 관리하는 주문 번호를 전달
 				    ,name : orderName
-				    ,amount : finalPrice + shippingFee
-//				    ,amount : 100 // 최소 결제 금액 100원 // .나중엔 삭제하고 위에꺼 써야함
+//				    ,amount : finalPrice + shippingFee
+				    ,amount : 100 // 최소 결제 금액 100원 // .나중엔 삭제하고 위에꺼 써야함
 				//    ,buyer_email : 'iamport@siot.do' // 이메일 
 				    ,buyer_name : name
 				    ,buyer_tel : phone
@@ -415,20 +432,40 @@
 						,"merchantUid" : rsp.merchant_uid
 						,"orderItemName" : orderName
 					}
-					,success:function(response){
+				
+				
+				
+				// ... 결제 요청 코드 ...
+				,success: function(response) {
+				    if (response.result == "success") {
+				        console.log("결제 결과 객체(rsp):", rsp); // 여기서 값을 확인
+				        alert("카드사: " + rsp.card_name + ", 결제수단: " + rsp.pay_method);
+				        
+				        // 페이지 이동을 잠시 막아서 콘솔을 확인합니다.
+				        // location.href = "/nunubooks/order/order/complete?merchantUid=" + rsp.merchant_uid;
+				    } else {
+				        alert("주문 실패");
+				    }
+				}
+				
+				
+				
+				
+				
+//					,success:function(response){
 
-						if(response.result == "success"){
+//						if(response.result == "success"){
 
 //							alert("결제 성공")
 
-							location.href="/nunubooks/order/order/complete?merchantUid=" +rsp.merchant_uid;
-						} else {
-							alert("주문 실패" + rsp.error_msg)
-						}
-					}
-					,error:function(){
-					alert("주문 오류")
-					}
+//							location.href="/nunubooks/order/order/complete?merchantUid=" +rsp.merchant_uid;
+//						} else {
+//							alert("주문 실패" + rsp.error_msg)
+//						}
+//					}
+//					,error:function(){
+//					alert("주문 오류")
+//					}
 				    			
 				
 				    	});  		//$.ajax({
